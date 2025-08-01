@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bharath Srividhya | Portfolio</title>
+    <style>
+        /* --- Global Styles & Fonts --- */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+        :root {
+            --bg-color: #121212;
+            --primary-color: #1a1a1a;
+            --secondary-color: #242424;
+            --accent-color: #007BFF;
+            --text-color: #e0e0e0;
+            --text-secondary-color: #a0a0a0;
+            --border-color: #333333;
+        }
+    
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            padding: 2rem;
+        }
+    
+        /* --- Main Container --- */
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background-color: var(--primary-color);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+    
+        /* --- Header / Hero Section --- */
+        .header {
+            padding: 3rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('https://www.transparenttextures.com/patterns/cubes.png');
+        }
+    
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+    
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+    
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+    
+        .contact-info a {
+            color: var(--text-secondary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+    
+        .contact-info a:hover {
+            color: var(--accent-color);
+        }
+    
+        /* --- Main Accordion Section --- */
+        .accordion {
+            padding: 2rem 3rem;
+        }
+    
+        .accordion-item {
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+        .accordion-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+    
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            cursor: pointer;
+            user-select: none;
+        }
+    
+        .accordion-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+    
+        .accordion-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+    
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+            padding: 0 1rem;
+        }
+    
+        .accordion-item.active .accordion-content {
+            max-height: 2000px; /* Increased for more content */
+            padding: 1rem 0; /* Adjusted padding */
+        }
+    
+        .accordion-item.active .accordion-icon {
+            transform: rotate(45deg);
+        }
+    
+        /* --- NESTED ACCORDION: Content Entry --- */
+        .content-entry {
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+            overflow: hidden; /* Important for nested animation */
+        }
+        .content-entry:last-child {
+            margin-bottom: 0;
+        }
+    
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 1.5rem;
+            cursor: pointer; /* Make the header clickable */
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .entry-header-main {
+            flex-grow: 1;
+        }
+    
+        .entry-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        .entry-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary-color);
+        }
+        .entry-date {
+            font-size: 0.9rem;
+            color: var(--text-secondary-color);
+            white-space: nowrap;
+            padding-top: 0.2rem; /* Align better with title */
+        }
+        
+        .entry-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+            padding: 0 1.5rem; /* Match header padding */
+        }
+    
+        /* Active state for nested accordion */
+        .content-entry.active .entry-details {
+            max-height: 1000px; /* Adjust as needed */
+            padding: 0 1.5rem 1.5rem 1.5rem;
+        }
+    
+        .entry-description ul {
+            list-style-position: inside;
+            padding-left: 0.5rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+        }
+    
+        .entry-description li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary-color);
+        }
+    
+        .tech-stack {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+    
+        .tech-tag {
+            background-color: var(--border-color);
+            color: var(--text-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            .header {
+                padding: 2rem;
+            }
+            .accordion {
+                padding: 1.5rem;
+            }
+            .entry-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1>Bharath Srividhya</h1>
+            <p class="subtitle">Computer Engineer | Machine Learning & AI | Cybersecurity</p>
+            <div class="contact-info">
+                <a href="mailto:bharathkrishnansrividhya@gmail.com">bharathkrishnansrividhya@gmail.com</a>
+                <span>&bull;</span>
+                <a href="https://www.linkedin.com/in/bharaths27" target="_blank">LinkedIn</a>
+                <span>&bull;</span>
+                <a href="https://github.com/bharaths27" target="_blank">GitHub</a>
+            </div>
+        </header>
+
+        <!-- Main Content Accordion -->
+        <main class="accordion">
+            <!-- Work Experience Section -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h2>Work Experience</h2>
+                    <div class="accordion-icon">+</div>
+                </div>
+                <div class="accordion-content">
+                    
+                    <!-- Cyware Labs Entry -->
+                    <div class="content-entry">
+                        <div class="entry-header">
+                            <div class="entry-header-main">
+                                <div class="entry-title">Artificial Intelligence Intern</div>
+                                <div class="entry-subtitle">Cyware Labs Inc.</div>
+                            </div>
+                            <div class="entry-date">Mar 2025 – June 2025</div>
+                        </div>
+                        <div class="entry-details">
+                            <div class="entry-description">
+                                <ul>
+                                    <li>Architected an AI platform to autonomously parse API specifications (OpenAPI, Postman), generating connectors for 1,000+ endpoints to automate B2B integration workflows.</li>
+                                    <li>Engineered the core adaptive ML model that iteratively refined connector accuracy by learning from user feedback and historical data structures.</li>
+                                    <li>Developed the intuitive front-end using React, automating an estimated 95% of the manual effort involved in typical developer API integrations.</li>
+                                </ul>
+                            </div>
+                            <div class="tech-stack">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Flask</span>
+                                <span class="tech-tag">React</span>
+                                <span class="tech-tag">Machine Learning</span>
+                                <span class="tech-tag">API Integration</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 1Kosmos Inc. Entry -->
+                    <div class="content-entry">
+                        <div class="entry-header">
+                            <div class="entry-header-main">
+                                <div class="entry-title">Cybersecurity Engineer Intern</div>
+                                <div class="entry-subtitle">1Kosmos Inc.</div>
+                            </div>
+                            <div class="entry-date">Aug 2024 – Nov 2024</div>
+                        </div>
+                        <div class="entry-details">
+                            <div class="entry-description">
+                            <ul>
+                                    <li>Enhanced authentication security for 5000+ users by developing secure websites with advanced multi-factor authentication (MFA).</li>
+                                    <li>Integrated AI/ML into the BlockID app to enhance biometric authentication and decentralized identity for 20+ enterprise clients.</li>
+                                    <li>Engineered a blockchain solution for decentralized identity, increasing user verification speed by 40%.</li>
+                            </ul>
+                            </div>
+                            <div class="tech-stack">
+                                <span class="tech-tag">Cybersecurity</span>
+                                <span class="tech-tag">AI/ML</span>
+                                <span class="tech-tag">Blockchain</span>
+                                <span class="tech-tag">MFA</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Bahwan CyberTek Inc. Entry -->
+                    <div class="content-entry">
+                        <div class="entry-header">
+                            <div class="entry-header-main">
+                                <div class="entry-title">Software Developer Intern</div>
+                                <div class="entry-subtitle">Bahwan CyberTek Inc.</div>
+                            </div>
+                            <div class="entry-date">June 2024 – Aug 2024</div>
+                        </div>
+                        <div class="entry-details">
+                            <div class="entry-description">
+                                <ul>
+                                    <li>Improved API response times by 25% by designing and developing RESTful APIs for a web portal serving over 1500 projects.</li>
+                                    <li>Enhanced platform scalability for large datasets by developing full-stack components in Java and optimizing PostgreSQL operations.</li>
+                                    <li>Drove a 20% reduction in feature deployment time by delivering secure solutions as a key contributor in an agile team.</li>
+                                </ul>
+                            </div>
+                            <div class="tech-stack">
+                                <span class="tech-tag">Java</span>
+                                <span class="tech-tag">Spring Boot</span>
+                                <span class="tech-tag">PostgreSQL</span>
+                                <span class="tech-tag">REST APIs</span>
+                                <span class="tech-tag">Agile</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Eufinity Entry -->
+                    <div class="content-entry">
+                        <div class="entry-header">
+                            <div class="entry-header-main">
+                                <div class="entry-title">Software App Developer</div>
+                                <div class="entry-subtitle">Eufinity</div>
+                            </div>
+                            <div class="entry-date">May 2023 – Sept 2023</div>
+                        </div>
+                        <div class="entry-details">
+                            <div class="entry-description">
+                                <ul>
+                                    <li>Architected and developed a secure, full-stack web application using React.js and a Node.js backend, implementing JWT-based authentication.</li>
+                                    <li>Built a Python-based microservice using Flask and Scikit-learn to serve a sentiment analysis model, providing personalized insights to users.</li>
+                                </ul>
+                            </div>
+                            <div class="tech-stack">
+                                <span class="tech-tag">React.js</span>
+                                <span class="tech-tag">Node.js</span>
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Flask</span>
+                                <span class="tech-tag">JWT</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add other work experiences here -->
+
+                </div>
+            </div>
+
+
+            <!-- Projects Section -->
+            <div class="accordion-item">
+                <div class="accordion-header">
+                    <h2>Projects</h2>
+                    <div class="accordion-icon">+</div>
+                </div>
+                <div class="accordion-content">
+
+                    <!-- Stock Prediction Tool Entry -->
+                    <div class="content-entry">
+                        <div class="entry-header">
+                            <div class="entry-header-main">
+                                <div class="entry-title">Stock Prediction Tool</div>
+                                <div class="entry-subtitle">Personal Project</div>
+                            </div>
+                            <div class="entry-date">Jan 2024</div>
+                        </div>
+                        <div class="entry-details">
+                            <div class="entry-description">
+                                <ul>
+                                    <li>Built a Scikit-learn model to predict stock prices, enhancing forecast accuracy with linear regression and decision trees.</li>
+                                    <li>Enabled real-time analysis by developing interactive visualizations in Plotly to compare predicted vs. actual stock prices.</li>
+                                </ul>
+                            </div>
+                            <div class="tech-stack">
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Pandas</span>
+                                <span class="tech-tag">Scikit-learn</span>
+                                <span class="tech-tag">Plotly</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3D Car Model Optimization Tool Entry -->
+                    <div class="content-entry">
+                        <div class="entry-header">
+                            <div class="entry-header-main">
+                                <div class="entry-title">3D Car Model Optimization Tool</div>
+                                <div class="entry-subtitle">Personal Project</div>
+                            </div>
+                            <div class="entry-date">May 2024</div>
+                        </div>
+                        <div class="entry-details">
+                            <div class="entry-description">
+                                <ul>
+                                    <li>Built an interactive 3D platform with WebGL and Three.js for real-time optimization of car parts for performance and aesthetics.</li>
+                                    <li>Implemented a real-time optimization engine, allowing users to instantly visualize and simulate car configuration changes.</li>
+                                </ul>
+                            </div>
+                            <div class="tech-stack">
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">React</span>
+                                <span class="tech-tag">WebGL</span>
+                                <span class="tech-tag">Three.js</span>
+                                <span class="tech-tag">UI/UX</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Autonomous Floorcare Robot Entry -->
+                    <div class="content-entry">
+                        <div class="entry-header">
+                            <div class="entry-header-main">
+                                <div class="entry-title">Autonomous Multi-Function Floorcare Robot</div>
+                                <div class="entry-subtitle">University Project</div>
+                            </div>
+                            <div class="entry-date">May 2024</div>
+                        </div>
+                        <div class="entry-details">
+                            <div class="entry-description">
+                                <ul>
+                                    <li>Designed and programmed C++ firmware for an autonomous robot, integrating ultrasonic and IR sensors for robust, real-time obstacle avoidance.</li>
+                                    <li>Implemented actuator control logic for differential drive locomotion and a relay-switched fan for a dual-function navigation and vacuuming system.</li>
+                                </ul>
+                            </div>
+                            <div class="tech-stack">
+                                <span class="tech-tag">C++</span>
+                                <span class="tech-tag">Arduino</span>
+                                <span class="tech-tag">Robotics</span>
+                                <span class="tech-tag">Sensor Fusion</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add other projects here -->
+
+                </div>
+            </div>
+
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- Main Accordion Logic (Work Experience, Projects) ---
+            const mainAccordionItems = document.querySelectorAll('.accordion-item');
+    
+            mainAccordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                header.addEventListener('click', () => {
+                    item.classList.toggle('active');
+                });
+            });
+    
+            // --- Nested Accordion Logic (Individual Job Entries) ---
+            const nestedAccordionItems = document.querySelectorAll('.content-entry');
+    
+            nestedAccordionItems.forEach(item => {
+                const header = item.querySelector('.entry-header');
+                // Make sure the header exists to avoid errors
+                if (header) {
+                    header.addEventListener('click', () => {
+                        item.classList.toggle('active');
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
