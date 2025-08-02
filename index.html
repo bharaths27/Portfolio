@@ -123,8 +123,8 @@
         }
     
         .accordion-item.active .accordion-content {
-            max-height: 2000px; /* Increased for more content */
-            padding: 1rem 0; /* Adjusted padding */
+            max-height: 2000px;
+            padding: 1rem 0;
         }
     
         .accordion-item.active .accordion-icon {
@@ -137,7 +137,7 @@
             border-radius: 8px;
             margin-bottom: 1rem;
             border: 1px solid var(--border-color);
-            overflow: hidden; /* Important for nested animation */
+            overflow: hidden;
         }
         .content-entry:last-child {
             margin-bottom: 0;
@@ -148,7 +148,7 @@
             justify-content: space-between;
             align-items: flex-start;
             padding: 1.5rem;
-            cursor: pointer; /* Make the header clickable */
+            cursor: pointer;
             flex-wrap: wrap;
             gap: 0.5rem;
         }
@@ -169,19 +169,18 @@
             font-size: 0.9rem;
             color: var(--text-secondary-color);
             white-space: nowrap;
-            padding-top: 0.2rem; /* Align better with title */
+            padding-top: 0.2rem;
         }
         
         .entry-details {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.4s ease-out, padding 0.4s ease-out;
-            padding: 0 1.5rem; /* Match header padding */
+            padding: 0 1.5rem;
         }
     
-        /* Active state for nested accordion */
         .content-entry.active .entry-details {
-            max-height: 1000px; /* Adjust as needed */
+            max-height: 1000px;
             padding: 0 1.5rem 1.5rem 1.5rem;
         }
     
@@ -212,6 +211,66 @@
             font-size: 0.8rem;
             font-weight: 500;
         }
+
+        /* --- ADDED: Modal Styles --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            padding: 1rem;
+        }
+        .modal-overlay.visible {
+            opacity: 1;
+        }
+        .modal-content {
+            background: var(--primary-color);
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            width: 100%;
+            max-width: 800px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.visible .modal-content {
+            transform: scale(1);
+        }
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-secondary-color);
+            font-size: 2rem;
+            cursor: pointer;
+        }
+        .modal-button {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background-color: var(--secondary-color);
+            color: var(--accent-color);
+            text-decoration: none;
+            border: 1px solid var(--accent-color);
+            border-radius: 6px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .modal-button:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
         
         /* --- Responsive Design --- */
         @media (max-width: 768px) {
@@ -234,7 +293,6 @@
 <body>
 
     <div class="container">
-        <!-- Header Section -->
         <header class="header">
             <h1>Bharath Srividhya</h1>
             <p class="subtitle">Computer Engineer | Machine Learning & AI | Cybersecurity</p>
@@ -247,17 +305,13 @@
             </div>
         </header>
 
-        <!-- Main Content Accordion -->
         <main class="accordion">
-            <!-- Work Experience Section -->
             <div class="accordion-item">
                 <div class="accordion-header">
                     <h2>Work Experience</h2>
                     <div class="accordion-icon">+</div>
                 </div>
                 <div class="accordion-content">
-                    
-                    <!-- Cyware Labs Entry -->
                     <div class="content-entry">
                         <div class="entry-header">
                             <div class="entry-header-main">
@@ -274,17 +328,8 @@
                                     <li>Developed the intuitive front-end using React, automating an estimated 95% of the manual effort involved in typical developer API integrations.</li>
                                 </ul>
                             </div>
-                            <div class="tech-stack">
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">Flask</span>
-                                <span class="tech-tag">React</span>
-                                <span class="tech-tag">Machine Learning</span>
-                                <span class="tech-tag">API Integration</span>
-                            </div>
                         </div>
                     </div>
-
-                    <!-- 1Kosmos Inc. Entry -->
                     <div class="content-entry">
                         <div class="entry-header">
                             <div class="entry-header-main">
@@ -296,87 +341,22 @@
                         <div class="entry-details">
                             <div class="entry-description">
                             <ul>
-                                    <li>Enhanced authentication security for 5000+ users by developing secure websites with advanced multi-factor authentication (MFA).</li>
-                                    <li>Integrated AI/ML into the BlockID app to enhance biometric authentication and decentralized identity for 20+ enterprise clients.</li>
-                                    <li>Engineered a blockchain solution for decentralized identity, increasing user verification speed by 40%.</li>
+                                <li>Enhanced authentication security for 5000+ users by developing secure websites with advanced multi-factor authentication (MFA).</li>
+                                <li>Integrated AI/ML into the BlockID app to enhance biometric authentication and decentralized identity for 20+ enterprise clients.</li>
+                                <li>Engineered a blockchain solution for decentralized identity, increasing user verification speed by 40%.</li>
                             </ul>
                             </div>
-                            <div class="tech-stack">
-                                <span class="tech-tag">Cybersecurity</span>
-                                <span class="tech-tag">AI/ML</span>
-                                <span class="tech-tag">Blockchain</span>
-                                <span class="tech-tag">MFA</span>
-                            </div>
                         </div>
                     </div>
-                    
-                    <!-- Bahwan CyberTek Inc. Entry -->
-                    <div class="content-entry">
-                        <div class="entry-header">
-                            <div class="entry-header-main">
-                                <div class="entry-title">Software Developer Intern</div>
-                                <div class="entry-subtitle">Bahwan CyberTek Inc.</div>
-                            </div>
-                            <div class="entry-date">June 2024 – Aug 2024</div>
-                        </div>
-                        <div class="entry-details">
-                            <div class="entry-description">
-                                <ul>
-                                    <li>Improved API response times by 25% by designing and developing RESTful APIs for a web portal serving over 1500 projects.</li>
-                                    <li>Enhanced platform scalability for large datasets by developing full-stack components in Java and optimizing PostgreSQL operations.</li>
-                                    <li>Drove a 20% reduction in feature deployment time by delivering secure solutions as a key contributor in an agile team.</li>
-                                </ul>
-                            </div>
-                            <div class="tech-stack">
-                                <span class="tech-tag">Java</span>
-                                <span class="tech-tag">Spring Boot</span>
-                                <span class="tech-tag">PostgreSQL</span>
-                                <span class="tech-tag">REST APIs</span>
-                                <span class="tech-tag">Agile</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Eufinity Entry -->
-                    <div class="content-entry">
-                        <div class="entry-header">
-                            <div class="entry-header-main">
-                                <div class="entry-title">Software App Developer</div>
-                                <div class="entry-subtitle">Eufinity</div>
-                            </div>
-                            <div class="entry-date">May 2023 – Sept 2023</div>
-                        </div>
-                        <div class="entry-details">
-                            <div class="entry-description">
-                                <ul>
-                                    <li>Architected and developed a secure, full-stack web application using React.js and a Node.js backend, implementing JWT-based authentication.</li>
-                                    <li>Built a Python-based microservice using Flask and Scikit-learn to serve a sentiment analysis model, providing personalized insights to users.</li>
-                                </ul>
-                            </div>
-                            <div class="tech-stack">
-                                <span class="tech-tag">React.js</span>
-                                <span class="tech-tag">Node.js</span>
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">Flask</span>
-                                <span class="tech-tag">JWT</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Add other work experiences here -->
-
                 </div>
             </div>
 
-
-            <!-- Projects Section -->
             <div class="accordion-item">
                 <div class="accordion-header">
                     <h2>Projects</h2>
                     <div class="accordion-icon">+</div>
                 </div>
                 <div class="accordion-content">
-
-                    <!-- Stock Prediction Tool Entry -->
                     <div class="content-entry">
                         <div class="entry-header">
                             <div class="entry-header-main">
@@ -386,23 +366,10 @@
                             <div class="entry-date">Jan 2024</div>
                         </div>
                         <div class="entry-details">
-                            <div class="entry-description">
-                                <ul>
-                                    <li>Built a Scikit-learn model to predict stock prices, enhancing forecast accuracy with linear regression and decision trees.</li>
-                                    <li>Enabled real-time analysis by developing interactive visualizations in Plotly to compare predicted vs. actual stock prices.</li>
-                                </ul>
                             </div>
-                            <div class="tech-stack">
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">Pandas</span>
-                                <span class="tech-tag">Scikit-learn</span>
-                                <span class="tech-tag">Plotly</span>
-                            </div>
-                        </div>
                     </div>
 
-                    <!-- 3D Car Model Optimization Tool Entry -->
-                    <div class="content-entry">
+                    <div class="content-entry" id="car-project">
                         <div class="entry-header">
                             <div class="entry-header-main">
                                 <div class="entry-title">3D Car Model Optimization Tool</div>
@@ -413,21 +380,21 @@
                         <div class="entry-details">
                             <div class="entry-description">
                                 <ul>
-                                    <li>Built an interactive 3D platform with WebGL and Three.js for real-time optimization of car parts for performance and aesthetics.</li>
+                                    <li>Built an interactive 3D platform with WebGL for real-time optimization of car parts for performance and aesthetics.</li>
                                     <li>Implemented a real-time optimization engine, allowing users to instantly visualize and simulate car configuration changes.</li>
                                 </ul>
                             </div>
                             <div class="tech-stack">
                                 <span class="tech-tag">JavaScript</span>
                                 <span class="tech-tag">React</span>
-                                <span class="tech-tag">WebGL</span>
+                                <span class="tech-tag">Python</span>
+                                <span class="tech-tag">Flask</span>
                                 <span class="tech-tag">Three.js</span>
-                                <span class="tech-tag">UI/UX</span>
+                                <span class="tech-tag">Machine Learning</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Autonomous Floorcare Robot Entry -->
                     <div class="content-entry">
                         <div class="entry-header">
                             <div class="entry-header-main">
@@ -437,51 +404,112 @@
                             <div class="entry-date">May 2024</div>
                         </div>
                         <div class="entry-details">
-                            <div class="entry-description">
-                                <ul>
-                                    <li>Designed and programmed C++ firmware for an autonomous robot, integrating ultrasonic and IR sensors for robust, real-time obstacle avoidance.</li>
-                                    <li>Implemented actuator control logic for differential drive locomotion and a relay-switched fan for a dual-function navigation and vacuuming system.</li>
-                                </ul>
                             </div>
-                            <div class="tech-stack">
-                                <span class="tech-tag">C++</span>
-                                <span class="tech-tag">Arduino</span>
-                                <span class="tech-tag">Robotics</span>
-                                <span class="tech-tag">Sensor Fusion</span>
-                            </div>
-                        </div>
                     </div>
-                    <!-- Add other projects here -->
-
                 </div>
             </div>
-
-
         </main>
+    </div>
+
+    <div id="projectModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <div id="modalBody">
+                </div>
+        </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // --- Main Accordion Logic (Work Experience, Projects) ---
-            const mainAccordionItems = document.querySelectorAll('.accordion-item');
-    
-            mainAccordionItems.forEach(item => {
-                const header = item.querySelector('.accordion-header');
+            // --- Main Accordion Logic ---
+            document.querySelectorAll('.accordion-header').forEach(header => {
                 header.addEventListener('click', () => {
-                    item.classList.toggle('active');
+                    header.parentElement.classList.toggle('active');
                 });
             });
     
-            // --- Nested Accordion Logic (Individual Job Entries) ---
-            const nestedAccordionItems = document.querySelectorAll('.content-entry');
-    
-            nestedAccordionItems.forEach(item => {
-                const header = item.querySelector('.entry-header');
-                // Make sure the header exists to avoid errors
-                if (header) {
-                    header.addEventListener('click', () => {
-                        item.classList.toggle('active');
+            // --- Nested Accordion Logic ---
+            document.querySelectorAll('.content-entry .entry-header').forEach(header => {
+                // Ensure clicks on the car project don't also trigger the nested accordion
+                if (header.parentElement.id !== 'car-project') {
+                    header.addEventListener('click', (event) => {
+                        event.stopPropagation();
+                        header.parentElement.classList.toggle('active');
                     });
+                }
+            });
+    
+            // --- Modal Logic & Content ---
+            const modal = document.getElementById('projectModal');
+            const modalBody = document.getElementById('modalBody');
+            const closeModalBtn = document.querySelector('.modal-close');
+            
+            const projectDocs = {
+                'car-optimization-tool': {
+                    title: 'Gear Vision: A 3D Car Optimization Simulator',
+                    // UPDATED: Live URLs
+                    liveLink: 'https://bharaths27.github.io/Gear_Vision_Frontend/',
+                    githubLink: 'https://github.com/bharaths27/Gear_Vision_Frontend',
+                    content: `
+                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">A full-stack web application that allows users to select real-world vehicles, view them as interactive 3D models, and simulate the performance impact of various modifications using a machine learning-powered engine.</p>
+                        
+                        <div style="margin-bottom: 1.5rem; display: flex; gap: 1rem;">
+                            <a href="https://bharaths27.github.io/Gear_Vision_Frontend/" target="_blank" class="modal-button">Live Demo</a>
+                            <a href="https://github.com/bharaths27/Gear_Vision_Frontend" target="_blank" class="modal-button">Source Code</a>
+                        </div>
+
+                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Core Features</h3>
+                        <ul style="list-style-position: inside; margin-bottom: 1.5rem; padding-left: 0.5rem;">
+                            <li><strong>Dynamic Vehicle Data:</strong> Integrates with an external API via a secure Node.js backend proxy to fetch real-time specifications for selected vehicles.</li>
+                            <li><strong>Interactive 3D Viewer:</strong> Utilizes React Three Fiber (Three.js) to render and manipulate detailed 3D car models in the browser.</li>
+                            <li><strong>ML-Powered Simulation:</strong> Implements a Python-based microservice with a Scikit-learn model to instantly predict performance changes (0-60 time, horsepower) based on user-selected upgrades.</li>
+                        </ul>
+
+                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Technical Architecture</h3>
+                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">The project is built on a microservice architecture. The React frontend acts as the user interface, which communicates with two independent backend services: a Node.js server that securely handles external API requests, and a Python/Flask server that serves the machine learning model.</p>
+                        
+                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Machine Learning Implementation</h3>
+                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">The key challenge was providing instant, realistic performance feedback. A full physics simulation would be too slow for a web app. The solution was to train a lightweight Linear Regression model on sample performance data. This predictive engine takes a car's base stats and modification values as input and returns an accurate approximation of performance changes with near-zero latency, served via a scalable Flask REST API.</p>
+
+                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Skills Demonstrated</h3>
+                        <div class="tech-stack" style="padding-bottom: 1rem;">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Flask</span>
+                            <span class="tech-tag">Scikit-learn</span>
+                            <span class="tech-tag">Three.js</span>
+                            <span class="tech-tag">WebGL</span>
+                            <span class="tech-tag">REST APIs</span>
+                            <span class="tech-tag">Machine Learning</span>
+                            <span class="tech-tag">Secure Credential Management</span>
+                            <span class="tech-tag">Full-Stack Development</span>
+                        </div>
+                    `
+                }
+            };
+
+            // Find the car project entry and make it clickable
+            const carProjectEntry = document.getElementById('car-project');
+            if (carProjectEntry) {
+                carProjectEntry.style.cursor = 'pointer';
+                carProjectEntry.addEventListener('click', () => {
+                    const doc = projectDocs['car-optimization-tool'];
+                    modalBody.innerHTML = `<h2 style="margin-bottom: 0.5rem;">${doc.title}</h2>${doc.content}`;
+                    modal.style.display = 'flex';
+                    setTimeout(() => modal.classList.add('visible'), 10);
+                });
+            }
+
+            // Close modal logic
+            closeModalBtn.addEventListener('click', () => {
+                modal.classList.remove('visible');
+                setTimeout(() => modal.style.display = 'none', 300);
+            });
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    modal.classList.remove('visible');
+                    setTimeout(() => modal.style.display = 'none', 300);
                 }
             });
         });
