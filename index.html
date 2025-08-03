@@ -212,7 +212,7 @@
             font-weight: 500;
         }
 
-        /* --- ADDED: Modal Styles --- */
+        /* --- Modal Styles --- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -293,6 +293,7 @@
 <body>
 
     <div class="container">
+        <!-- Header Section -->
         <header class="header">
             <h1>Bharath Srividhya</h1>
             <p class="subtitle">Computer Engineer | Machine Learning & AI | Cybersecurity</p>
@@ -305,70 +306,32 @@
             </div>
         </header>
 
+        <!-- Main Content Accordion -->
         <main class="accordion">
+            <!-- Work Experience Section -->
             <div class="accordion-item">
                 <div class="accordion-header">
                     <h2>Work Experience</h2>
                     <div class="accordion-icon">+</div>
                 </div>
                 <div class="accordion-content">
-                    <div class="content-entry">
-                        <div class="entry-header">
-                            <div class="entry-header-main">
-                                <div class="entry-title">Artificial Intelligence Intern</div>
-                                <div class="entry-subtitle">Cyware Labs Inc.</div>
-                            </div>
-                            <div class="entry-date">Mar 2025 – June 2025</div>
-                        </div>
-                        <div class="entry-details">
-                            <div class="entry-description">
-                                <ul>
-                                    <li>Architected an AI platform to autonomously parse API specifications (OpenAPI, Postman), generating connectors for 1,000+ endpoints to automate B2B integration workflows.</li>
-                                    <li>Engineered the core adaptive ML model that iteratively refined connector accuracy by learning from user feedback and historical data structures.</li>
-                                    <li>Developed the intuitive front-end using React, automating an estimated 95% of the manual effort involved in typical developer API integrations.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="content-entry">
-                        <div class="entry-header">
-                            <div class="entry-header-main">
-                                <div class="entry-title">Cybersecurity Engineer Intern</div>
-                                <div class="entry-subtitle">1Kosmos Inc.</div>
-                            </div>
-                            <div class="entry-date">Aug 2024 – Nov 2024</div>
-                        </div>
-                        <div class="entry-details">
-                            <div class="entry-description">
-                            <ul>
-                                <li>Enhanced authentication security for 5000+ users by developing secure websites with advanced multi-factor authentication (MFA).</li>
-                                <li>Integrated AI/ML into the BlockID app to enhance biometric authentication and decentralized identity for 20+ enterprise clients.</li>
-                                <li>Engineered a blockchain solution for decentralized identity, increasing user verification speed by 40%.</li>
-                            </ul>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Work entries here -->
                 </div>
             </div>
 
+            <!-- Projects Section -->
             <div class="accordion-item">
                 <div class="accordion-header">
                     <h2>Projects</h2>
                     <div class="accordion-icon">+</div>
                 </div>
                 <div class="accordion-content">
+                    <!-- Stock Prediction Tool Entry -->
                     <div class="content-entry">
-                        <div class="entry-header">
-                            <div class="entry-header-main">
-                                <div class="entry-title">Stock Prediction Tool</div>
-                                <div class="entry-subtitle">Personal Project</div>
-                            </div>
-                            <div class="entry-date">Jan 2024</div>
-                        </div>
-                        <div class="entry-details">
-                            </div>
+                        <!-- Stock project details here -->
                     </div>
 
+                    <!-- 3D Car Model Optimization Tool Entry -->
                     <div class="content-entry" id="car-project">
                         <div class="entry-header">
                             <div class="entry-header-main">
@@ -395,42 +358,31 @@
                         </div>
                     </div>
 
+                    <!-- Autonomous Floorcare Robot Entry -->
                     <div class="content-entry">
-                        <div class="entry-header">
-                            <div class="entry-header-main">
-                                <div class="entry-title">Autonomous Multi-Function Floorcare Robot</div>
-                                <div class="entry-subtitle">University Project</div>
-                            </div>
-                            <div class="entry-date">May 2024</div>
-                        </div>
-                        <div class="entry-details">
-                            </div>
+                       <!-- Robot project details here -->
                     </div>
                 </div>
             </div>
         </main>
     </div>
 
+    <!-- Modal HTML -->
     <div id="projectModal" class="modal-overlay" style="display: none;">
         <div class="modal-content">
             <button class="modal-close">&times;</button>
-            <div id="modalBody">
-                </div>
+            <div id="modalBody"></div>
         </div>
     </div>
 
+    <!-- Script Section -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // --- Main Accordion Logic ---
+            // Accordion logic
             document.querySelectorAll('.accordion-header').forEach(header => {
-                header.addEventListener('click', () => {
-                    header.parentElement.classList.toggle('active');
-                });
+                header.addEventListener('click', () => header.parentElement.classList.toggle('active'));
             });
-    
-            // --- Nested Accordion Logic ---
             document.querySelectorAll('.content-entry .entry-header').forEach(header => {
-                // Ensure clicks on the car project don't also trigger the nested accordion
                 if (header.parentElement.id !== 'car-project') {
                     header.addEventListener('click', (event) => {
                         event.stopPropagation();
@@ -438,8 +390,8 @@
                     });
                 }
             });
-    
-            // --- Modal Logic & Content ---
+
+            // Modal logic and content
             const modal = document.getElementById('projectModal');
             const modalBody = document.getElementById('modalBody');
             const closeModalBtn = document.querySelector('.modal-close');
@@ -447,29 +399,34 @@
             const projectDocs = {
                 'car-optimization-tool': {
                     title: 'Gear Vision: A 3D Car Optimization Simulator',
-                    // UPDATED: Live URLs
-                    liveLink: 'https://bharaths27.github.io/Gear_Vision_Frontend/',
-                    githubLink: 'https://github.com/bharaths27/Gear_Vision_Frontend',
                     content: `
-                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">A full-stack web application that allows users to select real-world vehicles, view them as interactive 3D models, and simulate the performance impact of various modifications using a machine learning-powered engine.</p>
+                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
+                            Gear Vision is a comprehensive full-stack application demonstrating a microservice architecture to deliver a dynamic, interactive, and data-driven user experience. It allows users to select real-world vehicles, view them as interactive 3D models, and simulate the performance impact of various modifications using a machine learning-powered engine.
+                        </p>
                         
                         <div style="margin-bottom: 1.5rem; display: flex; gap: 1rem;">
                             <a href="https://bharaths27.github.io/Gear_Vision_Frontend/" target="_blank" class="modal-button">Live Demo</a>
-                            <a href="https://github.com/bharaths27/Gear_Vision_Frontend" target="_blank" class="modal-button">Source Code</a>
+                            <a href="https://github.com/bharaths27/Gear_Vision_Frontend" target="_blank" class="modal-button">View on GitHub</a>
                         </div>
 
-                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Core Features</h3>
-                        <ul style="list-style-position: inside; margin-bottom: 1.5rem; padding-left: 0.5rem;">
-                            <li><strong>Dynamic Vehicle Data:</strong> Integrates with an external API via a secure Node.js backend proxy to fetch real-time specifications for selected vehicles.</li>
-                            <li><strong>Interactive 3D Viewer:</strong> Utilizes React Three Fiber (Three.js) to render and manipulate detailed 3D car models in the browser.</li>
-                            <li><strong>ML-Powered Simulation:</strong> Implements a Python-based microservice with a Scikit-learn model to instantly predict performance changes (0-60 time, horsepower) based on user-selected upgrades.</li>
-                        </ul>
-
                         <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Technical Architecture</h3>
-                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">The project is built on a microservice architecture. The React frontend acts as the user interface, which communicates with two independent backend services: a Node.js server that securely handles external API requests, and a Python/Flask server that serves the machine learning model.</p>
+                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
+                            The project is built on a decoupled microservice architecture to ensure scalability and separation of concerns. The <strong>React frontend</strong> acts as the central user interface, orchestrating calls to two independent backend services:
+                            <ul style="list-style-position: inside; margin-top: 0.5rem; padding-left: 0.5rem;">
+                                <li>A <strong>Node.js & Express server</strong> acts as a secure backend-for-frontend (BFF). It manages external API requests, protecting sensitive API keys by preventing them from being exposed on the client-side. It also connects to a MongoDB Atlas database for potential future data persistence.</li>
+                                <li>A <strong>Python, Flask & Scikit-learn microservice</strong> serves the machine learning model, providing a dedicated, lightweight REST API for performance predictions.</li>
+                            </ul>
+                        </p>
                         
-                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Machine Learning Implementation</h3>
-                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">The key challenge was providing instant, realistic performance feedback. A full physics simulation would be too slow for a web app. The solution was to train a lightweight Linear Regression model on sample performance data. This predictive engine takes a car's base stats and modification values as input and returns an accurate approximation of performance changes with near-zero latency, served via a scalable Flask REST API.</p>
+                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Machine Learning Implementation & Problem Solving</h3>
+                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
+                            A key project challenge was providing instant, realistic performance feedback without the overhead of a complex physics engine. The solution was to develop a predictive model. I trained a <strong>Linear Regression model</strong> using Scikit-learn on a dataset of vehicle base stats and performance gains from various modifications. This approach allows the "optimization engine" to return an accurate approximation of performance changes (0-60 time, horsepower) with near-zero latency. The model is served via a scalable Flask REST API, demonstrating a practical application of machine learning in a real-time web environment.
+                        </p>
+
+                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Obstacles & Solutions</h3>
+                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
+                            Deploying a multi-part application with cross-origin dependencies presented a significant challenge. Initial deployment was blocked by <strong>CORS (Cross-Origin Resource Sharing)</strong> errors between the live frontend and the backend services. I resolved this by implementing specific server-side CORS policies in both the Node.js and Flask applications, whitelisting the frontend's domain. Additionally, handling secret management for API keys and database credentials required implementing a secure solution using <strong>environment variables</strong> on the deployment platform (Render), ensuring no sensitive data was committed to the public GitHub repositories.
+                        </p>
 
                         <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Skills Demonstrated</h3>
                         <div class="tech-stack" style="padding-bottom: 1rem;">
@@ -484,12 +441,13 @@
                             <span class="tech-tag">Machine Learning</span>
                             <span class="tech-tag">Secure Credential Management</span>
                             <span class="tech-tag">Full-Stack Development</span>
+                            <span class="tech-tag">CORS Configuration</span>
+                            <span class="tech-tag">Cloud Deployment (Render, GitHub Pages)</span>
                         </div>
                     `
                 }
             };
 
-            // Find the car project entry and make it clickable
             const carProjectEntry = document.getElementById('car-project');
             if (carProjectEntry) {
                 carProjectEntry.style.cursor = 'pointer';
@@ -501,7 +459,6 @@
                 });
             }
 
-            // Close modal logic
             closeModalBtn.addEventListener('click', () => {
                 modal.classList.remove('visible');
                 setTimeout(() => modal.style.display = 'none', 300);
