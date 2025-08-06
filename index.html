@@ -451,13 +451,13 @@
         document.addEventListener('DOMContentLoaded', function () {
             // Main accordion logic
             document.querySelectorAll('.accordion-header').forEach(header => {
-                header.parentElement.classList.toggle('active');
+                header.addEventListener('click', () => header.parentElement.classList.toggle('active'));
             });
             // Nested accordion logic for simple entries
             document.querySelectorAll('.content-entry .entry-header').forEach(header => {
                 const parentEntry = header.parentElement;
-                // Corrected logic: only add expand/collapse to entries that ARE NOT modal triggers
-                if (!parentEntry.id.includes('-project')) {
+                // Corrected logic: only add expand/collapse to entries that do not have a special ID
+                if (!parentEntry.id) {
                     header.addEventListener('click', (event) => {
                         event.stopPropagation();
                         parentEntry.classList.toggle('active');
