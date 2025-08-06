@@ -397,21 +397,13 @@
                 </div>
                 <div class="accordion-content">
 
-                    <div class="content-entry">
+                    <div class="content-entry" id="stock-project">
                         <div class="entry-header">
                             <div class="entry-header-main">
                                 <div class="entry-title">Stock Prediction Tool</div>
                                 <div class="entry-subtitle">Personal Project</div>
                             </div>
                             <div class="entry-date">Jan 2024</div>
-                        </div>
-                        <div class="entry-details">
-                            <div class="entry-description">
-                                <ul>
-                                    <li>Built a Scikit-learn model to predict stock prices, enhancing forecast accuracy with linear regression and decision trees.</li>
-                                    <li>Enabled real-time analysis by developing interactive visualizations in Plotly to compare predicted vs. actual stock prices.</li>
-                                </ul>
-                            </div>
                         </div>
                     </div>
 
@@ -483,6 +475,48 @@
             const closeModalBtn = document.querySelector('.modal-close');
             
             const projectDocs = {
+                'stock-prediction-tool': {
+                    title: 'Stock Prediction & Analysis Tool',
+                    content: `
+                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
+                            The Stock Prediction & Analysis Tool is a full-stack application designed to provide a seamless and interactive platform for market data analysis. It allows users to query historical performance for 50 popular S&P 500 companies, view key financial metrics, and generate future price forecasts using one of two distinct machine learning models.
+                        </p>
+
+                        <div style="margin-bottom: 1.5rem; display: flex; gap: 1rem;">
+                            <a href="https://stock-prediction-app-delta.vercel.app/" target="_blank" class="modal-button">Live Demo</a>
+                            <a href="https://github.com/bharaths27/Stock-Prediction-App" target="_blank" class="modal-button">View on GitHub</a>
+                        </div>
+
+                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Technical Architecture</h3>
+                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
+                            The project is built on a decoupled architecture to ensure scalability and high performance. The system is 100% self-contained and makes no live external API calls during user interaction.
+                            <ul style="list-style-position: inside; margin-top: 0.5rem; padding-left: 0.5rem;">
+                                <li>A <strong>React & Next.js frontend</strong>, styled with Tailwind CSS and Shadcn/UI, provides a dynamic user interface and interactive data visualizations with Recharts.</li>
+                                <li>A <strong>Python & FastAPI backend</strong> serves as a lightweight API. It reads from a pre-cached, local file-based data store to deliver historical and metric data with near-zero latency. It also handles the real-time loading and inference of the Scikit-learn prediction models.</li>
+                            </ul>
+                        </p>
+
+                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Machine Learning & Problem Solving</h3>
+                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
+                            A key project challenge was overcoming the unreliability and strict rate-limiting of free public financial APIs. An initial on-demand fetching architecture proved unstable. The solution was to re-architect the system to use an offline approach. I developed Python scripts to pre-fetch and process market data, which were then used to train two distinct models: a <strong>Linear Regression</strong> model and a more complex <strong>Random Forest Regressor</strong>. The final application is completely self-contained, using the pre-generated data and model files, which guarantees a fast, stable, and reliable user experience. This process demonstrates a practical solution to common third-party API challenges and highlights skills in system architecture and iterative development.
+                        </p>
+
+                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Skills Demonstrated</h3>
+                        <div class="tech-stack" style="padding-bottom: 1rem;">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Next.js</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">FastAPI</span>
+                            <span class="tech-tag">Scikit-learn</span>
+                            <span class="tech-tag">REST APIs</span>
+                            <span class="tech-tag">System Architecture</span>
+                            <span class="tech-tag">Data Caching</span>
+                            <span class="tech-tag">Full-Stack Development</span>
+                            <span class="tech-tag">Cloud Deployment (Vercel, Render)</span>
+                        </div>
+                    `
+                },
+
                 'car-optimization-tool': {
                     title: 'Gear Vision: A 3D Car Optimization Simulator',
                     content: `
@@ -533,6 +567,17 @@
                     `
                 }
             };
+            
+            const stockProjectEntry = document.getElementById('stock-project');
+            if (stockProjectEntry) {
+                stockProjectEntry.style.cursor = 'pointer';
+                stockProjectEntry.addEventListener('click', () => {
+                    const doc = projectDocs['stock-prediction-tool'];
+                    modalBody.innerHTML = `<h2 style="margin-bottom: 0.5rem;">${doc.title}</h2>${doc.content}`;
+                    modal.style.display = 'flex';
+                    setTimeout(() => modal.classList.add('visible'), 10);
+                });
+            }
 
             const carProjectEntry = document.getElementById('car-project');
             if (carProjectEntry) {
