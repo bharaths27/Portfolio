@@ -480,7 +480,7 @@
                         <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
                             The Stock Prediction & Analysis Tool is a full-stack application designed to provide a seamless and interactive platform for market data analysis. It allows users to query historical performance for 50 popular S&P 500 companies, view key financial metrics, and generate future price forecasts using one of two distinct machine learning models.
                         </p>
-
+                        
                         <div style="margin-bottom: 1.5rem; display: flex; gap: 1rem;">
                             <a href="https://stock-prediction-app-delta.vercel.app/" target="_blank" class="modal-button">Live Demo</a>
                             <a href="https://github.com/bharaths27/Stock-Prediction-App" target="_blank" class="modal-button">View on GitHub</a>
@@ -494,12 +494,17 @@
                                 <li>A <strong>Python & FastAPI backend</strong> serves as a lightweight API. It reads from a pre-cached, local file-based data store to deliver historical and metric data with near-zero latency. It also handles the real-time loading and inference of the Scikit-learn prediction models.</li>
                             </ul>
                         </p>
-
-                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Machine Learning & Problem Solving</h3>
+                        
+                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Machine Learning Implementation</h3>
                         <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
-                            A key project challenge was overcoming the unreliability and strict rate-limiting of free public financial APIs. An initial on-demand fetching architecture proved unstable. The solution was to re-architect the system to use an offline approach. I developed Python scripts to pre-fetch and process market data, which were then used to train two distinct models: a <strong>Linear Regression</strong> model and a more complex <strong>Random Forest Regressor</strong>. The final application is completely self-contained, using the pre-generated data and model files, which guarantees a fast, stable, and reliable user experience. This process demonstrates a practical solution to common third-party API challenges and highlights skills in system architecture and iterative development.
+                            The predictive engine was developed by training models on a rich dataset created through advanced <strong>feature engineering</strong>. Beyond simple price history, I calculated technical indicators such as <strong>Simple Moving Averages (SMA)</strong> and the <strong>Relative Strength Index (RSI)</strong> to provide the models with a deeper understanding of market trend and momentum. The application allows users to select between two distinct models: a baseline <strong>Linear Regression</strong> model and a more complex <strong>Random Forest Regressor</strong>, which is capable of capturing non-linear patterns in the data. Predictions are generated using an iterative forecasting technique, where the model's output for day one is used as an input to predict day two, and so on.
                         </p>
 
+                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Obstacles & Solutions</h3>
+                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
+                            A key project challenge was overcoming the unreliability and strict rate-limiting of free public financial APIs like `yfinance`. An initial on-demand fetching architecture proved unstable and frequently crashed. The solution was to re-architect the system to use an offline approach. I developed Python scripts to pre-fetch and process market data, which were then used to train the models. The final application is completely self-contained, using the pre-generated data and model files, which guarantees a fast and stable user experience. Additionally, I resolved numerous Python dependency conflicts (e.g., `numpy` versioning, `pandas-ta` incompatibility) by pinning specific package versions in `requirements.txt` and re-implementing feature engineering logic with pure Pandas to remove a problematic library.
+                        </p>
+                        
                         <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Skills Demonstrated</h3>
                         <div class="tech-stack" style="padding-bottom: 1rem;">
                             <span class="tech-tag">React</span>
@@ -507,10 +512,12 @@
                             <span class="tech-tag">Python</span>
                             <span class="tech-tag">FastAPI</span>
                             <span class="tech-tag">Scikit-learn</span>
+                            <span class="tech-tag">Pandas</span>
                             <span class="tech-tag">REST APIs</span>
                             <span class="tech-tag">System Architecture</span>
-                            <span class="tech-tag">Data Caching</span>
+                            <span class="tech-tag">Feature Engineering</span>
                             <span class="tech-tag">Full-Stack Development</span>
+                            <span class="tech-tag">Dependency Management</span>
                             <span class="tech-tag">Cloud Deployment (Vercel, Render)</span>
                         </div>
                     `
