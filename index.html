@@ -418,6 +418,14 @@
                         </div>
                     </div>
 
+                    <div class="content-entry" id="contract-auditor-project">
+                        <div class="entry-header">
+                            <div class="entry-header-main">
+                                <div class="entry-title">AI Smart Contract Auditor</div>
+                                <div class="entry-subtitle">Personal Project</div>
+                            </div>
+                            <div class="entry-date">Oct 2025</div> </div>
+                    </div>
                     <div class="content-entry">
                         <div class="entry-header">
                             <div class="entry-header-main">
@@ -568,6 +576,58 @@
                         </div>
                     `
                 }
+                // === NEW JAVASCRIPT OBJECT START ===
+                ,
+                'ai-contract-auditor': {
+                    title: 'AI Smart Contract Auditor',
+                    content: `
+                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
+                            A full-stack application that leverages a local, private Large Language Model (Code Llama) to perform security audits on Solidity smart contracts. The tool provides a "How It Works" section and example contracts (Integer Overflow, Reentrancy) for users to test the AI's analysis capabilities directly in their browser.
+                        </p>
+                        
+                        <div style="margin-bottom: 1.5rem; display: flex; gap: 1rem;">
+                            <a href="https://github.com/bharaths27/Smart-Contract-Auditor" target="_blank" class="modal-button">View on GitHub</a>
+                        </div>
+                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem; font-style: italic;">
+                            Note: A live demo is not publicly hosted as the project's core AI functionality relies on running the Ollama and Code Llama models locally on the user's machine to ensure 100% privacy and control.
+                        </p>
+
+                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Technical Architecture</h3>
+                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
+                            The application is built with a decoupled architecture, ensuring a clean separation of concerns between the user interface and the AI logic.
+                            <ul style="list-style-position: inside; margin-top: 0.5rem; padding-left: 0.5rem;">
+                                <li>A <strong>React & Next.js frontend</strong> provides a responsive, modern UI for users to paste code and view the formatted audit results.</li>
+                                <li>A <strong>Python & FastAPI backend</strong> serves as a simple API. It receives the user's code, forwards it to the AI model, and returns the response. It also handles CORS policies to allow communication with the frontend.</li>
+                                <li><strong>Ollama (with Code Llama)</strong> runs as a separate local server, exposing an API that the FastAPI backend calls. This design keeps all sensitive code on the user's machine.</li>
+                            </ul>
+                        </p>
+                        
+                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">AI Implementation: Prompt Engineering</h3>
+                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
+                            This project does not involve fine-tuning; its intelligence comes from advanced <strong>prompt engineering</strong> and <strong>in-context learning</strong>. The backend uses a highly structured, multi-part prompt (the \`PROMPT_TEMPLATE\`) that instructs the \`codellama\` model to act as a "world-class, meticulous smart contract security auditor." This prompt provides core principles (like "Checks-Effects-Interactions"), and formatting examples, guiding the general-purpose model to perform a specialized, high-quality security analysis.
+                        </p>
+
+                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Obstacles & Solutions</h3>
+                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
+                            The main challenge was orchestrating three separate services (React, FastAPI, Ollama) and ensuring they could communicate. This was solved by implementing <strong>CORS (Cross-Origin Resource Sharing)</strong> middleware in the FastAPI backend, which explicitly "whitelists" the frontend's \`http://localhost:3000\` origin, allowing it to make requests. Another challenge was getting consistent, high-quality output from the AI. This was solved by iteratively refining the \`PROMPT_TEMPLATE\` to be highly specific, which dramatically improved the relevance and accuracy of the audit.
+                        </p>
+
+                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Skills Demonstrated</h3>
+                        <div class="tech-stack" style="padding-bottom: 1rem;">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Next.js</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">FastAPI</span>
+                            <span class="tech-tag">Ollama</span>
+                            <span class="tech-tag">Prompt Engineering</span>
+                            <span class="tech-tag">AI Integration</span>
+                            <span class="tech-tag">Full-Stack Development</span>
+                            <span class="tech-tag">REST APIs</span>
+                            <span class="tech-tag">CORS Configuration</span>
+                        </div>
+                    `
+                }
+                // === NEW JAVASCRIPT OBJECT END ===
             };
 
             function openModal(doc) {
@@ -593,6 +653,14 @@
                 carProjectEntry.style.cursor = 'pointer';
                 carProjectEntry.addEventListener('click', () => openModal(projectDocs['car-optimization-tool']));
             }
+
+            // === NEW EVENT LISTENER START ===
+            const auditorProjectEntry = document.getElementById('contract-auditor-project');
+            if (auditorProjectEntry) {
+                auditorProjectEntry.style.cursor = 'pointer';
+                auditorProjectEntry.addEventListener('click', () => openModal(projectDocs['ai-contract-auditor']));
+            }
+            // === NEW EVENT LISTENER END ===
 
             closeModalBtn.addEventListener('click', closeModal);
             modal.addEventListener('click', (event) => {
