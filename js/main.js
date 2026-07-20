@@ -15,7 +15,7 @@ const EXPERIENCE = [
     date: "May 2026 – Jul 2026",
     location: "New York, NY",
     scope: "industry",
-    brand: "--c-cognizant",
+    brand: "--cat-professional",
     mono: "CG",
     logo: "cognizant.com",
     tagline: "// Agentic AI · Data Engineering · Databricks",
@@ -39,7 +39,7 @@ const EXPERIENCE = [
     date: "Jan 2026 – May 2026",
     location: "Boston, MA",
     scope: "research",
-    brand: "--c-bu",
+    brand: "--cat-research",
     mono: "H2X",
     logo: "bu.edu",
     tagline: "// Vision-Language Models · Accessible Navigation",
@@ -58,7 +58,7 @@ const EXPERIENCE = [
     date: "Jan 2026 – May 2026",
     location: "Boston, MA",
     scope: "research",
-    brand: "--c-bu",
+    brand: "--cat-research",
     mono: "AL",
     logo: "bu.edu",
     tagline: "// Scientific Computing · EdTech Visualization",
@@ -77,7 +77,7 @@ const EXPERIENCE = [
     date: "Jan 2026 – Apr 2026",
     location: "Boston, MA",
     scope: "research",
-    brand: "--c-bu",
+    brand: "--cat-research",
     mono: "AI",
     logo: "bu.edu",
     tagline: "// Alignment · Interpretability · AI Control",
@@ -96,7 +96,7 @@ const EXPERIENCE = [
     date: "Jan 2025 – May 2026",
     location: "Boston, MA",
     scope: "leadership",
-    brand: "--c-bu",
+    brand: "--cat-leadership",
     mono: "CyS",
     logo: "bu.edu",
     tagline: "// Technical Leadership · Curriculum · Outreach",
@@ -115,7 +115,7 @@ const EXPERIENCE = [
     date: "Mar 2025 – Sep 2025",
     location: "Jersey City, NJ",
     scope: "industry",
-    brand: "--c-cyware",
+    brand: "--cat-professional",
     mono: "CY",
     logo: "cyware.com",
     tagline: "// ML for Cybersecurity · Threat Detection",
@@ -137,7 +137,7 @@ const EXPERIENCE = [
     date: "Aug 2024 – Nov 2024",
     location: "Iselin, NJ",
     scope: "industry",
-    brand: "--c-1kosmos",
+    brand: "--cat-professional",
     mono: "1K",
     logo: "1kosmos.com",
     tagline: "// Zero-Trust · Decentralized Identity · MFA",
@@ -159,7 +159,7 @@ const EXPERIENCE = [
     date: "May 2024 – Aug 2024",
     location: "Boston, MA",
     scope: "industry",
-    brand: "--c-bahwan",
+    brand: "--cat-professional",
     mono: "BCT",
     logo: "bahwancybertek.com",
     tagline: "// Enterprise Full-Stack · Java / Spring Boot",
@@ -182,7 +182,7 @@ const EXPERIENCE = [
     date: "May 2023 – Sep 2023",
     location: "Iselin, NJ",
     scope: "industry",
-    brand: "--c-eufinity",
+    brand: "--cat-professional",
     mono: "EU",
     logo: "eufinity.com",
     tagline: "// Secure Full-Stack · ML Microservices",
@@ -447,7 +447,7 @@ function renderProjects(filter = "all") {
         <span class="glyph">${p.glyph}</span>
         ${p.featured ? `<span class="project-ribbon">★ LATEST</span>` : ""}
         <img src="${p.image}" alt="${p.title} preview" loading="lazy"
-             onerror="this.remove(); this.parentElement.classList.add('img-fallback')">
+             onerror="this.parentElement.classList.add('img-fallback'); this.remove()">
         <span class="project-badge">${p.date}</span>
       </div>
       <div class="project-body">
@@ -548,8 +548,87 @@ function initAnimatedMetrics() {
   document.querySelectorAll("[data-count], .bar-fill").forEach((el) => io.observe(el));
 }
 
+/* ---------- Animated starfield (space vibe) ---------- */
+function initStarfield() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const canvas = document.createElement("canvas");
+  canvas.id = "starfield";
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext("2d");
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  const PALETTE = ["255,255,255", "103,232,249", "192,132,252", "147,197,253"]; // white, cyan, violet, blue
+  let w, h, stars = [], shooting = null, nextShoot = 0, t = 0;
+
+  function build() {
+    w = canvas.width = Math.floor(innerWidth * DPR);
+    h = canvas.height = Math.floor(innerHeight * DPR);
+    canvas.style.width = innerWidth + "px";
+    canvas.style.height = innerHeight + "px";
+    const count = Math.min(340, Math.round((innerWidth * innerHeight) / 5200));
+    stars = Array.from({ length: count }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: (Math.random() * 1.3 + 0.3) * DPR,
+      a: Math.random() * 0.6 + 0.25,
+      tw: Math.random() * 0.018 + 0.004,
+      ph: Math.random() * Math.PI * 2,
+      c: PALETTE[(Math.random() * PALETTE.length) | 0],
+      dy: (Math.random() * 0.06 + 0.02) * DPR, // slow downward drift
+    }));
+  }
+
+  function frame() {
+    t += 1;
+    ctx.clearRect(0, 0, w, h);
+    for (const s of stars) {
+      s.y += s.dy;
+      if (s.y > h + 2) { s.y = -2; s.x = Math.random() * w; }
+      const alpha = s.a * (0.6 + 0.4 * Math.sin(s.ph + t * s.tw));
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${s.c},${alpha.toFixed(3)})`;
+      ctx.fill();
+    }
+    // occasional shooting star
+    if (!shooting && t > nextShoot) {
+      shooting = {
+        x: Math.random() * w * 0.7,
+        y: Math.random() * h * 0.4,
+        len: (Math.random() * 120 + 90) * DPR,
+        vx: (Math.random() * 5 + 6) * DPR,
+        vy: (Math.random() * 2 + 2) * DPR,
+        life: 0,
+        max: 60,
+      };
+    }
+    if (shooting) {
+      const sh = shooting;
+      sh.x += sh.vx; sh.y += sh.vy; sh.life += 1;
+      const p = 1 - sh.life / sh.max;
+      const grad = ctx.createLinearGradient(sh.x, sh.y, sh.x - sh.len, sh.y - sh.len * (sh.vy / sh.vx));
+      grad.addColorStop(0, `rgba(255,255,255,${(0.9 * p).toFixed(3)})`);
+      grad.addColorStop(1, "rgba(255,255,255,0)");
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 2 * DPR;
+      ctx.beginPath();
+      ctx.moveTo(sh.x, sh.y);
+      ctx.lineTo(sh.x - sh.len, sh.y - sh.len * (sh.vy / sh.vx));
+      ctx.stroke();
+      if (sh.life >= sh.max || sh.x > w + 50) { shooting = null; nextShoot = t + 220 + Math.random() * 380; }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  build();
+  let rt;
+  window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(build, 200); }, { passive: true });
+  nextShoot = 120;
+  requestAnimationFrame(frame);
+}
+
 /* ---------- Init ---------- */
 document.addEventListener("DOMContentLoaded", () => {
+  initStarfield();
   renderExperience();
   renderProjects();
   initAnimatedMetrics();
@@ -571,8 +650,9 @@ document.addEventListener("DOMContentLoaded", () => {
     a.addEventListener("click", () => { toggle.classList.remove("open"); links.classList.remove("open"); })
   );
 
-  // Active section highlight
-  const navAnchors = [...links.querySelectorAll("a")];
+  // Active section highlight (only hash links point to on-page sections;
+  // the Résumé link is a PDF path and must be excluded from querySelector)
+  const navAnchors = [...links.querySelectorAll("a")].filter((a) => (a.getAttribute("href") || "").startsWith("#"));
   const sections = navAnchors.map((a) => document.querySelector(a.getAttribute("href"))).filter(Boolean);
   const spy = new IntersectionObserver(
     (entries) => entries.forEach((e) => {
