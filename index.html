@@ -1,710 +1,320 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bharath Srividhya | Portfolio</title>
-    <style>
-        /* --- Global Styles & Fonts --- */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-    
-        :root {
-            --bg-color: #121212;
-            --primary-color: #1a1a1a;
-            --secondary-color: #242424;
-            --accent-color: #007BFF;
-            --text-color: #e0e0e0;
-            --text-secondary-color: #a0a0a0;
-            --border-color: #333333;
-        }
-    
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-    
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            display: flex;
-            justify-content: center;
-            padding: 2rem;
-        }
-    
-        /* --- Main Container --- */
-        .container {
-            width: 100%;
-            max-width: 900px;
-            background-color: var(--primary-color);
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-        }
-    
-        /* --- Header / Hero Section --- */
-        .header {
-            padding: 3rem;
-            text-align: center;
-            border-bottom: 1px solid var(--border-color);
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('https://www.transparenttextures.com/patterns/cubes.png');
-        }
-    
-        .header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-    
-        .header .subtitle {
-            font-size: 1.2rem;
-            color: var(--accent-color);
-            font-weight: 500;
-            margin-bottom: 1.5rem;
-        }
-    
-        .contact-info {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-        }
-    
-        .contact-info a {
-            color: var(--text-secondary-color);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-    
-        .contact-info a:hover {
-            color: var(--accent-color);
-        }
-    
-        /* --- Main Accordion Section --- */
-        .main-content {
-            padding: 2rem 3rem;
-        }
-    
-        .accordion-item {
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 1rem;
-        }
-        .accordion-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-    
-        .accordion-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-            cursor: pointer;
-            user-select: none;
-        }
-    
-        .accordion-header h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-    
-        .accordion-icon {
-            font-size: 1.5rem;
-            transition: transform 0.3s ease;
-        }
-    
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
-        }
-    
-        .accordion-item.active .accordion-content {
-            max-height: 2000px;
-            padding: 1rem 0;
-        }
-    
-        .accordion-item.active .accordion-icon {
-            transform: rotate(45deg);
-        }
-    
-        /* --- NESTED ACCORDION: Content Entry --- */
-        .content-entry {
-            background-color: var(--secondary-color);
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-        }
-        .content-entry:last-child {
-            margin-bottom: 0;
-        }
-    
-        .entry-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            padding: 1.5rem;
-            cursor: pointer;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-        
-        .entry-header-main {
-            flex-grow: 1;
-        }
-    
-        .entry-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-        .entry-subtitle {
-            font-size: 1rem;
-            color: var(--text-secondary-color);
-        }
-        .entry-date {
-            font-size: 0.9rem;
-            color: var(--text-secondary-color);
-            white-space: nowrap;
-            padding-top: 0.2rem;
-        }
-        
-        .entry-details {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
-            padding: 0 1.5rem;
-        }
-    
-        .content-entry.active .entry-details {
-            max-height: 1000px;
-            padding: 0 1.5rem 1.5rem 1.5rem;
-        }
-    
-        .entry-description ul {
-            list-style-position: inside;
-            padding-left: 0.5rem;
-            border-top: 1px solid var(--border-color);
-            padding-top: 1rem;
-        }
-    
-        .entry-description li {
-            margin-bottom: 0.5rem;
-            color: var(--text-secondary-color);
-        }
-    
-        .tech-stack {
-            margin-top: 1rem;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-    
-        .tech-tag {
-            background-color: var(--border-color);
-            color: var(--text-color);
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bharath Srividhya | AI & Cybersecurity Engineer</title>
+  <meta name="description" content="Bharath Srividhya — Computer Engineer building at the intersection of Artificial Intelligence and Cybersecurity. Agentic AI, LLMs, machine learning, and zero-trust security." />
+  <meta name="author" content="Bharath Srividhya" />
 
-        /* --- Modal Styles --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            padding: 1rem;
-            visibility: hidden;
-        }
-        .modal-overlay.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-        .modal-content {
-            background: var(--primary-color);
-            padding: 2.5rem;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            width: 100%;
-            max-width: 800px;
-            max-height: 85vh;
-            overflow-y: auto;
-            position: relative;
-            transform: scale(0.95);
-            transition: transform 0.3s ease;
-        }
-        .modal-overlay.visible .modal-content {
-            transform: scale(1);
-        }
-        .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1.5rem;
-            background: none;
-            border: none;
-            color: var(--text-secondary-color);
-            font-size: 2rem;
-            cursor: pointer;
-        }
-        .modal-button {
-            display: inline-block;
-            padding: 0.5rem 1.5rem;
-            background-color: var(--secondary-color);
-            color: var(--accent-color);
-            text-decoration: none;
-            border: 1px solid var(--accent-color);
-            border-radius: 6px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        .modal-button:hover {
-            background-color: var(--accent-color);
-            color: var(--primary-color);
-        }
-        
-        /* --- Responsive Design --- */
-        @media (max-width: 768px) {
-            body {
-                padding: 1rem;
-            }
-            .header {
-                padding: 2rem;
-            }
-            .main-content {
-                padding: 1.5rem;
-            }
-            .entry-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-    </style>
+  <!-- Open Graph / social preview -->
+  <meta property="og:title" content="Bharath Srividhya | AI & Cybersecurity Engineer" />
+  <meta property="og:description" content="Building intelligent, secure systems — Agentic AI, LLMs, machine learning, and zero-trust security." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/profile.jpg" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
 
+  <!-- ===================== NAV ===================== -->
+  <nav class="nav" id="nav">
     <div class="container">
-        <header class="header">
-            <h1>Bharath Srividhya</h1>
-            <p class="subtitle">Computer Engineer | Machine Learning & AI | Cybersecurity</p>
-            <div class="contact-info">
-                <a href="mailto:bharathkrishnansrividhya@gmail.com">bharathkrishnansrividhya@gmail.com</a>
-                <span>&bull;</span>
-                <a href="https://www.linkedin.com/in/bharaths27" target="_blank">LinkedIn</a>
-                <span>&bull;</span>
-                <a href="https://github.com/bharaths27" target="_blank">GitHub</a>
-            </div>
-        </header>
-
-        <main class="main-content">
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    <h2>Work Experience</h2>
-                    <div class="accordion-icon">+</div>
-                </div>
-                <div class="accordion-content">
-                    
-                    <div class="content-entry">
-                        <div class="entry-header">
-                            <div class="entry-header-main">
-                                <div class="entry-title">Artificial Intelligence Intern</div>
-                                <div class="entry-subtitle">Cyware Labs Inc.</div>
-                            </div>
-                            <div class="entry-date">Mar 2025 – June 2025</div>
-                        </div>
-                        <div class="entry-details">
-                            <div class="entry-description">
-                                
-                                <h4 style="color: var(--accent-color); font-weight: 600; margin-bottom: 0.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: 1rem;">
-                                    AI-Driven Security Automation
-                                </h4>
-                                <p style="color: var(--text-secondary-color); margin-bottom: 1rem;">
-                                    As a key member of the AI engineering team, I contributed to a next-generation platform designed to automate B2B integrations with Cyware's core <strong>Threat Intelligence (CTI)</strong> and <strong>SOAR</strong> (Security Orchestration, Automation, and Response) services. This system intelligently parses diverse, unstructured API specifications (like OpenAPI and Postman files) for over 1,000 unique endpoints.
-                                </p>
-                                <p style="color: var(--text-secondary-color); margin-bottom: 1rem;">
-                                    My primary role was engineering the system's core intelligence, which utilized <strong>Generative AI</strong> and <strong>Natural Language Processing (NLP)</strong> models. I developed the logic for a <strong>Large Language Model (LLM)</strong> to semantically understand API schemas, map complex data fields, and <strong>autonomously generate functional, sandboxed Python connector code</strong>. This solution was packaged into an intuitive React front-end, successfully automating over 95% of the manual developer effort previously required for new client integrations.
-                                </p>
-                                <p style="color: var(--text-secondary-color); margin-bottom: 1rem;">
-                                    To ensure long-term viability, I also engineered an <strong>adaptive machine learning model</strong> that implemented <strong>Reinforcement Learning from Human Feedback (RLHF)</strong>. This model iteratively refines connector accuracy by learning from user-submitted corrections and historical data structures, creating a powerful, self-improving automation pipeline.
-                                </p>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="content-entry">
-                        <div class="entry-header">
-                            <div class="entry-header-main">
-                                <div class="entry-title">Cybersecurity Engineer Intern</div>
-                                <div class="entry-subtitle">1Kosmos Inc.</div>
-                            </div>
-                            <div class="entry-date">Aug 2024 – Nov 2024</div>
-                        </div>
-                        <div class="entry-details">
-                            <div class="entry-description">
-                                
-                                <h4 style="color: var(--accent-color); font-weight: 600; margin-bottom: 0.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: 1rem;">
-                                    Zero-Trust & Identity Management (IAM)
-                                </h4>
-                                <p style="color: var(--text-secondary-color); margin-bottom: 1rem;">
-                                    As an engineer on the core BlockID development team, I analyzed and enhanced the security posture of the company's flagship <strong>Multi-Factor Authentication (MFA)</strong> and <strong>decentralized identity</strong> platform, a system that secures over 20 major enterprise clients and 5,000+ users.
-                                </p>
-                                <p style="color: var(--text-secondary-color); margin-bottom: 1rem;">
-                                    My primary project was the research and implementation of a <strong>Zero-Trust security model</strong> for a new client-facing service. I designed and deployed new <strong>context-aware access policies</strong> that evaluated user behavior, device posture (via device fingerprinting), and geographic location. This successfully hardened the authentication flow against sophisticated attacks like <strong>session hijacking</strong> and <strong>lateral movement</strong>, moving the platform from a static to a dynamic security model.
-                                </p>
-                                <p style="color: var(--text-secondary-color); margin-bottom: 1rem;">
-                                    I also conducted <strong>vulnerability analysis</strong> and <strong>penetration testing</strong> on existing authentication endpoints, identified and documented attack vectors in line with the <strong>OWASP Top 10</strong>, and assisted senior engineers in patching and deploying secure code, contributing to a 40% increase in user verification speed.
-                                </p>
-
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="content-entry">
-                        <div class="entry-header">
-                            <div class="entry-header-main">
-                                <div class="entry-title">Software Developer Intern</div>
-                                <div class="entry-subtitle">Bahwan CyberTek Inc.</div>
-                            </div>
-                            <div class="entry-date">June 2024 – Aug 2024</div>
-                        </div>
-                        <div class="entry-details">
-                            <div class="entry-description">
-
-                                <h4 style="color: var(--accent-color); font-weight: 600; margin-bottom: 0.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: 1rem;">
-                                    Enterprise Full-Stack & AI Integration
-                                </h4>
-                                <p style="color: var(--text-secondary-color); margin-bottom: 1rem;">
-                                    I contributed as a full-stack developer on an enterprise data portal using a <strong>Java Spring Boot</strong> backend (in Eclipse) and a <strong>React</strong> frontend (in VS Code). This internal platform enabled clients to navigate, search, and manage thousands of complex records from a large-scale, distributed <strong>PostgreSQL</strong> database.
-                                </p>
-                                <p style="color: var(--text-secondary-color); margin-bottom: 1rem;">
-                                    My standout contribution was designing and implementing the project's <strong>AI-powered text correction service</strong>. I developed a <strong>Python/Flask microservice</strong> that integrated a pre-trained <strong>Transformer-based NLP model</strong>. This service autonomously parsed, validated, and corrected user-input errors in real-time before database submission, which dramatically improved data integrity and the overall user experience.
-                                </p>
-                                <p style="color: var(--text-secondary-color); margin-bottom: 1rem;">
-                                    On the frontend, I developed several key components, including a dynamic, multi-field search bar and interactive data tables. I also refactored and optimized backend API endpoints, analyzing SQL query performance to improve data retrieval speeds by 25%.
-                                </p>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="content-entry">
-                        <div class="entry-header">
-                            <div class="entry-header-main">
-                                <div class="entry-title">Software App Developer</div>
-                                <div class="entry-subtitle">Eufinity</div>
-                            </div>
-                            <div class="entry-date">May 2023 – Sept 2023</div>
-                        </div>
-                        <div class="entry-details">
-                            <div class="entry-description">
-                                
-                                <h4 style="color: var(--accent-color); font-weight: 600; margin-bottom: 0.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; margin-top: 1rem;">
-                                    Secure Full-Stack Mobile Development
-                                </h4>
-                                <p style="color: var(--text-secondary-color); margin-bottom: 1rem;">
-                                    As a lead developer for this mental health awareness organization, I architected and co-developed a cross-platform mobile application using <strong>React Native</strong> and <strong>Expo</strong>. The app was designed from the ground up to be a secure, anonymous support hub for users in need.
-                                </p>
-                                <p style="color: var(--text-secondary-color); margin-bottom: 1rem;">
-                                    I personally engineered the secure backend API using <strong>Node.js</strong>, <strong>Express</strong>, and a <strong>PostgreSQL</strong> database, which enabled all core functionalities. This included an anonymous specialist booking system, an encrypted user journaling feature (using <strong>AES-256 encryption</strong>), and a real-time emergency contact notification service.
-                                </p>
-                                <p style="color: var(--text-secondary-color); margin-bottom: 1rem;">
-                                    My primary focus was security and user trust. I implemented <strong>JWT-based authentication</strong> for secure sessions and <strong>end-to-end encryption</strong> for all user data in transit (with SSL) and at rest, ensuring a robust, private, and safe environment for all users.
-                                </p>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="accordion-item">
-                <div class="accordion-header">
-                    <h2>Projects</h2>
-                    <div class="accordion-icon">+</div>
-                </div>
-                <div class="accordion-content">
-
-                    <div class="content-entry" id="stock-project">
-                        <div class="entry-header">
-                            <div class="entry-header-main">
-                                <div class="entry-title">Stock Prediction Tool</div>
-                                <div class="entry-subtitle">Personal Project</div>
-                            </div>
-                            <div class="entry-date">Jan 2024</div>
-                        </div>
-                    </div>
-
-                    <div class="content-entry" id="car-project">
-                        <div class="entry-header">
-                            <div class="entry-header-main">
-                                <div class="entry-title">3D Car Model Optimization Tool</div>
-                                <div class="entry-subtitle">Personal Project</div>
-                            </div>
-                            <div class="entry-date">May 2024</div>
-                        </div>
-                    </div>
-
-                    <div class="content-entry" id="contract-auditor-project">
-                        <div class="entry-header">
-                            <div class="entry-header-main">
-                                <div class="entry-title">AI Smart Contract Auditor</div>
-                                <div class="entry-subtitle">Personal Project</div>
-                            </div>
-                            <div class="entry-date">Oct 2025</div> </div>
-                    </div>
-                    <div class="content-entry">
-                        <div class="entry-header">
-                            <div class="entry-header-main">
-                                <div class="entry-title">Autonomous Multi-Function Floorcare Robot</div>
-                                <div class="entry-subtitle">University Project</div>
-                            </div>
-                            <div class="entry-date">May 2024</div>
-                        </div>
-                        <div class="entry-details">
-                            <div class="entry-description">
-                                <ul>
-                                    <li>Designed and programmed C++ firmware for an autonomous robot, integrating ultrasonic and IR sensors for robust, real-time obstacle avoidance.</li>
-                                    <li>Implemented actuator control logic for differential drive locomotion and a relay-switched fan for a dual-function navigation and vacuuming system.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
+      <a href="#home" class="nav-logo"><span class="bracket">&lt;</span>BS<span class="bracket">/&gt;</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about"><span class="idx">01.</span>About</a></li>
+        <li><a href="#experience"><span class="idx">02.</span>Experience</a></li>
+        <li><a href="#projects"><span class="idx">03.</span>Projects</a></li>
+        <li><a href="#skills"><span class="idx">04.</span>Skills</a></li>
+        <li><a href="#contact"><span class="idx">05.</span>Contact</a></li>
+        <li class="nav-cta"><a href="assets/Bharath_Srividhya_Resume.pdf" target="_blank" class="btn btn-ghost" style="padding:8px 16px">Résumé</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
+  </nav>
 
-    <div id="projectModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close">&times;</button>
-            <div id="modalBody"></div>
+  <!-- ===================== HERO ===================== -->
+  <header class="hero section" id="home">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <div class="hero-status"><span class="dot"></span> Open to AI &amp; Security roles · Summer 2027</div>
+          <h1>Bharath<br /><span class="grad">Srividhya</span></h1>
+          <div class="hero-role">
+            <span class="prompt">$</span> <span class="typed" id="typed"></span><span class="cursor"></span>
+          </div>
+          <p class="hero-desc">
+            Computer Engineer building at the intersection of <strong style="color:var(--cyan)">Artificial Intelligence</strong>
+            and <strong style="color:var(--violet-soft)">Cybersecurity</strong> — from production Agentic AI systems and
+            LLM-powered data pipelines to zero-trust identity and AI safety research.
+          </p>
+          <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary">View My Work →</a>
+            <a href="assets/Bharath_Srividhya_Resume.pdf" target="_blank" class="btn btn-ghost">Download Résumé</a>
+          </div>
+          <div class="hero-socials">
+            <a href="https://github.com/bharaths27" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/bharaths27" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33 0-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+            </a>
+            <a href="mailto:bharathkrishnansrividhya@gmail.com" aria-label="Email">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+            </a>
+          </div>
         </div>
+
+        <!-- Photo + terminal -->
+        <div class="hero-visual reveal">
+          <div class="hero-photo-card">
+            <img src="assets/profile.jpg" alt="Bharath Srividhya"
+                 onerror="this.closest('.hero-photo-card').style.display='none'" />
+            <span class="hero-photo-badge"><span class="dot">●</span> Boston, MA · Building &amp; shipping</span>
+          </div>
+          <div class="terminal">
+            <div class="terminal-bar">
+              <span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span>
+              <span class="tname">bharath@portfolio: ~</span>
+            </div>
+            <div class="terminal-body">
+              <div class="line"><span class="t-com">$</span> <span class="t-key">cat</span> <span class="t-val">profile.json</span></div>
+              <div class="line"><span class="t-val">{</span></div>
+              <div class="line">  <span class="t-key">"role"</span>: <span class="t-str">"Computer Engineer @ Boston University"</span>,</div>
+              <div class="line">  <span class="t-key">"focus"</span>: [<span class="t-str">"Agentic AI"</span>, <span class="t-str">"Cybersecurity"</span>],</div>
+              <div class="line">  <span class="t-key">"stack"</span>: [<span class="t-str">"Python"</span>, <span class="t-str">"React"</span>, <span class="t-str">"Databricks"</span>],</div>
+              <div class="line">  <span class="t-key">"latest"</span>: <span class="t-str">"AI &amp; Analytics Intern @ Cognizant"</span>,</div>
+              <div class="line">  <span class="t-key">"status"</span>: <span class="t-str">"building &amp; shipping"</span></div>
+              <div class="line"><span class="t-val">}</span></div>
+              <div class="line">&nbsp;</div>
+              <div class="line"><span class="t-com">$</span> <span class="t-cmt">// let's build something secure &amp; smart_</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </header>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Main accordion logic
-            document.querySelectorAll('.accordion-header').forEach(header => {
-                header.addEventListener('click', () => header.parentElement.classList.toggle('active'));
-            });
-            // Nested accordion logic for simple entries
-            document.querySelectorAll('.content-entry .entry-header').forEach(header => {
-                const parentEntry = header.parentElement;
-                // Corrected logic: only add expand/collapse to entries that do not have a special ID
-                if (!parentEntry.id) {
-                    header.addEventListener('click', (event) => {
-                        event.stopPropagation();
-                        parentEntry.classList.toggle('active');
-                    });
-                }
-            });
+  <!-- ===================== ABOUT ===================== -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">01. WHO I AM</div>
+        <h2 class="section-title">About <span class="accent">Me</span></h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-photo-wrap reveal">
+          <img class="about-photo" src="assets/profile.jpg" alt="Bharath Srividhya"
+               onerror="this.classList.add('img-fallback'); this.removeAttribute('src')" />
+          <div class="edu-card">
+            <div class="edu-school">
+              <span class="logo-badge" style="--brand:var(--c-bu);width:34px;height:34px;font-size:.72rem">BU<img src="https://logo.clearbit.com/bu.edu" alt="" loading="lazy" onerror="this.remove()"></span>
+              Boston University
+            </div>
+            <div class="edu-degree">B.S. Computer Engineering · <span style="color:var(--text)">ML Concentration</span></div>
+            <div class="edu-meta">Sept 2023 – May 2027 · Boston, MA</div>
+          </div>
+        </div>
+        <div class="about-body reveal">
+          <p>
+            I'm a Computer Engineer who loves building where <strong>intelligent systems</strong> meet
+            <strong>security</strong>. Most recently at <strong style="color:var(--c-cognizant)">Cognizant</strong>, I architected
+            <span class="about-highlight">"Aerotrace"</span> — a production Pydantic-AI multi-agent system for a 200+ aircraft cargo
+            airline that cut compliance reporting from <strong>3 days to under 30 seconds</strong> and slashed cost-per-report
+            from <strong>$800+ to under $1</strong>.
+          </p>
+          <p>
+            My path spans <strong>industry</strong> (Agentic AI &amp; data engineering, ML for cybersecurity, zero-trust identity,
+            enterprise full-stack) and <strong>research</strong> — fine-tuning vision-language models for accessible navigation at the
+            <strong style="color:var(--c-bu)">H2X Lab</strong>, and studying RLHF failure modes and mechanistic interpretability as an
+            <strong style="color:var(--c-bu)">AI Safety &amp; Alignment</strong> Technical Fellow.
+          </p>
+          <p>
+            I also lead as <strong>President of the BU Cybersecurity Association</strong>, running hands-on workshops in
+            penetration testing and threat analysis. Always chasing the next hard problem at the intersection of
+            <span class="about-highlight">AI</span> and <span class="about-highlight">security</span>.
+          </p>
+          <div class="stats" id="statsGrid">
+            <div class="stat" style="--brand:var(--c-cognizant)"><div class="num" data-count="99" data-suffix="%"><span class="grad">0</span></div><div class="label">Reporting cost reduced</div></div>
+            <div class="stat" style="--brand:var(--c-bu)"><div class="num" data-count="9" data-suffix="+"><span class="grad">0</span></div><div class="label">Roles across AI &amp; security</div></div>
+            <div class="stat" style="--brand:var(--cyan)"><div class="num" data-count="6" data-suffix="+"><span class="grad">0</span></div><div class="label">Shipped projects</div></div>
+            <div class="stat" style="--brand:var(--violet)"><div class="num" data-count="1000" data-suffix="+"><span class="grad">0</span></div><div class="label">API endpoints automated</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-            // --- Modal Logic and Content ---
-            const modal = document.getElementById('projectModal');
-            const modalBody = document.getElementById('modalBody');
-            const closeModalBtn = document.querySelector('.modal-close');
-            
-            const projectDocs = {
-                'stock-prediction-tool': {
-                    title: 'Stock Prediction & Analysis Tool',
-                    content: `
-                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
-                            The Stock Prediction & Analysis Tool is a full-stack application designed to provide a seamless and interactive platform for market data analysis. It allows users to query historical performance for 50 popular S&P 500 companies, view key financial metrics, and generate future price forecasts using one of two distinct machine learning models.
-                        </p>
-                        
-                        <div style="margin-bottom: 1.5rem; display: flex; gap: 1rem;">
-                            <a href="https://stock-prediction-app-delta.vercel.app/" target="_blank" class="modal-button">Live Demo</a>
-                            <a href="https://github.com/bharaths27/Stock-Prediction-App" target="_blank" class="modal-button">View on GitHub</a>
-                        </div>
+  <!-- ===================== EXPERIENCE ===================== -->
+  <section class="section" id="experience">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">02. THE JOURNEY</div>
+        <h2 class="section-title">Work <span class="accent">Experience</span></h2>
+        <p class="section-sub">Industry engineering, university research, and technical leadership — color-coded by organization.</p>
+      </div>
+      <div class="filter-bar reveal">
+        <button class="filter-btn active" data-filter="all" data-scope="exp">All</button>
+        <button class="filter-btn" data-filter="industry" data-scope="exp">Industry</button>
+        <button class="filter-btn" data-filter="research" data-scope="exp">Research</button>
+        <button class="filter-btn" data-filter="leadership" data-scope="exp">Leadership</button>
+      </div>
+      <div class="timeline" id="timeline"><!-- rendered by main.js --></div>
+    </div>
+  </section>
 
-                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Technical Architecture</h3>
-                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
-                            The project is built on a decoupled architecture to ensure scalability and high performance. The system is 100% self-contained and makes no live external API calls during user interaction.
-                            <ul style="list-style-position: inside; margin-top: 0.5rem; padding-left: 0.5rem;">
-                                <li>A <strong>React & Next.js frontend</strong>, styled with Tailwind CSS and Shadcn/UI, provides a dynamic user interface and interactive data visualizations with Recharts.</li>
-                                <li>A <strong>Python & FastAPI backend</strong> serves as a lightweight API. It reads from a pre-cached, local file-based data store to deliver historical and metric data with near-zero latency. It also handles the real-time loading and inference of the Scikit-learn prediction models.</li>
-                            </ul>
-                        </p>
-                        
-                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Machine Learning Implementation</h3>
-                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
-                            The predictive engine was developed by training models on a rich dataset created through advanced <strong>feature engineering</strong>. Beyond simple price history, I calculated technical indicators such as <strong>Simple Moving Averages (SMA)</strong> and the <strong>Relative Strength Index (RSI)</strong> to provide the models with a deeper understanding of market trend and momentum. The application allows users to select between two distinct models: a baseline <strong>Linear Regression</strong> model and a more complex <strong>Random Forest Regressor</strong>, which is capable of capturing non-linear patterns in the data. Predictions are generated using an iterative forecasting technique, where the model's output for day one is used as an input to predict day two, and so on.
-                        </p>
+  <!-- ===================== PROJECTS ===================== -->
+  <section class="section" id="projects">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">03. BUILT WITH INTENT</div>
+        <h2 class="section-title">Featured <span class="accent">Projects</span></h2>
+        <p class="section-sub">Click any card for the full architecture breakdown, challenges, and solutions.</p>
+      </div>
+      <div class="filter-bar reveal">
+        <button class="filter-btn active" data-filter="all" data-scope="proj">All</button>
+        <button class="filter-btn" data-filter="ai" data-scope="proj">AI / LLM</button>
+        <button class="filter-btn" data-filter="ml" data-scope="proj">Machine Learning</button>
+        <button class="filter-btn" data-filter="embedded" data-scope="proj">Embedded</button>
+      </div>
+      <div class="projects-grid" id="projectsGrid"><!-- rendered by main.js --></div>
+    </div>
+  </section>
 
-                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Obstacles & Solutions</h3>
-                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
-                            A key project challenge was overcoming the unreliability and strict rate-limiting of free public financial APIs. An initial on-demand fetching architecture proved unstable and frequently crashed. The solution was to re-architect the system to use an offline approach. I developed Python scripts to pre-fetch and process market data, which were then used to train the models. The final application is completely self-contained, using the pre-generated data and model files, which guarantees a fast, stable, and reliable user experience. This process demonstrates a practical solution to common third-party API challenges and highlights skills in system architecture and iterative development.
-                        </p>
-                        
-                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Skills Demonstrated</h3>
-                        <div class="tech-stack" style="padding-bottom: 1rem;">
-                            <span class="tech-tag">React</span>
-                            <span class="tech-tag">Next.js</span>
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">FastAPI</span>
-                            <span class="tech-tag">Scikit-learn</span>
-                            <span class="tech-tag">Pandas</span>
-                            <span class="tech-tag">REST APIs</span>
-                            <span class="tech-tag">System Architecture</span>
-                            <span class="tech-tag">Feature Engineering</span>
-                            <span class="tech-tag">Full-Stack Development</span>
-                            <span class="tech-tag">Dependency Management</span>
-                            <span class="tech-tag">Cloud Deployment (Vercel, Render)</span>
-                        </div>
-                    `
-                },
-                'car-optimization-tool': {
-                    title: 'Gear Vision: A 3D Car Optimization Simulator',
-                    content: `
-                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
-                            Gear Vision is a comprehensive full-stack application demonstrating a microservice architecture to deliver a dynamic, interactive, and data-driven user experience. It allows users to select real-world vehicles, view them as interactive 3D models, and simulate the performance impact of various modifications using a machine learning-powered engine.
-                        </p>
-                        
-                        <div style="margin-bottom: 1.5rem; display: flex; gap: 1rem;">
-                            <a href="https://bharaths27.github.io/Gear_Vision_Frontend/" target="_blank" class="modal-button">Live Demo</a>
-                            <a href="https://github.com/bharaths27/Gear_Vision_Frontend" target="_blank" class="modal-button">View on GitHub</a>
-                        </div>
+  <!-- ===================== SKILLS ===================== -->
+  <section class="section" id="skills">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">04. TOOLKIT</div>
+        <h2 class="section-title">Skills &amp; <span class="accent">Technologies</span></h2>
+        <p class="section-sub">The stack I reach for across AI, security, and full-stack engineering.</p>
+      </div>
 
-                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Technical Architecture</h3>
-                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
-                            The project is built on a decoupled microservice architecture to ensure scalability and separation of concerns. The <strong>React frontend</strong> acts as the central user interface, orchestrating calls to two independent backend services:
-                            <ul style="list-style-position: inside; margin-top: 0.5rem; padding-left: 0.5rem;">
-                                <li>A <strong>Node.js & Express server</strong> acts as a secure backend-for-frontend (BFF). It manages external API requests, protecting sensitive API keys by preventing them from being exposed on the client-side. It also connects to a MongoDB Atlas database for potential future data persistence.</li>
-                                <li>A <strong>Python, Flask & Scikit-learn microservice</strong> serves the machine learning model, providing a dedicated, lightweight REST API for performance predictions.</li>
-                            </ul>
-                        </p>
-                        
-                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Machine Learning Implementation & Problem Solving</h3>
-                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
-                            A key project challenge was providing instant, realistic performance feedback without the overhead of a complex physics engine. The solution was to develop a predictive model. I trained a <strong>Linear Regression model</strong> using Scikit-learn on a dataset of vehicle base stats and performance gains from various modifications. This approach allows the "optimization engine" to return an accurate approximation of performance changes (0-60 time, horsepower) with near-zero latency, served via a scalable Flask REST API.
-                        </p>
+      <div class="skills-top">
+        <div class="skill-bars reveal">
+          <h3>Core Proficiency</h3>
+          <div class="bar-row"><div class="bar-label"><span>Agentic AI &amp; LLMs</span><span class="pct">95%</span></div><div class="bar-track"><div class="bar-fill" data-pct="95"></div></div></div>
+          <div class="bar-row"><div class="bar-label"><span>Python &amp; ML</span><span class="pct">93%</span></div><div class="bar-track"><div class="bar-fill" data-pct="93"></div></div></div>
+          <div class="bar-row"><div class="bar-label"><span>Cybersecurity &amp; Zero-Trust</span><span class="pct">88%</span></div><div class="bar-track"><div class="bar-fill" data-pct="88"></div></div></div>
+          <div class="bar-row"><div class="bar-label"><span>Full-Stack (React / FastAPI)</span><span class="pct">90%</span></div><div class="bar-track"><div class="bar-fill" data-pct="90"></div></div></div>
+          <div class="bar-row"><div class="bar-label"><span>Data Engineering (Databricks)</span><span class="pct">85%</span></div><div class="bar-track"><div class="bar-fill" data-pct="85"></div></div></div>
+        </div>
+        <div class="skill-card reveal" style="--brand:var(--cyan)">
+          <div class="skill-head">
+            <div class="skill-icon">🤖</div>
+            <div><h3>AI &amp; Machine Learning</h3><div class="sub">agents · llms · ml</div></div>
+          </div>
+          <div class="chips">
+            <span class="chip">Pydantic AI</span><span class="chip">Multi-Agent Systems</span><span class="chip">MCP</span>
+            <span class="chip">LLMs &amp; GenAI</span><span class="chip">RLHF</span><span class="chip">Fine-Tuning</span>
+            <span class="chip">Tiny LLaVA / VLMs</span><span class="chip">Computer Vision</span><span class="chip">RAG &amp; Vector Search</span>
+            <span class="chip">Mechanistic Interpretability</span><span class="chip">Scikit-learn</span><span class="chip">Pandas</span>
+          </div>
+        </div>
+      </div>
 
-                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Obstacles & Solutions</h3>
-                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
-                            Deploying a multi-part application with cross-origin dependencies presented a significant challenge. Initial deployment was blocked by <strong>CORS (Cross-Origin Resource Sharing)</strong> errors between the live frontend and the backend services. I resolved this by implementing specific server-side CORS policies in both the Node.js and Flask applications, whitelisting the frontend's domain. Additionally, handling secret management for API keys and database credentials required implementing a secure solution using <strong>environment variables</strong> on the deployment platform (Render), ensuring no sensitive data was committed to the public GitHub repositories.
-                        </p>
+      <div class="skills-grid">
+        <div class="skill-card reveal" style="--brand:var(--c-bu)">
+          <div class="skill-head">
+            <div class="skill-icon">🛡️</div>
+            <div><h3>Cybersecurity</h3><div class="sub">appsec · iam · offsec</div></div>
+          </div>
+          <div class="chips">
+            <span class="chip">Zero-Trust</span><span class="chip">IAM / MFA</span><span class="chip">Penetration Testing</span>
+            <span class="chip">OWASP Top 10</span><span class="chip">Adversarial Robustness</span><span class="chip">Red-Teaming</span>
+            <span class="chip">Decentralized Identity</span><span class="chip">JWT / Auth</span><span class="chip">AES-256</span>
+          </div>
+        </div>
+        <div class="skill-card reveal" style="--brand:var(--c-cognizant)">
+          <div class="skill-head">
+            <div class="skill-icon">🗄️</div>
+            <div><h3>Data &amp; Cloud</h3><div class="sub">pipelines · db · cloud</div></div>
+          </div>
+          <div class="chips">
+            <span class="chip">Databricks</span><span class="chip">Unity Catalog</span><span class="chip">Medallion Architecture</span>
+            <span class="chip">ETL Pipelines</span><span class="chip">PostgreSQL</span><span class="chip">pgvector</span>
+            <span class="chip">MongoDB</span><span class="chip">Pinecone</span><span class="chip">AWS S3</span><span class="chip">SQLite</span>
+          </div>
+        </div>
+        <div class="skill-card reveal" style="--brand:var(--amber)">
+          <div class="skill-head">
+            <div class="skill-icon">⌨️</div>
+            <div><h3>Languages</h3><div class="sub">code</div></div>
+          </div>
+          <div class="chips">
+            <span class="chip">Python</span><span class="chip">Java</span><span class="chip">C++</span>
+            <span class="chip">JavaScript</span><span class="chip">C</span><span class="chip">SQL</span>
+            <span class="chip">HTML / CSS</span><span class="chip">MATLAB</span>
+          </div>
+        </div>
+        <div class="skill-card reveal" style="--brand:var(--green)">
+          <div class="skill-head">
+            <div class="skill-icon">⚙️</div>
+            <div><h3>Frameworks &amp; Tools</h3><div class="sub">full-stack · tooling</div></div>
+          </div>
+          <div class="chips">
+            <span class="chip">React</span><span class="chip">Next.js</span><span class="chip">Node.js</span>
+            <span class="chip">FastAPI</span><span class="chip">Flask</span><span class="chip">Django</span>
+            <span class="chip">Spring Boot</span><span class="chip">React Native</span><span class="chip">Streamlit</span>
+            <span class="chip">Three.js</span><span class="chip">Git / BitBucket</span><span class="chip">Linux</span>
+          </div>
+        </div>
+      </div>
 
-                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Skills Demonstrated</h3>
-                        <div class="tech-stack" style="padding-bottom: 1rem;">
-                            <span class="tech-tag">React</span>
-                            <span class="tech-tag">Node.js</span>
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">Flask</span>
-                            <span class="tech-tag">Scikit-learn</span>
-                            <span class="tech-tag">Three.js</span>
-                            <span class="tech-tag">WebGL</span>
-                            <span class="tech-tag">REST APIs</span>
-                            <span class="tech-tag">Machine Learning</span>
-                            <span class="tech-tag">Secure Credential Management</span>
-                            <span class="tech-tag">Full-Stack Development</span>
-                            <span class="tech-tag">CORS Configuration</span>
-                            <span class="tech-tag">Cloud Deployment (Render, GitHub Pages)</span>
-                        </div>
-                    `
-                }
-                // === NEW JAVASCRIPT OBJECT START ===
-                ,
-                'ai-contract-auditor': {
-                    title: 'AI Smart Contract Auditor',
-                    content: `
-                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
-                            A full-stack application that leverages a local, private Large Language Model (Code Llama) to perform security audits on Solidity smart contracts. The tool provides a "How It Works" section and example contracts (Integer Overflow, Reentrancy) for users to test the AI's analysis capabilities directly in their browser.
-                        </p>
-                        
-                        <div style="margin-bottom: 1.5rem; display: flex; gap: 1rem;">
-                            <a href="https://github.com/bharaths27/Smart-Contract-Auditor" target="_blank" class="modal-button">View on GitHub</a>
-                            <a href="https://www.loom.com/share/eed49925cad24144944da4758cda6ec7" target="_blank" class="modal-button">Video Demo</a>
-                        </div>
-                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem; font-style: italic;">
-                            Note: The project's core AI functionality relies on running the Ollama and Code Llama models locally to ensure 100% privacy and control. The video demo shows the full process.
-                        </p>
+      <div class="certs">
+        <div class="cert reveal"><span class="cert-ic">🔐</span><div><div class="cert-name">Google Cybersecurity</div><div class="cert-by">Google</div></div></div>
+        <div class="cert reveal"><span class="cert-ic">🧠</span><div><div class="cert-name">Generative AI Engineering</div><div class="cert-by">IBM</div></div></div>
+        <div class="cert reveal"><span class="cert-ic">📊</span><div><div class="cert-name">Machine Learning with Python</div><div class="cert-by">IBM</div></div></div>
+        <div class="cert reveal"><span class="cert-ic">🤖</span><div><div class="cert-name">AI Agent Fundamentals</div><div class="cert-by">Databricks</div></div></div>
+      </div>
+    </div>
+  </section>
 
-                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Technical Architecture</h3>
-                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
-                            The application is built with a decoupled architecture, ensuring a clean separation of concerns between the user interface and the AI logic.
-                            <ul style="list-style-position: inside; margin-top: 0.5rem; padding-left: 0.5rem;">
-                                <li>A <strong>React & Next.js frontend</strong> provides a responsive, modern UI for users to paste code and view the formatted audit results.</li>
-                                <li>A <strong>Python & FastAPI backend</strong> serves as a simple API. It receives the user's code, forwards it to the AI model, and returns the response. It also handles CORS policies to allow communication with the frontend.</li>
-                                <li><strong>Ollama (with Code Llama)</strong> runs as a separate local server, exposing an API that the FastAPI backend calls. This design keeps all sensitive code on the user's machine.</li>
-                            </ul>
-                        </p>
-                        
-                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">AI Implementation: Prompt Engineering</h3>
-                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
-                            This project does not involve fine-tuning; its intelligence comes from advanced <strong>prompt engineering</strong> and <strong>in-context learning</strong>. The backend uses a highly structured, multi-part prompt (the \`PROMPT_TEMPLATE\`) that instructs the \`codellama\` model to act as a "world-class, meticulous smart contract security auditor." This prompt provides core principles (like "Checks-Effects-Interactions"), and formatting examples, guiding the general-purpose model to perform a specialized, high-quality security analysis.
-                        </p>
+  <!-- ===================== CONTACT ===================== -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="contact-wrap reveal">
+        <div class="section-eyebrow" style="justify-content:center">05. GET IN TOUCH</div>
+        <h2>Let's build something <span class="grad">smart &amp; secure</span>.</h2>
+        <p>I'm open to opportunities in AI and Cybersecurity engineering. Whether you have a role, a project, or just want to talk shop — my inbox is open.</p>
+        <div class="contact-actions">
+          <a href="mailto:bharathkrishnansrividhya@gmail.com" class="btn btn-primary">Say Hello →</a>
+          <a href="https://www.linkedin.com/in/bharaths27" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn</a>
+          <a href="https://github.com/bharaths27" target="_blank" rel="noopener" class="btn btn-ghost">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Obstacles & Solutions</h3>
-                        <p style="color: var(--text-secondary-color); margin-bottom: 1.5rem;">
-                            The main challenge was orchestrating three separate services (React, FastAPI, Ollama) and ensuring they could communicate. This was solved by implementing <strong>CORS (Cross-Origin Resource Sharing)</strong> middleware in the FastAPI backend, which explicitly "whitelists" the frontend's \`http://localhost:3000\` origin, allowing it to make requests. Another challenge was getting consistent, high-quality output from the AI. This was solved by iteratively refining the \`PROMPT_TEMPLATE\` to be highly specific, which dramatically improved the relevance and accuracy of the audit.
-                        </p>
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; <span id="year">2026</span> Bharath Srividhya · Built from scratch, no frameworks.</p>
+      <a href="#home" class="up">Back to top ↑</a>
+    </div>
+  </footer>
 
-                        <h3 style="margin-bottom: 0.5rem; color: var(--accent-color);">Skills Demonstrated</h3>
-                        <div class="tech-stack" style="padding-bottom: 1rem;">
-                            <span class="tech-tag">React</span>
-                            <span class="tech-tag">Next.js</span>
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">FastAPI</span>
-                            <span class="tech-tag">Ollama</span>
-                            <span class="tech-tag">Prompt Engineering</span>
-                            <span class="tech-tag">AI Integration</span>
-                            <span class="tech-tag">Full-Stack Development</span>
-                            <span class="tech-tag">REST APIs</span>
-                            <span class="tech-tag">CORS Configuration</span>
-                        </div>
-                    `
-                }
-                // === NEW JAVASCRIPT OBJECT END ===
-            };
+  <!-- ===================== MODAL ===================== -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <div>
+          <div class="m-cat" id="modalCat"></div>
+          <h2 id="modalTitle"></h2>
+        </div>
+        <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
 
-            function openModal(doc) {
-                modalBody.innerHTML = `<h2 style="margin-bottom: 0.5rem;">${doc.title}</h2>${doc.content}`;
-                modal.style.display = 'flex';
-                setTimeout(() => modal.classList.add('visible'), 10);
-            }
-
-            function closeModal() {
-                modal.classList.remove('visible');
-                setTimeout(() => modal.style.display = 'none', 300);
-            }
-
-            // Attach event listeners
-            const stockProjectEntry = document.getElementById('stock-project');
-            if (stockProjectEntry) {
-                stockProjectEntry.style.cursor = 'pointer';
-                stockProjectEntry.addEventListener('click', () => openModal(projectDocs['stock-prediction-tool']));
-            }
-
-            const carProjectEntry = document.getElementById('car-project');
-            if (carProjectEntry) {
-                carProjectEntry.style.cursor = 'pointer';
-                carProjectEntry.addEventListener('click', () => openModal(projectDocs['car-optimization-tool']));
-            }
-
-            // === NEW EVENT LISTENER START ===
-            const auditorProjectEntry = document.getElementById('contract-auditor-project');
-            if (auditorProjectEntry) {
-                auditorProjectEntry.style.cursor = 'pointer';
-                auditorProjectEntry.addEventListener('click', () => openModal(projectDocs['ai-contract-auditor']));
-            }
-            // === NEW EVENT LISTENER END ===
-
-            closeModalBtn.addEventListener('click', closeModal);
-            modal.addEventListener('click', (event) => {
-                if (event.target === modal) closeModal();
-            });
-        });
-    </script>
+  <script src="js/main.js"></script>
 </body>
 </html>
