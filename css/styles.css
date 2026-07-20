@@ -104,7 +104,6 @@ body::after {
 /* Animated starfield (space vibe) — canvas injected by main.js */
 #starfield {
   position: fixed; inset: 0; z-index: -1; pointer-events: none;
-  mask-image: radial-gradient(ellipse 120% 100% at 50% 30%, #000 55%, transparent 100%);
 }
 
 a { color: inherit; text-decoration: none; }
@@ -233,19 +232,22 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .hero-socials a:hover { color: var(--cyan); border-color: var(--cyan); transform: translateY(-3px); box-shadow: var(--glow-cyan); }
 .hero-socials svg { width: 20px; height: 20px; }
 
-/* Hero right: photo + terminal stacked */
-.hero-visual { display: grid; gap: 20px; }
-.hero-photo-card {
-  position: relative; border-radius: var(--radius); overflow: hidden;
-  border: 1px solid var(--border-strong); box-shadow: var(--shadow-lg);
-  background: linear-gradient(135deg, rgba(47,123,255,.18), rgba(168,85,247,.18));
+/* Hero right: framed portrait + terminal stacked */
+.hero-visual { display: grid; gap: 22px; }
+.hero-photo { position: relative; border-radius: var(--radius); }
+.hero-photo img {
+  width: 100%; aspect-ratio: 4/5; object-fit: cover; object-position: center 16%;
+  border-radius: var(--radius); border: 1px solid var(--border-strong); box-shadow: var(--shadow-lg);
+  background: linear-gradient(135deg, rgba(47,123,255,.18), rgba(168,85,247,.18)); display: block;
 }
-.hero-photo-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; object-position: center 20%; }
-.hero-photo-card::after {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, transparent 55%, rgba(6,7,19,.55));
-  pointer-events: none;
+.hero-photo::before {
+  content: ""; position: absolute; inset: -3px; border-radius: calc(var(--radius) + 3px); padding: 3px;
+  background: var(--accent-grad);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude; opacity: .8; pointer-events: none;
 }
+.hero-photo.img-fallback { min-height: 380px; display: grid; place-items: center; border: 1px solid var(--border-strong); border-radius: var(--radius); }
+.hero-photo.img-fallback::after { content: "BS"; font-family: var(--font-mono); font-size: 4.5rem; font-weight: 700; background: var(--accent-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .hero-photo-badge {
   position: absolute; left: 14px; bottom: 12px; z-index: 2;
   font-family: var(--font-mono); font-size: .72rem; color: var(--text);
@@ -296,6 +298,26 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .edu-card .edu-school { display: flex; align-items: center; gap: 10px; font-weight: 650; }
 .edu-card .edu-degree { color: var(--text-dim); font-size: .9rem; margin-top: 4px; }
 .edu-card .edu-meta { font-family: var(--font-mono); font-size: .76rem; color: var(--text-faint); margin-top: 6px; }
+
+/* Logo wall (companies + BU) shown beside the About paragraph */
+.about-side { display: grid; gap: 20px; align-content: start; }
+.logo-wall { border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; background: var(--surface); }
+.lw-title { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 16px; }
+.lw-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.lw-logo {
+  aspect-ratio: 1/1; display: grid; place-items: center; border-radius: 12px;
+  background: #f7f8fb; border: 1px solid var(--border); position: relative; overflow: hidden;
+  font-family: var(--font-mono); font-weight: 700; font-size: .95rem; color: var(--brand);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.lw-logo:hover { transform: translateY(-3px); box-shadow: 0 12px 26px -12px var(--brand); border-color: var(--brand); }
+.lw-logo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 16px; }
+
+/* Experience category groups */
+.exp-group { margin-bottom: 52px; }
+.exp-group:last-child { margin-bottom: 0; }
+.exp-group-title { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 26px; display: flex; align-items: center; gap: 12px; }
+.exp-group-title::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, color-mix(in srgb, var(--brand) 45%, transparent), transparent); }
 
 .about-body p { color: var(--text-dim); margin-bottom: 18px; }
 .about-body p strong { color: var(--text); font-weight: 600; }
@@ -513,7 +535,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .hero-inner { grid-template-columns: 1fr; gap: 40px; }
   .hero-visual { order: -1; max-width: 460px; }
   .about-grid { grid-template-columns: 1fr; gap: 36px; }
-  .about-photo-wrap { max-width: 320px; }
+  .about-side { max-width: 420px; }
   .skills-top, .skills-grid, .projects-grid { grid-template-columns: 1fr; }
   .project-card.featured .project-cover { aspect-ratio: 16/9; }
   .certs { grid-template-columns: repeat(2, 1fr); }

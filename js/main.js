@@ -83,9 +83,9 @@ const EXPERIENCE = [
     tagline: "// Alignment · Interpretability · AI Control",
     points: [
       "Selected for an intensive technical fellowship analyzing failure modes of modern deep-learning frameworks and alignment risks in advanced AI.",
-      "Investigated RLHF vulnerabilities — reward misspecification, deceptive alignment, and goal misgeneralization — in frontier models.",
+      "Investigated RLHF vulnerabilities in frontier models, including reward misspecification, deceptive alignment, and goal misgeneralization.",
       "Conducted mechanistic-interpretability research using circuit tracing, feature steering, and persona vectors to decode internal model computations.",
-      "Bridged cybersecurity with AI safety — scalable oversight, adversarial robustness, red-teaming, and unlearning — and drafted technical proposals for future alignment research.",
+      "Bridged cybersecurity with AI safety across scalable oversight, adversarial robustness, red-teaming, and unlearning, then drafted technical proposals for future alignment research.",
     ],
     tags: ["RLHF", "Mechanistic Interpretability", "Adversarial Robustness", "Red-Teaming", "AI Safety"],
   },
@@ -142,7 +142,7 @@ const EXPERIENCE = [
     logo: "1kosmos.com",
     tagline: "// Zero-Trust · Decentralized Identity · MFA",
     points: [
-      "Worked hands-on with the BlockID app — biometric authentication, decentralized identity, and blockchain integration in cybersecurity.",
+      "Worked hands-on with the BlockID app across biometric authentication, decentralized identity, and blockchain integration in cybersecurity.",
       "Developed secure websites with multi-factor authentication, ensuring data protection and strengthening platform security.",
       "Researched AI/ML integration in cybersecurity, focusing on the intersection of machine learning and modern identity management.",
       "Contributed to blockchain-enabled security solutions and prepared for IDPro certification.",
@@ -213,14 +213,14 @@ const PROJECTS = [
       video: "https://www.linkedin.com/in/bharaths27/details/projects/",
     },
     body: `
-      <p><strong>TrueFace</strong> is a comprehensive, dual-sided mock-interview and integrity-testing platform built at <strong>HackDartmouth XI</strong> — a complete suite serving both candidates preparing for the real world and recruiters protecting their hiring pipelines.</p>
-      <h3>For the Interviewee — The Training Arena</h3>
+      <p><strong>TrueFace</strong> is a comprehensive, dual-sided mock-interview and integrity-testing platform built at <strong>HackDartmouth XI</strong>, a complete suite serving both candidates preparing for the real world and recruiters protecting their hiring pipelines.</p>
+      <h3>For the Interviewee, The Training Arena</h3>
       <ul>
         <li><strong>Real-Time AI Live Avatar:</strong> a hyper-realistic, low-latency conversational partner powered by <strong>Gemini</strong> and <strong>HeyGen</strong> that simulates the pressure of a real face-to-face interview.</li>
         <li><strong>Live Speech Analytics:</strong> an in-browser dashboard that intercepts raw audio transcripts to track and penalize filler words ("um," "like," "uh") the millisecond they happen.</li>
-        <li><strong>Performance Review Dashboard:</strong> a full CRUD interface to save, review, and delete recorded video responses next to the exact prompt asked — so candidates can study body language and delivery.</li>
+        <li><strong>Performance Review Dashboard:</strong> a full CRUD interface to save, review, and delete recorded video responses next to the exact prompt asked, so candidates can study body language and delivery.</li>
       </ul>
-      <h3>For the Interviewer — The Integrity Engine</h3>
+      <h3>For the Interviewer, The Integrity Engine</h3>
       <ul>
         <li><strong>Real-Time Deepfake Detection:</strong> active monitoring of the candidate's video stream to catch synthetic manipulation and facial overlays.</li>
         <li><strong>Voice &amp; Latency Tracking:</strong> measures unnatural latency spikes and audio anomalies that signal a third-party AI transcription/generation tool.</li>
@@ -256,7 +256,7 @@ const PROJECTS = [
         <li>A <strong>Python &amp; FastAPI backend</strong> that receives code, forwards it to the model, handles CORS, and returns the analysis.</li>
         <li><strong>Ollama (Code Llama)</strong> running as a separate local server, keeping all sensitive code on the user's machine.</li>
       </ul>
-      <h3>AI Implementation — Prompt Engineering</h3>
+      <h3>AI Implementation, Prompt Engineering</h3>
       <p>Intelligence comes from advanced <strong>prompt engineering</strong> and <strong>in-context learning</strong> rather than fine-tuning. A structured, multi-part prompt template instructs the model to act as a "world-class, meticulous smart contract security auditor," supplying core principles (e.g. Checks-Effects-Interactions) and formatting examples that steer a general model toward specialized, high-quality output.</p>
       <h3>Obstacles &amp; Solutions</h3>
       <p>Orchestrating three services (React, FastAPI, Ollama) required solving cross-origin communication via <strong>CORS middleware</strong> whitelisting the frontend origin. Output consistency was achieved by iteratively refining the prompt template to be highly specific, sharply improving relevance and accuracy.</p>
@@ -296,7 +296,7 @@ const PROJECTS = [
     brand: "--green",
     image: "assets/projects/stock.png",
     short:
-      "Full-stack platform to analyze 50 S&P 500 companies — historical metrics plus future price forecasts from two ML models built on engineered technical indicators.",
+      "Full-stack platform to analyze 50 S&P 500 companies, with historical metrics plus future price forecasts from two ML models built on engineered technical indicators.",
     tags: ["Next.js", "FastAPI", "Scikit-learn", "Pandas", "Feature Engineering"],
     links: {
       demo: "https://stock-prediction-app-delta.vercel.app/",
@@ -311,15 +311,15 @@ const PROJECTS = [
         <li><strong>Python &amp; FastAPI</strong> backend reading a pre-cached local data store for near-zero latency, plus real-time loading/inference of the ML models.</li>
       </ul>
       <h3>Machine Learning</h3>
-      <p>Models were trained on a dataset built through <strong>feature engineering</strong> — beyond raw price history, I computed technical indicators like <strong>Simple Moving Averages (SMA)</strong> and the <strong>Relative Strength Index (RSI)</strong>. Users choose between a baseline <strong>Linear Regression</strong> model and a <strong>Random Forest Regressor</strong> that captures non-linear patterns. Forecasts use an iterative technique where each day's prediction feeds the next.</p>
+      <p>Models were trained on a dataset built through <strong>feature engineering</strong>. Beyond raw price history, I computed technical indicators like <strong>Simple Moving Averages (SMA)</strong> and the <strong>Relative Strength Index (RSI)</strong>. Users choose between a baseline <strong>Linear Regression</strong> model and a <strong>Random Forest Regressor</strong> that captures non-linear patterns. Forecasts use an iterative technique where each day's prediction feeds the next.</p>
       <h3>Obstacles &amp; Solutions</h3>
-      <p>Free financial APIs were unreliable and rate-limited, crashing the initial on-demand architecture. I re-architected to an offline approach: Python scripts pre-fetch and process data and train the models, so the deployed app is fully self-contained — fast, stable, and reliable.</p>
+      <p>Free financial APIs were unreliable and rate-limited, crashing the initial on-demand architecture. I re-architected to an offline approach: Python scripts pre-fetch and process data and train the models, so the deployed app is fully self-contained, fast, stable, and reliable.</p>
     `,
     skills: ["React", "Next.js", "Python", "FastAPI", "Scikit-learn", "Pandas", "Feature Engineering", "System Architecture", "Vercel/Render"],
   },
   {
     id: "gear-vision",
-    title: "Gear Vision — 3D Car Optimizer",
+    title: "Gear Vision, 3D Car Optimizer",
     category: "Machine Learning · 3D",
     tag: "ml",
     glyph: "◈",
@@ -392,36 +392,42 @@ function logoBadge(brand, mono, domain) {
   return `<span class="logo-badge" style="--brand:var(${brand})">${mono}${img}</span>`;
 }
 
-/* ---------- Render experience timeline ---------- */
-function renderExperience(filter = "all") {
-  const wrap = document.getElementById("timeline");
-  wrap.innerHTML = "";
-  EXPERIENCE.filter((e) => filter === "all" || e.scope === filter).forEach((e) => {
-    const metrics = (e.metrics || [])
-      .map((m) => `<div class="metric-pill"><span class="mv">${m.v}</span><span class="ml">${m.l}</span></div>`)
-      .join("");
-    const item = document.createElement("div");
-    item.className = "tl-item reveal";
-    item.style.setProperty("--brand", `var(${e.brand})`);
-    item.innerHTML = `
-      <div class="tl-card" style="--brand:var(${e.brand})">
-        <div class="tl-head">
-          ${logoBadge(e.brand, e.mono, e.logo)}
-          <div class="tl-headings">
-            <div class="tl-role">${e.role}</div>
-            <div class="tl-company">${e.company} <span class="tl-type">· ${e.type}</span></div>
-            <div class="tl-meta">
-              <span class="tl-chip-meta">${e.date}</span>
-              <span class="tl-chip-meta">📍 ${e.location}</span>
-            </div>
+/* ---------- Render experience timelines (grouped into 3 categories) ---------- */
+function experienceItem(e) {
+  const metrics = (e.metrics || [])
+    .map((m) => `<div class="metric-pill"><span class="mv">${m.v}</span><span class="ml">${m.l}</span></div>`)
+    .join("");
+  const item = document.createElement("div");
+  item.className = "tl-item reveal";
+  item.style.setProperty("--brand", `var(${e.brand})`);
+  item.innerHTML = `
+    <div class="tl-card" style="--brand:var(${e.brand})">
+      <div class="tl-head">
+        ${logoBadge(e.brand, e.mono, e.logo)}
+        <div class="tl-headings">
+          <div class="tl-role">${e.role}</div>
+          <div class="tl-company">${e.company} <span class="tl-type">· ${e.type}</span></div>
+          <div class="tl-meta">
+            <span class="tl-chip-meta">${e.date}</span>
+            <span class="tl-chip-meta">📍 ${e.location}</span>
           </div>
         </div>
-        <div class="tl-tagline">${e.tagline}</div>
-        <ul class="tl-points">${e.points.map((p) => `<li>${p}</li>`).join("")}</ul>
-        ${metrics ? `<div class="tl-metrics">${metrics}</div>` : ""}
-        <div class="tl-tags">${e.tags.map((t) => `<span class="chip">${t}</span>`).join("")}</div>
-      </div>`;
-    wrap.appendChild(item);
+      </div>
+      <div class="tl-tagline">${e.tagline}</div>
+      <ul class="tl-points">${e.points.map((p) => `<li>${p}</li>`).join("")}</ul>
+      ${metrics ? `<div class="tl-metrics">${metrics}</div>` : ""}
+      <div class="tl-tags">${e.tags.map((t) => `<span class="chip">${t}</span>`).join("")}</div>
+    </div>`;
+  return item;
+}
+
+function renderExperience() {
+  const groups = ["industry", "research", "leadership"];
+  groups.forEach((scope) => {
+    const wrap = document.getElementById(`timeline-${scope}`);
+    if (!wrap) return;
+    wrap.innerHTML = "";
+    EXPERIENCE.filter((e) => e.scope === scope).forEach((e) => wrap.appendChild(experienceItem(e)));
   });
   observeReveals();
 }
@@ -564,17 +570,21 @@ function initStarfield() {
     h = canvas.height = Math.floor(innerHeight * DPR);
     canvas.style.width = innerWidth + "px";
     canvas.style.height = innerHeight + "px";
-    const count = Math.min(340, Math.round((innerWidth * innerHeight) / 5200));
-    stars = Array.from({ length: count }, () => ({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      r: (Math.random() * 1.3 + 0.3) * DPR,
-      a: Math.random() * 0.6 + 0.25,
-      tw: Math.random() * 0.018 + 0.004,
-      ph: Math.random() * Math.PI * 2,
-      c: PALETTE[(Math.random() * PALETTE.length) | 0],
-      dy: (Math.random() * 0.06 + 0.02) * DPR, // slow downward drift
-    }));
+    const count = Math.min(520, Math.round((innerWidth * innerHeight) / 2600));
+    stars = Array.from({ length: count }, () => {
+      const bright = Math.random() < 0.18; // ~18% are bright glowing stars
+      return {
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: (bright ? Math.random() * 1.6 + 1.1 : Math.random() * 1.1 + 0.45) * DPR,
+        a: bright ? Math.random() * 0.35 + 0.65 : Math.random() * 0.5 + 0.4,
+        tw: Math.random() * 0.02 + 0.005,
+        ph: Math.random() * Math.PI * 2,
+        c: PALETTE[(Math.random() * PALETTE.length) | 0],
+        dy: (Math.random() * 0.06 + 0.02) * DPR, // slow downward drift
+        glow: bright,
+      };
+    });
   }
 
   function frame() {
@@ -583,11 +593,13 @@ function initStarfield() {
     for (const s of stars) {
       s.y += s.dy;
       if (s.y > h + 2) { s.y = -2; s.x = Math.random() * w; }
-      const alpha = s.a * (0.6 + 0.4 * Math.sin(s.ph + t * s.tw));
+      const alpha = s.a * (0.55 + 0.45 * Math.sin(s.ph + t * s.tw));
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(${s.c},${alpha.toFixed(3)})`;
+      if (s.glow) { ctx.shadowColor = `rgba(${s.c},${alpha.toFixed(3)})`; ctx.shadowBlur = 6 * DPR; }
       ctx.fill();
+      if (s.glow) ctx.shadowBlur = 0;
     }
     // occasional shooting star
     if (!shooting && t > nextShoot) {
