@@ -556,7 +556,8 @@ function initAnimatedMetrics() {
 
 /* ---------- Animated starfield (space vibe) ---------- */
 function initStarfield() {
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  // Reduced-motion users still get a night sky — just static (no drift/twinkle).
+  const REDUCE = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const canvas = document.createElement("canvas");
   canvas.id = "starfield";
   document.body.appendChild(canvas);
@@ -631,8 +632,26 @@ function initStarfield() {
     requestAnimationFrame(frame);
   }
 
+  function drawStatic() {
+    ctx.clearRect(0, 0, w, h);
+    for (const s of stars) {
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${s.c},${s.a.toFixed(3)})`;
+      if (s.glow) { ctx.shadowColor = `rgba(${s.c},${s.a.toFixed(3)})`; ctx.shadowBlur = 6 * DPR; }
+      ctx.fill();
+      if (s.glow) ctx.shadowBlur = 0;
+    }
+  }
+
   build();
   let rt;
+  if (REDUCE) {
+    // static night sky, no animation loop
+    drawStatic();
+    window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { build(); drawStatic(); }, 200); }, { passive: true });
+    return;
+  }
   window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(build, 200); }, { passive: true });
   nextShoot = 120;
   requestAnimationFrame(frame);
