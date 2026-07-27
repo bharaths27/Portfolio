@@ -20,9 +20,9 @@ const EXPERIENCE = [
     logo: "cognizant.com",
     tagline: "// Agentic AI · Data Engineering · Databricks",
     points: [
-      "Engineered a Databricks Workspace Admin Portal on Medallion Architecture (Bronze/Silver/Gold) with Unity Catalog, plus a daily 5AM incremental ETL pipeline for live data access and workspace authorization.",
-      "Architected <strong>\"Aerotrace,\"</strong> a Pydantic-AI multi-agent system for a 200+ aircraft cargo airline that automates complex compliance and audit reporting.",
-      "Built an end-to-end ingestion pipeline from AWS S3 into PostgreSQL (pgvector) and a custom retrieval tool with dynamic SQL / vector / hybrid routing feeding a 4-agent ecosystem (Orchestrator, Compliance, Audit, Output).",
+      "Architected <strong>\"Aerotrace,\"</strong> a Pydantic AI multi-agent system for a cargo airline (200+ aircraft) that automates complex compliance and audit reporting.",
+      "Engineered a Databricks Workspace Admin Portal (Medallion Architecture + Unity Catalog) with a daily automated ETL pipeline for live data access and workspace authorization.",
+      "Built an end-to-end ingestion pipeline from AWS S3 into PostgreSQL (pgvector), with a custom retrieval tool routing across SQL, vector, and hybrid search to feed a 4-agent ecosystem (Orchestrator, Compliance, Audit, Output).",
       "Implemented advanced AI memory (Superset for global context, Subset for isolated inter-agent messaging) and shipped production MCP servers via Databricks Genie.",
     ],
     metrics: [
@@ -31,6 +31,7 @@ const EXPERIENCE = [
       { v: "99%", l: "cost reduction" },
     ],
     tags: ["Pydantic AI", "Databricks", "Unity Catalog", "PostgreSQL / pgvector", "MCP", "AWS S3", "Python"],
+    note: "Enterprise client engagement. Implementation details are under NDA, but I'm glad to walk through the architecture and my approach in an interview.",
   },
   {
     role: "AI Researcher / iOS Developer",
@@ -212,6 +213,7 @@ const PROJECTS = [
     links: {
       video: "https://www.linkedin.com/in/bharaths27/details/projects/",
     },
+    note: "Built at HackDartmouth XI. Full source code available on request.",
     body: `
       <p><strong>TrueFace</strong> is a comprehensive, dual-sided mock-interview and integrity-testing platform built at <strong>HackDartmouth XI</strong>, a complete suite serving both candidates preparing for the real world and recruiters protecting their hiring pipelines.</p>
       <h3>For the Interviewee, The Training Arena</h3>
@@ -276,6 +278,7 @@ const PROJECTS = [
       "Data-driven prediction model that calculates win probabilities and forecasts outcomes for live NBA games from historical performance data.",
     tags: ["Python", "Machine Learning", "Data Analytics", "Pandas"],
     links: {},
+    note: "Code available on request.",
     body: `
       <p>A data-driven prediction platform that calculates win probabilities and forecasts outcomes for live NBA games.</p>
       <h3>Highlights</h3>
@@ -392,16 +395,22 @@ function logoBadge(brand, mono, domain) {
   return `<span class="logo-badge" style="--brand:var(${brand})">${mono}${img}</span>`;
 }
 
-/* ---------- Render experience timelines (grouped into 3 categories) ---------- */
-function experienceItem(e) {
-  const metrics = (e.metrics || [])
+/* ---------- Render experience timelines (grouped into 3 categories) ----------
+   Cards are condensed (top 2 bullets + metrics) and open a detail modal. */
+function metricPills(metrics) {
+  return (metrics || [])
     .map((m) => `<div class="metric-pill"><span class="mv">${m.v}</span><span class="ml">${m.l}</span></div>`)
     .join("");
+}
+
+function experienceItem(e) {
+  const shown = e.points.slice(0, 2);
+  const extra = e.points.length - shown.length;
   const item = document.createElement("div");
   item.className = "tl-item reveal";
   item.style.setProperty("--brand", `var(${e.brand})`);
   item.innerHTML = `
-    <div class="tl-card" style="--brand:var(${e.brand})">
+    <div class="tl-card" style="--brand:var(${e.brand})" tabindex="0" role="button" aria-label="${e.role} at ${e.company}, view details">
       <div class="tl-head">
         ${logoBadge(e.brand, e.mono, e.logo)}
         <div class="tl-headings">
@@ -414,11 +423,34 @@ function experienceItem(e) {
         </div>
       </div>
       <div class="tl-tagline">${e.tagline}</div>
-      <ul class="tl-points">${e.points.map((p) => `<li>${p}</li>`).join("")}</ul>
-      ${metrics ? `<div class="tl-metrics">${metrics}</div>` : ""}
-      <div class="tl-tags">${e.tags.map((t) => `<span class="chip">${t}</span>`).join("")}</div>
+      <ul class="tl-points">${shown.map((p) => `<li>${p}</li>`).join("")}</ul>
+      ${e.metrics ? `<div class="tl-metrics">${metricPills(e.metrics)}</div>` : ""}
+      <div class="tl-tags">${e.tags.slice(0, 6).map((t) => `<span class="chip">${t}</span>`).join("")}</div>
+      <div class="tl-foot"><span class="detail">Full details${extra > 0 ? ` · +${extra} more` : ""} →</span></div>
     </div>`;
+  const card = item.querySelector(".tl-card");
+  const open = () => openExpModal(e);
+  card.addEventListener("click", open);
+  card.addEventListener("keydown", (ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); open(); } });
   return item;
+}
+
+function openExpModal(e) {
+  const overlay = document.getElementById("modalOverlay");
+  overlay.querySelector(".modal").style.setProperty("--brand", `var(${e.brand})`);
+  document.getElementById("modalCat").textContent = `${e.company} · ${e.date}`;
+  document.getElementById("modalTitle").textContent = e.role;
+  document.getElementById("modalBody").innerHTML = `
+    <p class="m-sub">${e.type} · 📍 ${e.location}</p>
+    <p class="tl-tagline" style="margin:6px 0 4px">${e.tagline}</p>
+    <h3>What I did</h3>
+    <ul>${e.points.map((p) => `<li>${p}</li>`).join("")}</ul>
+    ${e.metrics ? `<h3>Impact</h3><div class="tl-metrics">${metricPills(e.metrics)}</div>` : ""}
+    ${e.note ? `<p class="note">${e.note}</p>` : ""}
+    <h3>Skills &amp; Tools</h3>
+    <div class="chips">${e.tags.map((t) => `<span class="chip">${t}</span>`).join("")}</div>`;
+  overlay.classList.add("visible");
+  document.body.style.overflow = "hidden";
 }
 
 function renderExperience() {
@@ -441,7 +473,7 @@ function renderProjects(filter = "all") {
     if (p.links.demo) links.push(`<a href="${p.links.demo}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${iconLink()} Demo</a>`);
     if (p.links.github) links.push(`<a href="${p.links.github}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${iconGithub()} Code</a>`);
     if (p.links.video) links.push(`<a href="${p.links.video}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${iconPlay()} Video</a>`);
-    const linksHtml = links.length ? links.join("") : `<span style="color:var(--text-faint);font-size:.85rem">Private / coursework</span>`;
+    const linksHtml = links.length ? links.join("") : `<span style="color:var(--text-faint);font-size:.85rem">${p.note || "Private / coursework"}</span>`;
 
     const card = document.createElement("article");
     card.className = "project-card reveal" + (p.featured ? " featured" : "");
@@ -487,6 +519,7 @@ function openModal(id) {
   document.getElementById("modalTitle").textContent = p.title;
   document.getElementById("modalBody").innerHTML = `
     ${links.length ? `<div class="m-links">${links.join("")}</div>` : ""}
+    ${p.note ? `<p class="note">${p.note}</p>` : ""}
     ${p.body}
     <h3>Skills Demonstrated</h3>
     <div class="chips">${p.skills.map((s) => `<span class="chip">${s}</span>`).join("")}</div>`;

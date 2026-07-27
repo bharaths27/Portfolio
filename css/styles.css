@@ -211,6 +211,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   padding: 6px 14px; border-radius: 999px; margin-bottom: 26px;
 }
 .hero-status .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); animation: pulse 2s infinite; }
+.hero-badges { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 26px; }
+.hero-badges .hero-status { margin-bottom: 0; }
+.hero-status.auth { border-color: color-mix(in srgb, var(--green) 40%, transparent); }
+.hero-status.auth .check { color: var(--green); font-weight: 700; }
 @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
 
 .hero h1 { font-size: clamp(2.6rem, 6.4vw, 4.6rem); font-weight: 800; line-height: 1.03; letter-spacing: -0.03em; margin-bottom: 18px; }
@@ -234,9 +238,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 /* Hero right: framed portrait + terminal stacked */
 .hero-visual { display: grid; gap: 22px; }
-.hero-photo { position: relative; border-radius: var(--radius); }
+.hero-photo { position: relative; border-radius: var(--radius); max-width: 320px; width: 100%; margin-inline: auto; }
 .hero-photo img {
-  width: 100%; aspect-ratio: 4/5; object-fit: cover; object-position: center 16%;
+  width: 100%; aspect-ratio: 1/1; object-fit: cover; object-position: center 30%;
   border-radius: var(--radius); border: 1px solid var(--border-strong); box-shadow: var(--shadow-lg);
   background: linear-gradient(135deg, rgba(47,123,255,.18), rgba(168,85,247,.18)); display: block;
 }
@@ -246,7 +250,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude; opacity: .8; pointer-events: none;
 }
-.hero-photo.img-fallback { min-height: 380px; display: grid; place-items: center; border: 1px solid var(--border-strong); border-radius: var(--radius); }
+.hero-photo.img-fallback { min-height: 320px; display: grid; place-items: center; border: 1px solid var(--border-strong); border-radius: var(--radius); }
 .hero-photo.img-fallback::after { content: "BS"; font-family: var(--font-mono); font-size: 4.5rem; font-weight: 700; background: var(--accent-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .hero-photo-badge {
   position: absolute; left: 14px; bottom: 12px; z-index: 2;
@@ -388,6 +392,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .metric-pill .mv { font-family: var(--font-mono); font-weight: 700; font-size: 1.15rem; color: var(--brand); line-height: 1.1; }
 .metric-pill .ml { font-size: .72rem; color: var(--text-faint); }
 .tl-tags { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 7px; }
+.tl-card { cursor: pointer; }
+.tl-card:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; }
+.tl-foot { margin-top: 16px; padding-top: 13px; border-top: 1px solid var(--border); }
+.tl-foot .detail { font-family: var(--font-mono); font-size: .78rem; color: var(--brand); }
+.m-sub { font-family: var(--font-mono); font-size: .8rem; color: var(--text-faint); }
 
 /* =====================================================================
    Skills
