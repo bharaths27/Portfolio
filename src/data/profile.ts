@@ -12,19 +12,14 @@ export const PROFILE = {
   location: 'Boston, MA',
   status: 'Open to AI & Security roles · Graduating May 2027',
   auth: 'Authorized to work in the US · no sponsorship required',
-  roles: ['AI & Agentic Systems Engineer', 'Cybersecurity Engineer', 'ML & LLM Builder', 'Robotics Tinkerer', 'Full Stack Developer'],
+  roles: ['AI & Agentic Systems Engineer', 'Cybersecurity Engineer', 'AI Agent Security', 'ML & LLM Builder', 'Robotics Builder'],
 }
 
 export const STATS = [
-  { value: 99, suffix: '%', label: 'Enterprise reporting cost cut', brand: '--cat-professional' },
-  { value: 8640, suffix: '×', label: 'Faster compliance reporting (3 days to 30s)', brand: '--cyan' },
-  { value: 1000, suffix: '+', label: 'API endpoints automated', brand: '--violet' },
-  { value: 396, suffix: '', label: 'Passing tests on ENGRAM Assist', brand: '--c-engram' },
-]
-
-export const MARQUEE = [
-  'Python', 'Pydantic AI', 'LLMs', 'RAG', 'FastAPI', 'Flask', 'React', 'Three.js', 'Databricks',
-  'PostgreSQL', 'Docker', 'OWASP ZAP', 'Nuclei', 'sqlmap', 'whisper.cpp', 'Raspberry Pi', 'MediaPipe', 'Java', 'C++',
+  { value: 99, suffix: '%', label: 'Reporting cost cut at Cognizant', brand: '--c-cognizant' },
+  { value: 8640, suffix: '×', label: 'Faster compliance reporting (3 days to 30s)', brand: '--c-cognizant' },
+  { value: 1000, suffix: '+', label: 'API endpoints automated', brand: '--c-cyware' },
+  { value: 396, suffix: '', label: 'Passing tests on ENGRAM Assist', brand: '--c-bu' },
 ]
 
 export interface SkillGroup {
@@ -40,21 +35,21 @@ export const SKILLS: SkillGroup[] = [
     title: 'AI & Machine Learning',
     sub: 'agents · llms · ml',
     icon: '🤖',
-    brand: '--cyan',
+    brand: '--c-gptfy',
     chips: ['Pydantic AI', 'Multi Agent Systems', 'MCP', 'LLMs & GenAI', 'RLHF', 'Fine Tuning', 'Tiny LLaVA / VLMs', 'Computer Vision', 'RAG & Vector Search', 'Mechanistic Interpretability', 'whisper.cpp', 'Scikit-learn', 'Pandas'],
   },
   {
     title: 'Cybersecurity',
     sub: 'appsec · iam · offsec',
     icon: '🛡️',
-    brand: '--c-gptfy',
-    chips: ['OWASP ZAP', 'Nuclei', 'sqlmap', 'ffuf', 'Dalfox', 'Penetration Testing', 'OWASP Top 10', 'Zero Trust', 'IAM / MFA', 'Adversarial Robustness', 'Red Teaming', 'Signed Commands', 'JWT / Auth'],
+    brand: '--c-bu',
+    chips: ['AI Agent & MCP Security', 'Threat Modeling', 'Penetration Testing', 'OWASP Top 10', 'OWASP ZAP', 'Nuclei', 'sqlmap', 'ffuf', 'Dalfox', 'Content Security Policy', 'SPF / DKIM / DMARC', 'Zero Trust', 'IAM / MFA', 'Adversarial Robustness', 'Red Teaming'],
   },
   {
     title: 'Data & Cloud',
     sub: 'pipelines · db · cloud',
     icon: '🗄️',
-    brand: '--cat-professional',
+    brand: '--c-cognizant',
     chips: ['Databricks', 'Unity Catalog', 'Medallion Architecture', 'ETL Pipelines', 'PostgreSQL', 'pgvector', 'MongoDB', 'Pinecone', 'AWS S3', 'SQLite', 'Docker'],
   },
   {
@@ -69,14 +64,14 @@ export const SKILLS: SkillGroup[] = [
     sub: 'full stack · tooling',
     icon: '⚙️',
     brand: '--green',
-    chips: ['React', 'Next.js', 'Node.js', 'FastAPI', 'Flask', 'Django', 'Spring Boot', 'Three.js', 'GSAP', 'Streamlit', 'Git / BitBucket', 'Linux', 'Claude Code'],
+    chips: ['React', 'Next.js', 'Astro', 'Node.js', 'FastAPI', 'Flask', 'Django', 'Spring Boot', 'Tailwind CSS', 'Three.js', 'GSAP', 'Streamlit', 'Git / BitBucket', 'Linux', 'Claude Code'],
   },
   {
     title: 'Robotics & Hardware',
-    sub: 'embedded · edge',
+    sub: 'hardware · edge',
     icon: '🦾',
     brand: '--c-engram',
-    chips: ['Raspberry Pi 5', 'Hiwonder MasterPi', 'Ultrasonic Sensors', 'OpenCV', 'MJPEG Streaming', 'systemd', 'SSH Tunnels', 'C++ Firmware'],
+    chips: ['Raspberry Pi 5', 'Hiwonder MasterPi', 'Ultrasonic Sensors', 'OpenCV', 'MJPEG Streaming', 'systemd', 'SSH Tunnels', 'C++'],
   },
 ]
 

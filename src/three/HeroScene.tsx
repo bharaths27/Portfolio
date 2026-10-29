@@ -1,306 +1,204 @@
-/* The persistent 3D background: a glowing "neural core" wrapped in scan rings,
-   a node network, and a shader particle field. It lives in a fixed canvas behind
-   the whole page and reacts to the pointer and to scroll progress. */
+/* "Neural shield": the hero visual that sits behind Bharath's photo.
+   A neural network ring (AI) surrounds a hexagonal shield (security).
+   Data packets stream in from the edge: safe ones (blue / purple) pass through
+   the shield, malicious ones (red) are stopped at it and flash. */
 import { useMemo, useRef } from 'react'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { AdaptiveDpr } from '@react-three/drei'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import * as THREE from 'three'
-import { scrollState } from '../hooks/scrollState'
 
-const PALETTE = [new THREE.Color('#5ee7ff'), new THREE.Color('#8b5cf6'), new THREE.Color('#fb923c'), new THREE.Color('#34d399')]
+const BLUE = new THREE.Color('#4f8cff')
+const PURPLE = new THREE.Color('#a78bfa')
+const RED = new THREE.Color('#ff3b4a')
+const SHIELD_R = 1.85
 
-/* Pick a palette color for a 0..1 progress value, blending between stops. */
-function paletteAt(t: number, out: THREE.Color) {
-  const x = Math.min(Math.max(t, 0), 0.9999) * (PALETTE.length - 1)
-  const i = Math.floor(x)
-  return out.copy(PALETTE[i]).lerp(PALETTE[i + 1], x - i)
-}
-
-const particleVertex = /* glsl */ `
-  uniform float uTime;
-  uniform float uPixelRatio;
-  uniform float uSize;
-  uniform float uScroll;
-  attribute float aScale;
-  attribute float aRandom;
-  varying float vRandom;
-  void main() {
-    vec3 p = position;
-    float wave = sin(uTime * 0.6 + aRandom * 6.2831) * 0.08;
-    p += normalize(p) * (wave + uScroll * 1.4 * aRandom);
-    vec4 mv = modelViewMatrix * vec4(p, 1.0);
-    gl_Position = projectionMatrix * mv;
-    gl_PointSize = uSize * aScale * uPixelRatio * (1.0 / -mv.z);
-    vRandom = aRandom;
-  }
-`
-
-const particleFragment = /* glsl */ `
-  uniform vec3 uColorA;
-  uniform vec3 uColorB;
-  varying float vRandom;
-  void main() {
-    float d = length(gl_PointCoord - 0.5);
-    float a = smoothstep(0.5, 0.0, d);
-    vec3 c = mix(uColorA, uColorB, vRandom);
-    gl_FragColor = vec4(c, a * 0.85);
-  }
-`
-
-const coreVertex = /* glsl */ `
-  uniform float uTime;
-  varying vec3 vNormal;
-  varying vec3 vView;
-  varying vec3 vPos;
-  void main() {
-    vec3 p = position;
-    // Cheap layered sine "noise" so the core breathes without a noise library.
-    float n = sin(p.x * 3.1 + uTime * 1.3) * sin(p.y * 2.7 + uTime * 1.1) * sin(p.z * 3.3 + uTime * 0.9);
-    p += normal * n * 0.12;
-    vec4 world = modelMatrix * vec4(p, 1.0);
-    vNormal = normalize(normalMatrix * normal);
-    vView = normalize(cameraPosition - world.xyz);
-    vPos = p;
-    gl_Position = projectionMatrix * viewMatrix * world;
-  }
-`
-
-const coreFragment = /* glsl */ `
-  uniform float uTime;
-  uniform vec3 uRim;
-  uniform vec3 uRim2;
-  varying vec3 vNormal;
-  varying vec3 vView;
-  varying vec3 vPos;
-  void main() {
-    float fres = pow(1.0 - abs(dot(normalize(vNormal), vView)), 2.4);
-    vec3 base = vec3(0.02, 0.025, 0.07);
-    vec3 rim = mix(uRim, uRim2, 0.5 + 0.5 * sin(vPos.y * 2.0 + uTime));
-    // A thin scan band sweeping over the surface.
-    float band = smoothstep(0.03, 0.0, abs(fract(vPos.y * 0.6 - uTime * 0.25) - 0.5));
-    vec3 col = base + rim * fres * 1.6 + uRim * band * 0.6;
-    gl_FragColor = vec4(col, 1.0);
-  }
-`
-
-function CoreMesh() {
-  const mat = useRef<THREE.ShaderMaterial>(null)
-  const uniforms = useMemo(
-    () => ({ uTime: { value: 0 }, uRim: { value: new THREE.Color('#5ee7ff') }, uRim2: { value: new THREE.Color('#8b5cf6') } }),
-    [],
-  )
-  const tmp = useMemo(() => new THREE.Color(), [])
-  useFrame((_, dt) => {
-    if (!mat.current) return
-    mat.current.uniforms.uTime.value += dt
-    mat.current.uniforms.uRim.value.lerp(paletteAt(scrollState.page, tmp), 0.05)
-  })
-  return (
-    <mesh>
-      <icosahedronGeometry args={[1.05, 32]} />
-      <shaderMaterial ref={mat} vertexShader={coreVertex} fragmentShader={coreFragment} uniforms={uniforms} />
-    </mesh>
-  )
-}
-
-function ParticleField({ count }: { count: number }) {
-  const { gl } = useThree()
-  const mat = useRef<THREE.ShaderMaterial>(null)
-  const pts = useRef<THREE.Points>(null)
-
-  const [positions, scales, randoms] = useMemo(() => {
-    const pos = new Float32Array(count * 3)
-    const sc = new Float32Array(count)
-    const rnd = new Float32Array(count)
-    for (let i = 0; i < count; i++) {
-      // Points on a thick spherical shell, denser toward the inside.
-      const r = 3 + Math.pow(Math.random(), 2) * 6
-      const theta = Math.random() * Math.PI * 2
-      const phi = Math.acos(2 * Math.random() - 1)
-      pos[i * 3] = r * Math.sin(phi) * Math.cos(theta)
-      pos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta)
-      pos[i * 3 + 2] = r * Math.cos(phi)
-      sc[i] = 0.4 + Math.random() * 1.2
-      rnd[i] = Math.random()
-    }
-    return [pos, sc, rnd]
-  }, [count])
-
-  const uniforms = useMemo(
-    () => ({
-      uTime: { value: 0 },
-      uPixelRatio: { value: Math.min(gl.getPixelRatio(), 2) },
-      uSize: { value: 38 },
-      uScroll: { value: 0 },
-      uColorA: { value: new THREE.Color('#5ee7ff') },
-      uColorB: { value: new THREE.Color('#8b5cf6') },
-    }),
-    [gl],
-  )
-
-  const tmp = useMemo(() => new THREE.Color(), [])
-
-  useFrame((_, dt) => {
-    if (!mat.current || !pts.current) return
-    const u = mat.current.uniforms
-    u.uTime.value += dt
-    u.uScroll.value = THREE.MathUtils.lerp(u.uScroll.value, scrollState.hero, 0.08)
-    u.uColorA.value.lerp(paletteAt(scrollState.page, tmp), 0.05)
-    pts.current.rotation.y += dt * 0.025
-  })
-
-  return (
-    <points ref={pts}>
-      <bufferGeometry>
-        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
-        <bufferAttribute attach="attributes-aScale" args={[scales, 1]} />
-        <bufferAttribute attach="attributes-aRandom" args={[randoms, 1]} />
-      </bufferGeometry>
-      <shaderMaterial
-        ref={mat}
-        vertexShader={particleVertex}
-        fragmentShader={particleFragment}
-        uniforms={uniforms}
-        transparent
-        depthWrite={false}
-        blending={THREE.AdditiveBlending}
-      />
-    </points>
-  )
-}
-
-/* A small graph of nodes with edges between close neighbours: the "network". */
-function Network({ nodes = 70 }: { nodes?: number }) {
+/* Nodes in a flat ring (annulus) around the shield, with edges between near neighbours. */
+function NeuralRing() {
   const ref = useRef<THREE.Group>(null)
-  const { nodePos, linePos } = useMemo(() => {
+  const { nodes, lines } = useMemo(() => {
     const pts: THREE.Vector3[] = []
-    for (let i = 0; i < nodes; i++) {
-      const v = new THREE.Vector3().randomDirection().multiplyScalar(2.1 + Math.random() * 0.9)
-      pts.push(v)
+    for (let i = 0; i < 90; i++) {
+      const a = Math.random() * Math.PI * 2
+      const r = 2.25 + Math.random() * 1.35
+      pts.push(new THREE.Vector3(Math.cos(a) * r, Math.sin(a) * r, (Math.random() - 0.5) * 0.8))
     }
-    const lines: number[] = []
-    for (let i = 0; i < pts.length; i++) {
-      for (let j = i + 1; j < pts.length; j++) {
-        if (pts[i].distanceTo(pts[j]) < 1.15) lines.push(...pts[i].toArray(), ...pts[j].toArray())
-      }
-    }
-    return {
-      nodePos: new Float32Array(pts.flatMap((p) => p.toArray())),
-      linePos: new Float32Array(lines),
-    }
-  }, [nodes])
+    const seg: number[] = []
+    pts.forEach((p, i) => {
+      // Connect each node to its two nearest neighbours: reads as a network, not a hairball.
+      pts
+        .map((q, j) => ({ j, d: p.distanceTo(q) }))
+        .filter((x) => x.j !== i)
+        .sort((x, y) => x.d - y.d)
+        .slice(0, 2)
+        .forEach(({ j }) => seg.push(...p.toArray(), ...pts[j].toArray()))
+    })
+    return { nodes: new Float32Array(pts.flatMap((p) => p.toArray())), lines: new Float32Array(seg) }
+  }, [])
 
   useFrame((_, dt) => {
-    if (ref.current) {
-      ref.current.rotation.y -= dt * 0.08
-      ref.current.rotation.x += dt * 0.02
-    }
+    if (ref.current) ref.current.rotation.z += dt * 0.03
   })
 
   return (
     <group ref={ref}>
       <lineSegments>
         <bufferGeometry>
-          <bufferAttribute attach="attributes-position" args={[linePos, 3]} />
+          <bufferAttribute attach="attributes-position" args={[lines, 3]} />
         </bufferGeometry>
-        <lineBasicMaterial color="#7dd3fc" transparent opacity={0.22} blending={THREE.AdditiveBlending} depthWrite={false} />
+        <lineBasicMaterial color="#6d8dff" transparent opacity={0.28} depthWrite={false} />
       </lineSegments>
       <points>
         <bufferGeometry>
-          <bufferAttribute attach="attributes-position" args={[nodePos, 3]} />
+          <bufferAttribute attach="attributes-position" args={[nodes, 3]} />
         </bufferGeometry>
-        <pointsMaterial color="#e0f2fe" size={0.06} sizeAttenuation transparent opacity={0.9} blending={THREE.AdditiveBlending} depthWrite={false} />
+        <pointsMaterial color="#c7d2fe" size={0.07} sizeAttenuation transparent opacity={0.95} depthWrite={false} />
       </points>
     </group>
   )
 }
 
-function Ring({ radius, speed, tilt, color }: { radius: number; speed: number; tilt: [number, number, number]; color: string }) {
-  const ref = useRef<THREE.Mesh>(null)
-  useFrame((_, dt) => {
-    if (ref.current) ref.current.rotation.z += dt * speed
+/* Hexagon outline helper. */
+function hexPoints(r: number) {
+  const pts: THREE.Vector3[] = []
+  for (let i = 0; i <= 6; i++) {
+    const a = (i / 6) * Math.PI * 2 + Math.PI / 6
+    pts.push(new THREE.Vector3(Math.cos(a) * r, Math.sin(a) * r, 0))
+  }
+  return pts
+}
+
+function Shield() {
+  const outer = useRef<THREE.Group>(null)
+  const scan = useRef<THREE.Mesh>(null)
+  const hex1 = useMemo(() => new THREE.BufferGeometry().setFromPoints(hexPoints(SHIELD_R)), [])
+  const hex2 = useMemo(() => new THREE.BufferGeometry().setFromPoints(hexPoints(SHIELD_R + 0.12)), [])
+
+  useFrame((state, dt) => {
+    if (outer.current) {
+      outer.current.rotation.z -= dt * 0.08
+      outer.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3) * 0.12
+      outer.current.rotation.y = Math.cos(state.clock.elapsedTime * 0.25) * 0.12
+    }
+    if (scan.current) scan.current.rotation.z += dt * 1.2
   })
+
   return (
-    <group rotation={tilt}>
-      <mesh ref={ref}>
-        <torusGeometry args={[radius, 0.008, 8, 160, Math.PI * 1.6]} />
-        <meshBasicMaterial color={color} toneMapped={false} />
+    <group ref={outer}>
+      <lineLoop geometry={hex1}>
+        <lineBasicMaterial color="#a78bfa" toneMapped={false} />
+      </lineLoop>
+      <lineLoop geometry={hex2}>
+        <lineBasicMaterial color="#4f8cff" transparent opacity={0.5} toneMapped={false} />
+      </lineLoop>
+      {/* Rotating scan arc, like a radar sweep along the shield. */}
+      <mesh ref={scan}>
+        <ringGeometry args={[SHIELD_R + 0.2, SHIELD_R + 0.26, 64, 1, 0, Math.PI * 0.45]} />
+        <meshBasicMaterial color="#a78bfa" transparent opacity={0.8} toneMapped={false} side={THREE.DoubleSide} />
       </mesh>
     </group>
   )
 }
 
-function Core() {
-  const group = useRef<THREE.Group>(null)
-  const wire = useRef<THREE.Mesh>(null)
-  const { viewport, size } = useThree()
-  const mobile = size.width < 900
+interface Packet {
+  angle: number
+  r: number
+  speed: number
+  bad: boolean
+  hit: number // seconds since a bad packet hit the shield, -1 if not yet
+}
 
-  useFrame((state, dt) => {
-    const g = group.current
-    if (!g) return
-    // Hero: core sits to the right on desktop. As you scroll it drifts and shrinks.
-    const h = scrollState.hero
-    const baseX = mobile ? 0 : Math.min(viewport.width * 0.22, 2.4)
-    const targetX = baseX + (mobile ? 0 : h * 1.8)
-    const targetY = mobile ? 2.1 - h * 1.2 : -h * 0.6
-    const targetS = (mobile ? 0.6 : 1) * (1 - h * 0.45)
-    g.position.x = THREE.MathUtils.lerp(g.position.x, targetX, 0.06)
-    g.position.y = THREE.MathUtils.lerp(g.position.y, targetY, 0.06)
-    g.scale.setScalar(THREE.MathUtils.lerp(g.scale.x, targetS, 0.06))
-    // Pointer parallax and slow spin tied to page progress.
-    g.rotation.y = THREE.MathUtils.lerp(g.rotation.y, state.pointer.x * 0.4 + scrollState.page * Math.PI * 2, 0.05)
-    g.rotation.x = THREE.MathUtils.lerp(g.rotation.x, -state.pointer.y * 0.3, 0.05)
-    if (wire.current) {
-      wire.current.rotation.x += dt * 0.15
-      wire.current.rotation.y += dt * 0.1
+function newPacket(start = false): Packet {
+  return {
+    angle: Math.random() * Math.PI * 2,
+    r: start ? 2 + Math.random() * 3 : 4.6 + Math.random() * 0.8,
+    speed: 0.6 + Math.random() * 0.7,
+    bad: Math.random() < 0.3,
+    hit: -1,
+  }
+}
+
+/* Packets travel inward. Bad ones stop at the shield and flash red; good ones pass and fade. */
+function Packets({ count = 46, reduced }: { count?: number; reduced: boolean }) {
+  const packets = useMemo(() => Array.from({ length: count }, () => newPacket(true)), [count])
+  const positions = useMemo(() => new Float32Array(count * 3), [count])
+  const colors = useMemo(() => new Float32Array(count * 3), [count])
+  const geo = useRef<THREE.BufferGeometry>(null)
+  const c = useMemo(() => new THREE.Color(), [])
+
+  useFrame((_, dt) => {
+    const step = reduced ? 0 : Math.min(dt, 0.05)
+    packets.forEach((p, i) => {
+      if (p.hit >= 0) {
+        p.hit += step
+        if (p.hit > 0.6) Object.assign(p, newPacket())
+      } else {
+        p.r -= p.speed * step
+        if (p.bad && p.r <= SHIELD_R + 0.15) {
+          p.r = SHIELD_R + 0.15
+          p.hit = 0
+        }
+        if (!p.bad && p.r < 1.1) Object.assign(p, newPacket())
+      }
+      positions[i * 3] = Math.cos(p.angle) * p.r
+      positions[i * 3 + 1] = Math.sin(p.angle) * p.r
+      positions[i * 3 + 2] = 0.2
+      // Fade in from the edge; a blocked packet flashes bright then fades out.
+      const edge = THREE.MathUtils.clamp((5 - p.r) / 1.2, 0, 1)
+      const flash = p.hit >= 0 ? 1.8 * (1 - p.hit / 0.6) : 1
+      c.copy(p.bad ? RED : i % 2 ? BLUE : PURPLE).multiplyScalar(edge * flash)
+      if (!p.bad && p.r < SHIELD_R) c.multiplyScalar(THREE.MathUtils.clamp((p.r - 1.1) / 0.7, 0, 1))
+      colors[i * 3] = c.r
+      colors[i * 3 + 1] = c.g
+      colors[i * 3 + 2] = c.b
+    })
+    if (geo.current) {
+      geo.current.attributes.position.needsUpdate = true
+      geo.current.attributes.color.needsUpdate = true
     }
   })
 
   return (
+    <points>
+      <bufferGeometry ref={geo}>
+        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
+        <bufferAttribute attach="attributes-color" args={[colors, 3]} />
+      </bufferGeometry>
+      <pointsMaterial size={0.13} vertexColors sizeAttenuation transparent depthWrite={false} toneMapped={false} blending={THREE.AdditiveBlending} />
+    </points>
+  )
+}
+
+function Scene({ reduced }: { reduced: boolean }) {
+  const group = useRef<THREE.Group>(null)
+  useFrame((state) => {
+    const g = group.current
+    if (!g || reduced) return
+    g.rotation.y = THREE.MathUtils.lerp(g.rotation.y, state.pointer.x * 0.25, 0.05)
+    g.rotation.x = THREE.MathUtils.lerp(g.rotation.x, -state.pointer.y * 0.2, 0.05)
+  })
+  return (
     <group ref={group}>
-      <CoreMesh />
-      <mesh ref={wire}>
-        <icosahedronGeometry args={[1.45, 1]} />
-        <meshBasicMaterial color="#5ee7ff" wireframe transparent opacity={0.35} toneMapped={false} />
-      </mesh>
-      <Ring radius={1.85} speed={0.4} tilt={[Math.PI / 2.2, 0, 0]} color="#5ee7ff" />
-      <Ring radius={2.05} speed={-0.25} tilt={[Math.PI / 3, Math.PI / 5, 0]} color="#a78bfa" />
-      <Ring radius={2.3} speed={0.18} tilt={[Math.PI / 1.7, -Math.PI / 6, 0]} color="#fb923c" />
-      <Network nodes={mobile ? 45 : 70} />
+      <NeuralRing />
+      <Shield />
+      <Packets reduced={reduced} />
     </group>
   )
 }
 
-function CameraRig() {
-  useFrame((state) => {
-    const { camera, pointer } = state
-    camera.position.x = THREE.MathUtils.lerp(camera.position.x, pointer.x * 0.5, 0.04)
-    camera.position.y = THREE.MathUtils.lerp(camera.position.y, pointer.y * 0.3, 0.04)
-    camera.lookAt(0, 0, 0)
-  })
-  return null
-}
-
-export default function HeroScene({ reduced }: { reduced: boolean }) {
-  const mobile = typeof window !== 'undefined' && window.innerWidth < 900
+export default function HeroScene({ reduced, active }: { reduced: boolean; active: boolean }) {
   return (
     <Canvas
-      className="scene-canvas"
+      className="hero-canvas"
       dpr={[1, 1.75]}
-      camera={{ position: [0, 0, 7], fov: 45 }}
-      gl={{ antialias: false, powerPreference: 'high-performance', alpha: true }}
-      frameloop={reduced ? 'demand' : 'always'}
+      camera={{ position: [0, 0, 9.4], fov: 45 }}
+      gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+      frameloop={reduced || !active ? 'demand' : 'always'}
       eventSource={document.body}
       eventPrefix="client"
     >
-      <AdaptiveDpr pixelated />
-      <ParticleField count={mobile ? 2200 : 5000} />
-      <Core />
-      <CameraRig />
+      <Scene reduced={reduced} />
       <EffectComposer multisampling={0}>
-        <Bloom mipmapBlur luminanceThreshold={0.15} intensity={0.9} radius={0.7} />
+        <Bloom mipmapBlur luminanceThreshold={0.2} intensity={0.8} radius={0.6} />
       </EffectComposer>
     </Canvas>
   )

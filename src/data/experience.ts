@@ -59,7 +59,7 @@ export const EXPERIENCE: Experience[] = [
     date: "May 2026 – Jul 2026",
     location: "New York, NY",
     scope: "industry",
-    brand: "--cat-professional",
+    brand: "--c-cognizant",
     mono: "CG",
     tagline: "// Agentic AI · Data Engineering · Databricks",
     points: [
@@ -83,7 +83,7 @@ export const EXPERIENCE: Experience[] = [
     date: "Jan 2026 – May 2026",
     location: "Boston, MA",
     scope: "research",
-    brand: "--cat-research",
+    brand: "--c-bu",
     mono: "H2X",
     tagline: "// Vision-Language Models · Accessible Navigation",
     points: [
@@ -101,7 +101,7 @@ export const EXPERIENCE: Experience[] = [
     date: "Jan 2026 – May 2026",
     location: "Boston, MA",
     scope: "research",
-    brand: "--cat-research",
+    brand: "--c-bu",
     mono: "AL",
     tagline: "// Scientific Computing · EdTech Visualization",
     points: [
@@ -119,7 +119,7 @@ export const EXPERIENCE: Experience[] = [
     date: "Jan 2026 – Apr 2026",
     location: "Boston, MA",
     scope: "research",
-    brand: "--cat-research",
+    brand: "--c-bu",
     mono: "AI",
     tagline: "// Alignment · Interpretability · AI Control",
     points: [
@@ -137,7 +137,7 @@ export const EXPERIENCE: Experience[] = [
     date: "Jan 2025 – May 2026",
     location: "Boston, MA",
     scope: "leadership",
-    brand: "--cat-leadership",
+    brand: "--c-bu",
     mono: "CyS",
     tagline: "// Technical Leadership · Curriculum · Outreach",
     points: [
@@ -155,7 +155,7 @@ export const EXPERIENCE: Experience[] = [
     date: "Mar 2025 – Sep 2025",
     location: "Jersey City, NJ",
     scope: "industry",
-    brand: "--cat-professional",
+    brand: "--c-cyware",
     mono: "CY",
     tagline: "// ML for Cybersecurity · Threat Detection",
     points: [
@@ -176,7 +176,7 @@ export const EXPERIENCE: Experience[] = [
     date: "Aug 2024 – Nov 2024",
     location: "Iselin, NJ",
     scope: "industry",
-    brand: "--cat-professional",
+    brand: "--c-1kosmos",
     mono: "1K",
     tagline: "// Zero-Trust · Decentralized Identity · MFA",
     points: [
@@ -197,7 +197,7 @@ export const EXPERIENCE: Experience[] = [
     date: "May 2024 – Aug 2024",
     location: "Boston, MA",
     scope: "industry",
-    brand: "--cat-professional",
+    brand: "--c-bahwan",
     mono: "BCT",
     tagline: "// Enterprise Full-Stack · Java / Spring Boot",
     points: [
@@ -219,7 +219,7 @@ export const EXPERIENCE: Experience[] = [
     date: "May 2023 – Sep 2023",
     location: "Iselin, NJ",
     scope: "industry",
-    brand: "--cat-professional",
+    brand: "--c-eufinity",
     mono: "EU",
     tagline: "// Secure Full-Stack · ML Microservices",
     points: [

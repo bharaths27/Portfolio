@@ -4,7 +4,7 @@ export interface Project {
   id: string
   title: string
   category: string
-  tag: 'ai' | 'ml' | 'embedded' | 'robotics' | 'security'
+  tag: 'ai' | 'ml' | 'robotics' | 'security'
   glyph: string
   date: string
   featured?: boolean
@@ -12,7 +12,9 @@ export interface Project {
   image?: string
   short: string
   tags: string[]
-  links: { demo?: string; github?: string; video?: string; devpost?: string }
+  links: { demo?: string; github?: string; video?: string; devpost?: string; site?: string }
+  /** Extra labelled links shown in the case study. */
+  more?: { label: string; url: string }[]
   note?: string
   body: string
   skills: string[]
@@ -77,6 +79,85 @@ export const PROJECTS: Project[] = [
     skills: ['Python', 'FastAPI', 'Raspberry Pi OS', 'whisper.cpp', 'OpenCV', 'MJPEG streaming', 'Signed HTTP', 'SSH tunnels', 'pytest', 'React 19', 'TypeScript', 'Vite', 'Tailwind CSS', 'React Three Fiber', 'MediaPipe Hands', 'Vitest', 'ffmpeg'],
   },
   {
+    id: 'boundline',
+    title: 'Boundline',
+    category: 'Security business · AI agents · MCP',
+    tag: 'security',
+    glyph: '⟂',
+    date: 'Oct 2026',
+    featured: true,
+    brand: '--c-boundline',
+    short:
+      'Boundline is my security review business for AI agents and MCP servers. I designed, built and launched the website, the products and the outreach system myself.',
+    tags: ['Astro', 'React', 'TypeScript', 'React Three Fiber', 'GSAP', 'Stripe', 'Cloudflare Pages'],
+    links: {
+      site: 'https://boundline.dev',
+    },
+    note: 'The code is in a private GitHub repo. I can walk through it on request.',
+    more: [
+      { label: 'Field note: Twelve checks before you ship an MCP server', url: 'https://boundline.dev/notes/mcp-server-security-checks/' },
+      { label: 'Templates and the MCP server checklist', url: 'https://boundline.dev/templates/' },
+      { label: 'Book a call', url: 'https://cal.com/boundline/intro' },
+    ],
+    stats: [
+      { v: '40', l: 'check MCP checklist' },
+      { v: '4 step', l: 'scroll story' },
+      { v: 'Live', l: 'site, booking, product' },
+    ],
+    body: `
+      <p><strong>Boundline</strong> is a small business I started in October 2026. It does security reviews for startups that build AI agents and MCP servers. Those startups often get asked hard security questions by their buyers, so Boundline reviews how their agent handles tool permissions, untrusted input, tool definitions, authentication, secrets and third party servers, then gives them a written report and fixes.</p>
+      <h3>What I built</h3>
+      <ul>
+        <li><strong>The business itself.</strong> I wrote the offers, the scope of a review, the pricing, the terms and the privacy policy.</li>
+        <li><strong>The website, boundline.dev.</strong> Astro with React islands, TypeScript, Tailwind CSS v4, GSAP and Lenis for motion, and React Three Fiber for the 3D scene. Hosted on Cloudflare Pages. Every push to main deploys on its own, and every branch gets its own preview link.</li>
+        <li><strong>A scroll story called "How one message crosses the line".</strong> It walks through a real attack pattern in four steps: an untrusted ticket lands in an issue tracker, the agent reads it, the agent tries to send data out by email, and an approval gate stops it. Each colour on the site has one meaning: amber for untrusted input, crimson for crossing the boundary, and jade for contained or approved.</li>
+        <li><strong>A site that works for everyone.</strong> It works with reduced motion, without JavaScript and without WebGL, where a 2D diagram takes over. It keeps WCAG AA contrast and has no sideways scrolling from 360px to 1920px wide.</li>
+        <li><strong>Security on my own site.</strong> A strict content security policy only allows scripts, styles and fonts from the site itself, with no inline code at all. I wrote a build check that fails the build if anything would break this policy.</li>
+        <li><strong>Products.</strong> A 40 check MCP server security checklist, sold for $15 through Stripe, with a download page after payment. A field note called "Twelve checks before you ship an MCP server".</li>
+        <li><strong>Email and domain setup.</strong> Google Workspace on my own domain, with SPF, DKIM and a strict DMARC policy.</li>
+        <li><strong>An outreach system.</strong> A scheduled task finds startups that just launched or raised money, finds an address they published themselves, and saves a short personal email as a draft. It sends at most 5 emails a day, never guesses an address, honors every opt out, and stops sending if emails start to bounce.</li>
+      </ul>
+      <h3>Status</h3>
+      <p>Launched in October 2026. The website, booking and the first paid product are live.</p>
+    `,
+    skills: ['AI agent security', 'MCP security', 'Threat modeling', 'Web security headers / CSP', 'Astro', 'React', 'TypeScript', 'Tailwind CSS', 'three.js', 'GSAP', 'Accessibility', 'DNS and email security (SPF, DKIM, DMARC)', 'Stripe', 'Automation', 'Running a business'],
+  },
+  {
+    id: "trueface",
+    title: "TrueFace",
+    category: "AI · Deepfake Detection · Full-Stack",
+    tag: "ai",
+    glyph: "◎",
+    date: "Apr 2026",
+    
+    brand: "--violet",
+    short:
+      "Dual-sided mock-interview & integrity platform (HackDartmouth XI). A real-time conversational AI avatar trains candidates, while a live integrity engine detects deepfakes, latency anomalies, and bot-like reasoning for recruiters.",
+    tags: ["Gemini", "HeyGen SDK", "Deepfake Detection", "Python", "MongoDB", "Full-Stack"],
+    links: {
+      github: "https://github.com/bharaths27/HackDartmouthXI",
+      video: "https://www.youtube.com/watch?v=oRwWkHM_534",
+      devpost: "https://devpost.com/software/trueface",
+    },
+    body: `
+      <p><strong>TrueFace</strong> is a comprehensive, dual-sided mock-interview and integrity-testing platform built at <strong>HackDartmouth XI</strong>, a complete suite serving both candidates preparing for the real world and recruiters protecting their hiring pipelines.</p>
+      <h3>For the Interviewee, The Training Arena</h3>
+      <ul>
+        <li><strong>Real-Time AI Live Avatar:</strong> a hyper-realistic, low-latency conversational partner powered by <strong>Gemini</strong> and <strong>HeyGen</strong> that simulates the pressure of a real face-to-face interview.</li>
+        <li><strong>Live Speech Analytics:</strong> an in-browser dashboard that intercepts raw audio transcripts to track and penalize filler words ("um," "like," "uh") the millisecond they happen.</li>
+        <li><strong>Performance Review Dashboard:</strong> a full CRUD interface to save, review, and delete recorded video responses next to the exact prompt asked, so candidates can study body language and delivery.</li>
+      </ul>
+      <h3>For the Interviewer, The Integrity Engine</h3>
+      <ul>
+        <li><strong>Real-Time Deepfake Detection:</strong> active monitoring of the candidate's video stream to catch synthetic manipulation and facial overlays.</li>
+        <li><strong>Voice &amp; Latency Tracking:</strong> measures unnatural latency spikes and audio anomalies that signal a third-party AI transcription/generation tool.</li>
+        <li><strong>Cognitive &amp; Reasoning Evaluation:</strong> a dedicated Speech Analyzer + Gemini Analyzer measure live reasoning against human baselines to catch suspiciously perfect, scripted answers.</li>
+        <li><strong>Live Risk Aggregation:</strong> consolidates deepfake probability, latency, voice anomalies, and reasoning scores into a single real-time Risk Score so recruiters know instantly if a session is compromised.</li>
+      </ul>
+    `,
+    skills: ["Gemini", "HeyGen SDK", "Anthropic Claude", "Deepfake Detection", "Computer Vision", "Speech Analytics", "MongoDB", "Full-Stack", "Real-Time Systems"],
+  },
+  {
     id: 'engram-cortex',
     title: 'ENGRAM Cortex',
     category: 'Robotics · AI Memory',
@@ -100,40 +181,6 @@ export const PROJECTS: Project[] = [
       <p>The next day our team built ENGRAM Assist on top of it at DS+X. Both projects grew out of VAYLT, my Boston University EC 463 Senior Design project, a private home hub for files.</p>
     `,
     skills: ['Python', 'Robotics', 'Task Planning', 'Human in the loop'],
-  },
-  {
-    id: "trueface",
-    title: "TrueFace",
-    category: "AI · Deepfake Detection · Full-Stack",
-    tag: "ai",
-    glyph: "◎",
-    date: "Apr 2026",
-    
-    brand: "--violet",
-    short:
-      "Dual-sided mock-interview & integrity platform (HackDartmouth XI). A real-time conversational AI avatar trains candidates, while a live integrity engine detects deepfakes, latency anomalies, and bot-like reasoning for recruiters.",
-    tags: ["Gemini", "HeyGen SDK", "Deepfake Detection", "Python", "MongoDB", "Full-Stack"],
-    links: {
-      video: "https://www.linkedin.com/in/bharaths27/details/projects/",
-    },
-    note: "Built at HackDartmouth XI. Full source code available on request.",
-    body: `
-      <p><strong>TrueFace</strong> is a comprehensive, dual-sided mock-interview and integrity-testing platform built at <strong>HackDartmouth XI</strong>, a complete suite serving both candidates preparing for the real world and recruiters protecting their hiring pipelines.</p>
-      <h3>For the Interviewee, The Training Arena</h3>
-      <ul>
-        <li><strong>Real-Time AI Live Avatar:</strong> a hyper-realistic, low-latency conversational partner powered by <strong>Gemini</strong> and <strong>HeyGen</strong> that simulates the pressure of a real face-to-face interview.</li>
-        <li><strong>Live Speech Analytics:</strong> an in-browser dashboard that intercepts raw audio transcripts to track and penalize filler words ("um," "like," "uh") the millisecond they happen.</li>
-        <li><strong>Performance Review Dashboard:</strong> a full CRUD interface to save, review, and delete recorded video responses next to the exact prompt asked, so candidates can study body language and delivery.</li>
-      </ul>
-      <h3>For the Interviewer, The Integrity Engine</h3>
-      <ul>
-        <li><strong>Real-Time Deepfake Detection:</strong> active monitoring of the candidate's video stream to catch synthetic manipulation and facial overlays.</li>
-        <li><strong>Voice &amp; Latency Tracking:</strong> measures unnatural latency spikes and audio anomalies that signal a third-party AI transcription/generation tool.</li>
-        <li><strong>Cognitive &amp; Reasoning Evaluation:</strong> a dedicated Speech Analyzer + Gemini Analyzer measure live reasoning against human baselines to catch suspiciously perfect, scripted answers.</li>
-        <li><strong>Live Risk Aggregation:</strong> consolidates deepfake probability, latency, voice anomalies, and reasoning scores into a single real-time Risk Score so recruiters know instantly if a session is compromised.</li>
-      </ul>
-    `,
-    skills: ["Gemini", "HeyGen SDK", "Anthropic Claude", "Deepfake Detection", "Computer Vision", "Speech Analytics", "MongoDB", "Full-Stack", "Real-Time Systems"],
   },
   {
     id: "smart-contract-auditor",
@@ -249,27 +296,5 @@ export const PROJECTS: Project[] = [
       <p>Cross-origin deployment surfaced <strong>CORS</strong> errors between the live frontend and backends, resolved with server-side CORS policies whitelisting the frontend domain. Secrets (API keys, DB credentials) were secured with <strong>environment variables</strong> on Render, keeping sensitive data out of the public repos.</p>
     `,
     skills: ["React", "Three.js", "WebGL", "Node.js", "Python", "Flask", "Scikit-learn", "REST APIs", "Secure Credentials", "CORS"],
-  },
-  {
-    id: "floorcare-robot",
-    title: "Autonomous Floorcare Robot",
-    category: "Embedded · Robotics",
-    tag: "embedded",
-    glyph: "⬡",
-    date: "May 2024",
-    brand: "--c-1kosmos",
-    short:
-      "University project: C++ firmware for an autonomous robot with real-time obstacle avoidance and a dual-function navigation + vacuuming system.",
-    tags: ["C++", "Embedded", "Sensors", "Robotics"],
-    links: {},
-    body: `
-      <p>An autonomous multi-function floorcare robot built as a university project.</p>
-      <h3>Highlights</h3>
-      <ul>
-        <li>Designed and programmed <strong>C++ firmware</strong> integrating ultrasonic and IR sensors for robust, real-time obstacle avoidance.</li>
-        <li>Implemented actuator control logic for differential-drive locomotion and a relay-switched fan, creating a dual-function navigation and vacuuming system.</li>
-      </ul>
-    `,
-    skills: ["C++", "Embedded Systems", "Sensor Integration", "Control Logic", "Robotics"],
   },
 ]

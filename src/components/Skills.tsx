@@ -1,37 +1,59 @@
+import { useState } from 'react'
 import { CERTS, SKILLS } from '../data/profile'
 import SectionHead from './SectionHead'
-import TiltCard from './TiltCard'
 
+/* Skills as a clean, scannable board: pick a category on the left, see its tools on the right.
+   "All" shows every category as labelled rows. */
 export default function Skills() {
+  const [active, setActive] = useState<string>('all')
+  const shown = active === 'all' ? SKILLS : SKILLS.filter((g) => g.title === active)
+
   return (
     <section className="section" id="skills">
       <div className="container">
-        <SectionHead index="05" eyebrow="toolkit" title="Skills and" accent="technologies" sub="The stack I reach for across AI, security, robotics and full stack engineering." />
-        <div className="skills-grid">
-          {SKILLS.map((g) => (
-            <div className="reveal" key={g.title}>
-              <TiltCard className="skill-card glass" max={5} style={{ ['--brand' as string]: `var(${g.brand})` }}>
-                <div className="skill-head">
-                  <span className="skill-icon">{g.icon}</span>
-                  <div>
-                    <h3>{g.title}</h3>
-                    <div className="mono muted small">{g.sub}</div>
-                  </div>
+        <SectionHead index="04" eyebrow="toolkit" title="Skills and" accent="tools" sub="Grouped by area so you can find what you are looking for fast." />
+        <div className="skills-board card reveal">
+          <div className="skills-tabs" role="tablist" aria-label="Skill areas">
+            <button role="tab" aria-selected={active === 'all'} className={`skills-tab ${active === 'all' ? 'is-active' : ''}`} onClick={() => setActive('all')}>
+              <span className="skills-tab-icon">✦</span> All areas
+              <span className="skills-tab-n mono">{SKILLS.reduce((n, g) => n + g.chips.length, 0)}</span>
+            </button>
+            {SKILLS.map((g) => (
+              <button
+                key={g.title}
+                role="tab"
+                aria-selected={active === g.title}
+                className={`skills-tab ${active === g.title ? 'is-active' : ''}`}
+                style={{ ['--brand' as string]: `var(${g.brand})` }}
+                onClick={() => setActive(g.title)}
+              >
+                <span className="skills-tab-icon">{g.icon}</span> {g.title}
+                <span className="skills-tab-n mono">{g.chips.length}</span>
+              </button>
+            ))}
+          </div>
+          <div className="skills-panel" role="tabpanel">
+            {shown.map((g) => (
+              <div className="skills-row" key={g.title} style={{ ['--brand' as string]: `var(${g.brand})` }}>
+                <div className="skills-row-head">
+                  <span>{g.icon}</span>
+                  <h3>{g.title}</h3>
+                  <span className="mono muted small">{g.sub}</span>
                 </div>
                 <div className="chips">
                   {g.chips.map((c) => (
-                    <span className="chip" key={c}>
+                    <span className="chip chip-brand" key={c}>
                       {c}
                     </span>
                   ))}
                 </div>
-              </TiltCard>
-            </div>
-          ))}
+              </div>
+            ))}
+          </div>
         </div>
         <div className="certs">
           {CERTS.map((c) => (
-            <div className="cert glass reveal" key={c.name}>
+            <div className="cert card reveal" key={c.name}>
               <span className="cert-ic">{c.icon}</span>
               <div>
                 <div className="cert-name">{c.name}</div>
