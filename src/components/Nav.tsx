@@ -4,7 +4,6 @@ import { scrollTo } from '../hooks/useSmoothScroll'
 
 const LINKS = [
   { id: 'about', label: 'About' },
-  { id: 'now', label: 'Now' },
   { id: 'experience', label: 'Experience' },
   { id: 'projects', label: 'Projects' },
   { id: 'skills', label: 'Skills' },

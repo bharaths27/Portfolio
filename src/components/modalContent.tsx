@@ -1,6 +1,7 @@
 import type { Experience } from '../data/experience'
 import type { Project } from '../data/projects'
 import type { ModalContent } from './Modal'
+import { PIPELINE } from '../data/profile'
 import { GithubIcon, LinkIcon, PlayIcon } from './Icons'
 
 export function MetricPills({ metrics }: { metrics?: { v: string; l: string }[] }) {
@@ -51,6 +52,11 @@ export function ProjectLinks({ p, large }: { p: Project; large?: boolean }) {
           <PlayIcon /> Video
         </a>
       )}
+      {p.links.site && (
+        <a className={cls} href={p.links.site} target="_blank" rel="noopener" onClick={stop}>
+          <LinkIcon /> Website
+        </a>
+      )}
       {p.links.devpost && (
         <a className={cls} href={p.links.devpost} target="_blank" rel="noopener" onClick={stop}>
           <LinkIcon /> Devpost
@@ -78,6 +84,22 @@ export function experienceModal(e: Experience): ModalContent {
             <li key={i} dangerouslySetInnerHTML={{ __html: p }} />
           ))}
         </ul>
+        {e.company === 'GPTfy' && (
+          <>
+            <h3>How the pipeline works</h3>
+            <ol className="pipeline">
+              {PIPELINE.map((s) => (
+                <li key={s.k}>
+                  <span className="pipeline-k mono">{s.k}</span>
+                  <div>
+                    <strong>{s.title}</strong>
+                    <p>{s.text}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </>
+        )}
         {e.metrics && (
           <>
             <h3>Impact</h3>
@@ -119,6 +141,20 @@ export function projectModal(p: Project, withVideo = false): ModalContent {
           <ProjectLinks p={p} large />
         </div>
         <div className="m-rich" dangerouslySetInnerHTML={{ __html: p.body }} />
+        {p.more && (
+          <>
+            <h3>Links</h3>
+            <ul>
+              {p.more.map((l) => (
+                <li key={l.url}>
+                  <a href={l.url} target="_blank" rel="noopener">
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
         {p.note && <p className="note">{p.note}</p>}
         <h3>Skills and tools</h3>
         <Chips items={p.skills} />

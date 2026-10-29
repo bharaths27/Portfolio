@@ -19,7 +19,7 @@ export default function Contact() {
     <section className="section contact" id="contact">
       <div className="container contact-inner">
         <div className="section-eyebrow mono reveal" style={{ justifyContent: 'center' }}>
-          <span className="eyebrow-idx">06</span>
+          <span className="eyebrow-idx">05</span>
           <span className="eyebrow-line" />
           get in touch
         </div>
@@ -27,7 +27,7 @@ export default function Contact() {
           Let's build something <span className="grad">smart and secure.</span>
         </h2>
         <p className="contact-sub reveal">
-          I am open to internships and new grad roles in AI, security and robotics. Whether you have a role, a project, or just want to talk shop, my inbox
+          I am open to roles in AI, security and robotics. Whether you have a role, a project, or just want to talk shop, my inbox
           is open.
         </p>
         <div className="contact-actions reveal">
