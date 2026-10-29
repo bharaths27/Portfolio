@@ -1,81 +1,61 @@
-# Bharath Srividhya — Portfolio
+# Bharath Srividhya · Portfolio
 
-A fast, hand-built personal portfolio for a Computer Engineer working at the
-intersection of **Artificial Intelligence** and **Cybersecurity**. No frameworks,
-no build step — just semantic HTML, modern CSS, and vanilla JavaScript.
+My personal portfolio: AI, cybersecurity and robotics. A fixed 3D scene (React Three Fiber + custom shaders + bloom)
+sits behind the whole page and reacts to your mouse and scroll, with GSAP scroll animations and Lenis smooth scrolling on top.
 
 🔗 **Live site:** https://bharaths27.github.io/Portfolio/
 
-![Portfolio hero](assets/profile.jpg)
-
 ## Highlights
 
-- **Space-themed, animated design** — a canvas starfield (twinkle, drift, and the
-  occasional shooting star) over a colorful ambient gradient. Degrades gracefully
-  to a static night sky when the visitor prefers reduced motion.
-- **Color-coded experience** — roles are grouped and colored by type:
-  🔵 Work Experience · 🟢 Research · 🔴 Leadership.
-- **Company logo wall** — organizations I've worked with and Boston University,
-  with brand-colored monogram fallbacks if a logo fails to load.
-- **Impact-first KPIs** with animated count-ups (cost reduction, latency, scale).
-- **Project case studies** — click any card for architecture, challenges, and
-  solutions in a modal.
-- **Responsive & accessible** — mobile menu, keyboard-dismissible modal, scroll
-  reveals, and `prefers-reduced-motion` support.
-
-## Sections
-
-`About → Experience → Projects → Skills → Contact`
+- **Live 3D background.** A fresnel shaded core with a scan band, orbit rings, a node network and 5,000 shader particles. It drifts away and dims as you scroll, and its colors shift through the page.
+- **Smooth scroll that stays in sync.** Lenis runs on the GSAP ticker, so every ScrollTrigger animation lines up with the smooth scroll.
+- **Pinned horizontal story** of the GPTfy scanner pipeline (desktop), stacked cards on phones.
+- **Kinetic type.** SplitText reveals for the name and every section title, a typed role line, and a scroll speed aware marquee.
+- **Case study modals** for every role and project, with the ENGRAM Assist demo video embedded.
+- **Small touches:** preloader, custom cursor with labels, magnetic buttons, 3D tilt cards, scroll progress bar, film grain.
+- **Accessible:** `prefers-reduced-motion` turns off the preloader, smooth scroll and heavy motion; keyboard friendly cards and modal; no horizontal scroll on phones.
 
 ## Tech
 
-| Area | Details |
-|------|---------|
-| Markup | Semantic HTML5 |
-| Styles | CSS custom properties, grid/flex, `color-mix()`, no preprocessor |
-| Behavior | Vanilla JS (ES2020), `IntersectionObserver`, Canvas 2D |
-| Fonts | Inter + JetBrains Mono (Google Fonts) |
-| Hosting | GitHub Pages |
+| Area | Libraries |
+|------|-----------|
+| App | Vite, React 19, TypeScript |
+| 3D | three.js, @react-three/fiber, @react-three/drei, @react-three/postprocessing |
+| Motion | GSAP (ScrollTrigger, SplitText), @gsap/react, Lenis, Motion |
+| Hosting | GitHub Pages via GitHub Actions |
 
-## Project structure
+## Run it locally
 
-```
-Portfolio/
-├── index.html          # markup for every section
-├── css/
-│   └── styles.css       # design system + component styles
-├── js/
-│   └── main.js          # data (experience/projects), rendering, starfield, interactions
-└── assets/
-    ├── profile.jpg               # hero portrait
-    ├── Bharath_Srividhya_Resume.pdf
-    └── projects/                 # optional project screenshots
+```bash
+git clone https://github.com/bharaths27/Portfolio.git
+cd Portfolio
+npm install
+npm run dev        # http://localhost:5173
+npm run build      # production build in dist/
+npm run preview    # serve the build
 ```
 
 ## Editing content
 
-All content is data-driven in [`js/main.js`](js/main.js):
+All text lives in `src/data/`:
 
-- **Experience** — edit the `EXPERIENCE` array. Each entry sets its category
-  (`scope`: `industry` / `research` / `leadership`) and color (`brand`).
-- **Projects** — edit the `PROJECTS` array. Set `featured: true` to pin a card
-  to the top; add screenshots to `assets/projects/` (see `assets/README.md`).
+- `experience.ts`: roles (`scope` is `industry`, `research` or `leadership`; `current: true` shows the NOW tag)
+- `projects.ts`: projects (`featured: true` makes the big card at the top; `links` can have `github`, `demo`, `video`, `devpost`)
+- `profile.ts`: hero text, stats, marquee, skills, certifications and the GPTfy pipeline stages
 
-## Run locally
+## Deploying
 
-It's a static site — open `index.html` directly, or serve it:
+Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the site and publishes it to GitHub Pages.
+One time setup: in the repo go to **Settings → Pages → Build and deployment → Source** and pick **GitHub Actions**.
 
-```bash
-# Python
-python -m http.server 8000
-# then visit http://localhost:8000
+## Working on it with Claude Code
+
+`CLAUDE.md` tells Claude Code how the project is laid out and the content rules. Useful plugins:
+
+```text
+/plugin install frontend-design@claude-plugins-official
+/plugin install playwright@claude-plugins-official
+/plugin install context7@claude-plugins-official
+/plugin marketplace add greensock/gsap-skills
+/plugin install gsap-skills@gsap-skills
 ```
-
-## Deployment
-
-Pushing to `main` auto-deploys via **GitHub Pages** (Settings → Pages, source:
-`main` branch). Changes go live within ~1 minute.
-
----
-
-© Bharath Srividhya · Built from scratch, no frameworks.
