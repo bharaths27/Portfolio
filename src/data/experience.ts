@@ -63,7 +63,7 @@ export const EXPERIENCE: Experience[] = [
     mono: "CG",
     tagline: "// Agentic AI · Data Engineering · Databricks",
     points: [
-      "Architected <strong>\"Aerotrace,\"</strong> a Pydantic AI multi-agent system for a cargo airline (200+ aircraft) that automates complex compliance and audit reporting.",
+      "Architected <strong>\"Aerotrace,\"</strong> at a Cognizant intern hackathon hosted by Senior Directors: a Pydantic AI multi-agent system for a cargo airline (200+ aircraft) that automates complex compliance and audit reporting.",
       "Engineered a Databricks Workspace Admin Portal (Medallion Architecture + Unity Catalog) with a daily automated ETL pipeline for live data access and workspace authorization.",
       "Built an end-to-end ingestion pipeline from AWS S3 into PostgreSQL (pgvector), with a custom retrieval tool routing across SQL, vector, and hybrid search to feed a 4-agent ecosystem (Orchestrator, Compliance, Audit, Output).",
       "Implemented advanced AI memory (Superset for global context, Subset for isolated inter-agent messaging) and shipped production MCP servers via Databricks Genie.",

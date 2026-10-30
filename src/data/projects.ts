@@ -123,6 +123,51 @@ export const PROJECTS: Project[] = [
     skills: ['AI agent security', 'MCP security', 'Threat modeling', 'Web security headers / CSP', 'Astro', 'React', 'TypeScript', 'Tailwind CSS', 'three.js', 'GSAP', 'Accessibility', 'DNS and email security (SPF, DKIM, DMARC)', 'Stripe', 'Automation', 'Running a business'],
   },
   {
+    id: 'aerotrace',
+    title: 'AeroTrace',
+    category: 'Multi Agent AI · Cognizant',
+    tag: 'ai',
+    glyph: '✈',
+    date: 'Summer 2026',
+    brand: '--c-cognizant',
+    short:
+      'A multi agent AI app for a cargo airline that pulls aircraft compliance and audit reports in under 30 seconds instead of over three days. Built at a Cognizant intern hackathon hosted by Senior Directors.',
+    tags: ['Pydantic AI', 'PostgreSQL', 'pgvector', 'Amazon S3', 'OCR', 'Python'],
+    links: {},
+    note: 'Built inside Cognizant, so there is no public code. I can walk through the architecture on request.',
+    stats: [
+      { v: '3 days → 30s', l: 'to get a report' },
+      { v: '99%', l: 'lower reporting cost' },
+    ],
+    body: `
+      <p><strong>AeroTrace</strong> is an AI app that uses several agents to fetch aircraft reports and answer questions about them. I built it with my team at a <strong>Cognizant intern hackathon</strong> hosted by Senior Directors during my internship in New York.</p>
+      <h3>The problem</h3>
+      <p>The client was a cargo airline with a large fleet. It spent hundreds of dollars and over three days just to get aircraft compliance and management reports. AeroTrace answers the same queries in under 30 seconds and cut the reporting cost by 99 percent, to a few cents per request.</p>
+      <h3>How the data gets in</h3>
+      <ul>
+        <li>We tested it on synthetic data: PDF documents and images.</li>
+        <li>OCR pulls the text out of the images. The pipeline then structures everything and stores it in an Amazon S3 bucket.</li>
+        <li>Numbers like dates and times go down a <strong>SQL path</strong>. Text and images are turned into embeddings and stored as vectors in PostgreSQL with pgvector, the <strong>vector path</strong>.</li>
+        <li>When a question needs both, the first agent picks a <strong>hybrid path</strong> that uses SQL and vector search together.</li>
+      </ul>
+      <h3>The agents</h3>
+      <ul>
+        <li><strong>Chat interface:</strong> shows the conversation next to live numbers for the cost and processing time of each request.</li>
+        <li><strong>Orchestrate Agent:</strong> the planner. It reads the question, decides which agents and tools to run, collects what they return and passes it on.</li>
+        <li><strong>Audit Agent and Compliance Agent:</strong> pull out the details about aircraft regulations and audits, using report tools that fetch the exact data they ask for.</li>
+        <li><strong>Output Agent:</strong> takes everything gathered and writes the final answer for the user.</li>
+      </ul>
+      <h3>Memory</h3>
+      <ul>
+        <li><strong>Superset memory</strong> carries the user's exact question through the whole pipeline, from the Orchestrate Agent to the Output Agent.</li>
+        <li><strong>Subset memory</strong> is a local channel that lets the Audit Agent and Compliance Agent talk to each other to double check report details.</li>
+      </ul>
+      <h3>Built with</h3>
+      <p>Pydantic AI for the agents, PostgreSQL with pgvector, Amazon S3, and OCR. We used GitHub Copilot and Claude while building it.</p>
+    `,
+    skills: ['Pydantic AI', 'Multi agent systems', 'RAG', 'PostgreSQL', 'pgvector', 'Amazon S3', 'OCR', 'Python'],
+  },
+  {
     id: "trueface",
     title: "TrueFace",
     category: "AI · Deepfake Detection · Full-Stack",
