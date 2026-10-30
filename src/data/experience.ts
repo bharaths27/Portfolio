@@ -31,7 +31,7 @@ export const EXPERIENCE: Experience[] = [
     role: 'R&D Cybersecurity Consultant',
     company: 'GPTfy',
     type: 'Independent consultant',
-    date: 'Present',
+    date: 'Sep 2026 – Present',
     scope: 'industry',
     brand: '--c-gptfy',
     mono: 'GP',

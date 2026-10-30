@@ -58,7 +58,7 @@ export default function About({ ready }: { ready: boolean }) {
             </p>
             <p className="reveal">
               Before that, at <strong>Cognizant</strong>, I architected <strong>Aerotrace</strong>, a Pydantic AI multi agent system that cut airline
-              compliance reporting from <strong>3 days to under 30 seconds</strong>. I do research at BU's <strong>H2X Lab</strong>, was a{' '}
+              compliance reporting from <strong>3 days to under 30 seconds</strong>. I did research at BU's <strong>H2X Lab</strong>, was a{' '}
               <strong>Technical AI Safety Fellow</strong>, and most recently led our team at the DS+X hackathon to build <strong>ENGRAM Assist</strong>,
               a voice and hand sign controlled helper robot.
             </p>
