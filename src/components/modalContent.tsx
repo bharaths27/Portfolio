@@ -136,6 +136,7 @@ export function projectModal(p: Project, withVideo = false): ModalContent {
             />
           </div>
         )}
+        {!(withVideo && yt) && p.image && <img className="m-shot" src={p.image} alt={p.imageAlt ?? ''} />}
         {p.award && (
           <div className="award">
             <div className="award-event">🏆 {p.award.event}</div>

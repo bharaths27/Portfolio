@@ -99,10 +99,16 @@ function ProjectCard({ p, onOpen }: { p: Project; onOpen: (m: ModalContent) => v
       onClick={() => onOpen(projectModal(p))}
       onKeyDown={(e) => e.key === 'Enter' && onOpen(projectModal(p))}
     >
-      <div className="project-cover">
+      <div className={`project-cover ${p.image ? 'has-shot' : ''}`}>
         <div className="cover-grid" />
-        <span className="glyph">{p.glyph}</span>
-        {yt && <YoutubeThumb id={yt} alt="" />}
+        {p.image ? (
+          <img className="cover-shot" src={p.image} alt={p.imageAlt ?? ''} loading="lazy" />
+        ) : (
+          <>
+            <span className="glyph">{p.glyph}</span>
+            {yt && <YoutubeThumb id={yt} alt="" />}
+          </>
+        )}
         {p.award && <span className="winner-ribbon mono">🏆 winner</span>}
         <span className="project-date mono">{p.date}</span>
       </div>

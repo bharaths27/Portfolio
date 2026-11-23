@@ -13,6 +13,7 @@ export interface Project {
   award?: { event: string; prizes: string[] }
   brand: string
   image?: string
+  imageAlt?: string
   short: string
   tags: string[]
   links: { demo?: string; github?: string; video?: string; devpost?: string; site?: string }
@@ -79,6 +80,8 @@ export const PROJECTS: Project[] = [
     glyph: '◎',
     date: 'Apr 2026',
     brand: '--violet',
+    image: `${import.meta.env.BASE_URL}projects/trueface.webp`,
+    imageAlt: 'TrueFace mock interview setup: role context and choosing an interviewer',
     short:
       'A practice interview app with two sides. Candidates practice with a live AI avatar, and recruiters get a live integrity check that looks for deepfakes, odd delays and answers that sound scripted.',
     tags: ['Gemini', 'HeyGen SDK', 'Deepfake Detection', 'Python', 'MongoDB', 'Full Stack'],
@@ -115,6 +118,8 @@ export const PROJECTS: Project[] = [
     glyph: '◍',
     date: 'Nov 2026',
     brand: '--cyan',
+    image: `${import.meta.env.BASE_URL}projects/clarity.webp`,
+    imageAlt: 'Clarity dashboard: a glass of water back in range after the Brita filter',
     short:
       'A water tester you pour into. The tank reads dissolved solids and clarity, then tips the cup into the filter that fixes the problem. Readings go over a direct radio link to a Raspberry Pi base station with an AI agent and a 3D map of Princeton.',
     tags: ['Arduino', 'ESP32', 'ESP-NOW', 'Raspberry Pi', 'Tiger Data', 'Gemini'],
@@ -175,6 +180,8 @@ export const PROJECTS: Project[] = [
     glyph: '⇢',
     date: 'Nov 2026',
     brand: '--green',
+    image: `${import.meta.env.BASE_URL}projects/outbound.webp`,
+    imageAlt: 'Outbound 3D map of Boston with quests and live MBTA trains',
     short:
       'A multiplayer game on Boston’s T. Students ride to quests on a live 3D map with every train in real time, plan trips from a photo with AI agents, fill a neighborhood passport, and turn XP into a Solana token they spend on coupons.',
     tags: ['Next.js', 'Supabase', 'TimescaleDB', 'Mastra', 'Gemini', 'Solana'],

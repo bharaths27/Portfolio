@@ -1628,6 +1628,22 @@ html.has-cursor .cursor-ring {
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
+.project-cover.has-shot {
+  height: auto;
+  aspect-ratio: 16 / 10;
+  background: #05060b;
+}
+.project-cover img.cover-shot {
+  object-fit: contain;
+}
+.m-shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  margin-bottom: 16px;
+}
 .award {
   padding: 10px 14px;
   border-radius: 12px;
