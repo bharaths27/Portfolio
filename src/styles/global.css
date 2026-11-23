@@ -17,6 +17,7 @@
   --purple: #a78bfa;
   --red: #ef4444;
   --amber: #f5b33b;
+  --gold: #f5c451;
   --green: #34d399;
 
   --c-bu: #f0444b;
@@ -1553,6 +1554,106 @@ html.has-cursor .cursor-ring {
   .projects-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Project rows: my business, hackathon winners, other projects */
+.group-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin: 0 0 22px;
+}
+.group-head + .featured-list,
+.group-head + .projects-grid {
+  margin-top: 0;
+}
+.projects-grid + .group-head {
+  margin-top: 64px;
+}
+.group-k {
+  font-size: 0.78rem;
+  color: var(--text-faint);
+}
+.group-head h3 {
+  font-size: 1.5rem;
+}
+.group-head p {
+  margin: 4px 0 0;
+  color: var(--text-dim);
+  font-size: 0.92rem;
+}
+.owner-badge {
+  align-self: flex-start;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand);
+  border: 1px solid color-mix(in srgb, var(--brand) 45%, transparent);
+  background: color-mix(in srgb, var(--brand) 10%, transparent);
+}
+.projects-grid.is-winners,
+.projects-grid.is-others {
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+@media (min-width: 1100px) {
+  .projects-grid.is-winners {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .projects-grid.is-others {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 420px) {
+  .projects-grid.is-winners,
+  .projects-grid.is-others {
+    grid-template-columns: 1fr;
+  }
+}
+.project-card.is-winner {
+  border-color: color-mix(in srgb, var(--gold) 35%, transparent);
+}
+.winner-ribbon {
+  position: absolute;
+  z-index: 1;
+  top: 12px;
+  left: 12px;
+  font-size: 0.7rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(7, 8, 15, 0.85);
+  color: var(--gold);
+  border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.award {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--gold) 35%, transparent);
+  background: color-mix(in srgb, var(--gold) 8%, transparent);
+  margin-bottom: 4px;
+}
+.award-event {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--gold);
+  font-size: 0.98rem;
+}
+.award ul {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0;
+  font-size: 0.85rem;
+  color: var(--text);
+}
+.award li {
+  margin: 0;
+  padding: 0;
+}
+.award li + li {
+  margin-top: 2px;
 }
 
 /* Skills board */

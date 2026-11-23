@@ -1,20 +1,8 @@
-import { useRef, useState } from 'react'
-import { gsap } from 'gsap'
-import { useGSAP } from '@gsap/react'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { PROJECTS, type Project } from '../data/projects'
 import SectionHead from './SectionHead'
 import type { ModalContent } from './Modal'
 import { Chips, MetricPills, ProjectLinks, projectModal, youtubeId } from './modalContent'
 import { PlayIcon } from './Icons'
-
-const FILTERS: { id: Project['tag'] | 'all'; label: string }[] = [
-  { id: 'all', label: 'All' },
-  { id: 'ai', label: 'AI / LLM' },
-  { id: 'security', label: 'Security' },
-  { id: 'robotics', label: 'Robotics' },
-  { id: 'ml', label: 'Machine Learning' },
-]
 
 function YoutubeThumb({ id, alt }: { id: string; alt: string }) {
   return (
@@ -59,7 +47,7 @@ function BoundlineStory() {
   )
 }
 
-function Featured({ p, onOpen, flip }: { p: Project; onOpen: (m: ModalContent) => void; flip?: boolean }) {
+function Featured({ p, onOpen, flip, badge }: { p: Project; onOpen: (m: ModalContent) => void; flip?: boolean; badge?: string }) {
   const yt = youtubeId(p.links.video)
   return (
     <article className={`featured card reveal ${flip ? 'is-flip' : ''}`} style={{ ['--brand' as string]: `var(${p.brand})` }}>
@@ -80,6 +68,7 @@ function Featured({ p, onOpen, flip }: { p: Project; onOpen: (m: ModalContent) =
         </button>
       )}
       <div className="featured-body">
+        {badge && <span className="owner-badge mono">{badge}</span>}
         <div className="p-cat mono">
           {p.category} · {p.date}
         </div>
@@ -98,76 +87,93 @@ function Featured({ p, onOpen, flip }: { p: Project; onOpen: (m: ModalContent) =
   )
 }
 
-export default function Projects({ onOpen }: { onOpen: (m: ModalContent) => void }) {
-  const root = useRef<HTMLElement>(null)
-  const [filter, setFilter] = useState<Project['tag'] | 'all'>('all')
-  const featured = PROJECTS.filter((p) => p.featured)
-  const rest = PROJECTS.filter((p) => !p.featured && (filter === 'all' || p.tag === filter))
-
-  useGSAP(
-    () => {
-      gsap.fromTo('.project-card', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.05, ease: 'power3.out' })
-      ScrollTrigger.refresh()
-    },
-    { scope: root, dependencies: [filter], revertOnUpdate: true },
+function ProjectCard({ p, onOpen }: { p: Project; onOpen: (m: ModalContent) => void }) {
+  const yt = youtubeId(p.links.video)
+  return (
+    <article
+      className={`project-card card reveal ${p.award ? 'is-winner' : ''}`}
+      style={{ ['--brand' as string]: `var(${p.brand})` }}
+      data-cursor="open"
+      role="button"
+      tabIndex={0}
+      onClick={() => onOpen(projectModal(p))}
+      onKeyDown={(e) => e.key === 'Enter' && onOpen(projectModal(p))}
+    >
+      <div className="project-cover">
+        <div className="cover-grid" />
+        <span className="glyph">{p.glyph}</span>
+        {yt && <YoutubeThumb id={yt} alt="" />}
+        {p.award && <span className="winner-ribbon mono">🏆 winner</span>}
+        <span className="project-date mono">{p.date}</span>
+      </div>
+      <div className="project-body">
+        {p.award && (
+          <div className="award">
+            <div className="award-event">{p.award.event}</div>
+            <ul>
+              {p.award.prizes.map((prize) => (
+                <li key={prize}>{prize}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <div className="p-cat mono">{p.category}</div>
+        <h3>{p.title}</h3>
+        <p>{p.short}</p>
+        <Chips items={p.tags} max={4} />
+        <div className="project-foot">
+          <div className="plinks">
+            <ProjectLinks p={p} />
+            {!Object.keys(p.links).length && <span className="muted small">{p.note ?? 'Coursework'}</span>}
+          </div>
+          <span className="more mono">details →</span>
+        </div>
+      </div>
+    </article>
   )
+}
+
+function GroupHead({ k, title, sub }: { k: string; title: string; sub: string }) {
+  return (
+    <div className="group-head reveal">
+      <span className="group-k mono">{k}</span>
+      <div>
+        <h3>{title}</h3>
+        <p>{sub}</p>
+      </div>
+    </div>
+  )
+}
+
+export default function Projects({ onOpen }: { onOpen: (m: ModalContent) => void }) {
+  const business = PROJECTS.filter((p) => p.group === 'business')
+  const winners = PROJECTS.filter((p) => p.group === 'winner')
+  const others = PROJECTS.filter((p) => p.group === 'other')
 
   return (
-    <section className="section" id="projects" ref={root}>
+    <section className="section" id="projects">
       <div className="container">
-        <SectionHead index="03" eyebrow="built with intent" title="Things I have" accent="built" sub="Two highlights first, then the rest. Click any card for the architecture, challenges and what I learned." />
+        <SectionHead index="03" eyebrow="built with intent" title="Things I have" accent="built" sub="My business first, then the hackathon projects that won, then the rest. Click any card for the full story." />
+
+        <GroupHead k="01" title="My business" sub="A startup I founded and own." />
         <div className="featured-list">
-          {featured.map((p, i) => (
-            <Featured key={p.id} p={p} onOpen={onOpen} flip={i % 2 === 1} />
+          {business.map((p) => (
+            <Featured key={p.id} p={p} onOpen={onOpen} badge="Founder and owner" />
           ))}
         </div>
-        <div className="more-head reveal">
-          <h3>More projects</h3>
-          <div className="filter-bar" role="tablist">
-            {FILTERS.map((f) => (
-              <button key={f.id} role="tab" aria-selected={filter === f.id} className={`filter-btn ${filter === f.id ? 'is-active' : ''}`} onClick={() => setFilter(f.id)}>
-                {f.label}
-              </button>
-            ))}
-          </div>
+
+        <GroupHead k="02" title="Hackathon winners" sub="Projects that won at HackDartmouth, HackPrinceton and BostonHacks." />
+        <div className="projects-grid is-winners">
+          {winners.map((p) => (
+            <ProjectCard key={p.id} p={p} onOpen={onOpen} />
+          ))}
         </div>
-        <div className="projects-grid">
-          {rest.map((p) => {
-            const yt = youtubeId(p.links.video)
-            return (
-              <article
-                key={p.id}
-                className="project-card card"
-                style={{ ['--brand' as string]: `var(${p.brand})` }}
-                data-cursor="open"
-                role="button"
-                tabIndex={0}
-                onClick={() => onOpen(projectModal(p))}
-                onKeyDown={(e) => e.key === 'Enter' && onOpen(projectModal(p))}
-              >
-                <div className="project-cover">
-                  <div className="cover-grid" />
-                  <span className="glyph">{p.glyph}</span>
-                  {yt && <YoutubeThumb id={yt} alt="" />}
-                  <span className="project-date mono">{p.date}</span>
-                </div>
-                <div className="project-body">
-                  <div className="p-cat mono">{p.category}</div>
-                  <h3>{p.title}</h3>
-                  <p>{p.short}</p>
-                  <Chips items={p.tags} max={4} />
-                  <div className="project-foot">
-                    <div className="plinks">
-                      <ProjectLinks p={p} />
-                      {!Object.keys(p.links).length && <span className="muted small">{p.note ?? 'Coursework'}</span>}
-                    </div>
-                    <span className="more mono">details →</span>
-                  </div>
-                </div>
-              </article>
-            )
-          })}
-          {!rest.length && <p className="muted">No other projects in this group yet.</p>}
+
+        <GroupHead k="03" title="Other projects" sub="Hackathon builds, internship work and side projects." />
+        <div className="projects-grid is-others">
+          {others.map((p) => (
+            <ProjectCard key={p.id} p={p} onOpen={onOpen} />
+          ))}
         </div>
       </div>
     </section>

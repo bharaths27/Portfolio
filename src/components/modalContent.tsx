@@ -136,6 +136,16 @@ export function projectModal(p: Project, withVideo = false): ModalContent {
             />
           </div>
         )}
+        {p.award && (
+          <div className="award">
+            <div className="award-event">🏆 {p.award.event}</div>
+            <ul>
+              {p.award.prizes.map((prize) => (
+                <li key={prize}>{prize}</li>
+              ))}
+            </ul>
+          </div>
+        )}
         {p.stats && <MetricPills metrics={p.stats} />}
         <div className="m-links">
           <ProjectLinks p={p} large />

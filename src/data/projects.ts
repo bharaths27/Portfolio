@@ -7,7 +7,10 @@ export interface Project {
   tag: 'ai' | 'ml' | 'robotics' | 'security'
   glyph: string
   date: string
-  featured?: boolean
+  /** Which row it shows in: my business, hackathon winners, or other projects. */
+  group: 'business' | 'winner' | 'other'
+  /** Hackathon and prizes, shown on winner cards. */
+  award?: { event: string; prizes: string[] }
   brand: string
   image?: string
   short: string
@@ -23,13 +26,209 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
+    id: 'boundline',
+    title: 'Boundline',
+    category: 'My business · AI agent security · MCP',
+    tag: 'security',
+    glyph: '⟂',
+    date: 'Oct 2026',
+    group: 'business',
+    brand: '--c-boundline',
+    short:
+      'Boundline is my security review business for AI agents and MCP servers. I designed, built and launched the website, the products and the outreach system myself.',
+    tags: ['Astro', 'React', 'TypeScript', 'React Three Fiber', 'GSAP', 'Stripe', 'Cloudflare Pages'],
+    links: {
+      site: 'https://boundline.dev',
+    },
+    note: 'The code is in a private GitHub repo. I can walk through it on request.',
+    more: [
+      { label: 'Field note: Twelve checks before you ship an MCP server', url: 'https://boundline.dev/notes/mcp-server-security-checks/' },
+      { label: 'Templates and the MCP server checklist', url: 'https://boundline.dev/templates/' },
+      { label: 'Book a call', url: 'https://cal.com/boundline/intro' },
+    ],
+    stats: [
+      { v: '40', l: 'check MCP checklist' },
+      { v: '4 step', l: 'scroll story' },
+      { v: 'Live', l: 'site, booking, product' },
+    ],
+    body: `
+      <p><strong>Boundline</strong> is a small business I started in October 2026. It does security reviews for startups that build AI agents and MCP servers. Those startups often get asked hard security questions by their buyers, so Boundline reviews how their agent handles tool permissions, untrusted input, tool definitions, authentication, secrets and third party servers, then gives them a written report and fixes.</p>
+      <h3>What I built</h3>
+      <ul>
+        <li><strong>The business itself.</strong> I wrote the offers, the scope of a review, the pricing, the terms and the privacy policy.</li>
+        <li><strong>The website, boundline.dev.</strong> Astro with React islands, TypeScript, Tailwind CSS v4, GSAP and Lenis for motion, and React Three Fiber for the 3D scene. Hosted on Cloudflare Pages. Every push to main deploys on its own, and every branch gets its own preview link.</li>
+        <li><strong>A scroll story called "How one message crosses the line".</strong> It walks through a real attack pattern in four steps: an untrusted ticket lands in an issue tracker, the agent reads it, the agent tries to send data out by email, and an approval gate stops it. Each colour on the site has one meaning: amber for untrusted input, crimson for crossing the boundary, and jade for contained or approved.</li>
+        <li><strong>A site that works for everyone.</strong> It works with reduced motion, without JavaScript and without WebGL, where a 2D diagram takes over. It keeps WCAG AA contrast and has no sideways scrolling from 360px to 1920px wide.</li>
+        <li><strong>Security on my own site.</strong> A strict content security policy only allows scripts, styles and fonts from the site itself, with no inline code at all. I wrote a build check that fails the build if anything would break this policy.</li>
+        <li><strong>Products.</strong> A 40 check MCP server security checklist, sold for $15 through Stripe, with a download page after payment. A field note called "Twelve checks before you ship an MCP server".</li>
+        <li><strong>Email and domain setup.</strong> Google Workspace on my own domain, with SPF, DKIM and a strict DMARC policy.</li>
+        <li><strong>An outreach system.</strong> A scheduled task finds startups that just launched or raised money, finds an address they published themselves, and saves a short personal email as a draft. It sends at most 5 emails a day, never guesses an address, honors every opt out, and stops sending if emails start to bounce.</li>
+      </ul>
+      <h3>Status</h3>
+      <p>Launched in October 2026. The website, booking and the first paid product are live.</p>
+    `,
+    skills: ['AI agent security', 'MCP security', 'Threat modeling', 'Web security headers / CSP', 'Astro', 'React', 'TypeScript', 'Tailwind CSS', 'three.js', 'GSAP', 'Accessibility', 'DNS and email security (SPF, DKIM, DMARC)', 'Stripe', 'Automation', 'Running a business'],
+  },
+  {
+    id: 'trueface',
+    title: 'TrueFace',
+    category: 'AI · Deepfake Detection · Full Stack',
+    tag: 'ai',
+    group: 'winner',
+    award: { event: 'HackDartmouth XI', prizes: ['Winner'] },
+    glyph: '◎',
+    date: 'Apr 2026',
+    brand: '--violet',
+    short:
+      'A practice interview app with two sides. Candidates practice with a live AI avatar, and recruiters get a live integrity check that looks for deepfakes, odd delays and answers that sound scripted.',
+    tags: ['Gemini', 'HeyGen SDK', 'Deepfake Detection', 'Python', 'MongoDB', 'Full Stack'],
+    links: {
+      github: 'https://github.com/bharaths27/HackDartmouthXI',
+      video: 'https://www.youtube.com/watch?v=oRwWkHM_534',
+      devpost: 'https://devpost.com/software/trueface',
+    },
+    body: `
+      <p><strong>TrueFace</strong> is a practice interview and integrity platform we built at <strong>HackDartmouth XI</strong>, where it won. It has two sides: one helps candidates get ready for real interviews, and the other helps recruiters protect their hiring.</p>
+      <h3>For the candidate: a place to practice</h3>
+      <ul>
+        <li><strong>Live AI avatar:</strong> a realistic, fast conversational partner powered by <strong>Gemini</strong> and <strong>HeyGen</strong> that feels like a real face to face interview.</li>
+        <li><strong>Live speech feedback:</strong> a dashboard in the browser reads the transcript as you talk and flags filler words ("um", "like", "uh") the moment you say them.</li>
+        <li><strong>Review dashboard:</strong> save, watch and delete your recorded answers next to the exact question you were asked, so you can study your body language and delivery.</li>
+      </ul>
+      <h3>For the recruiter: an integrity check</h3>
+      <ul>
+        <li><strong>Live deepfake detection:</strong> watches the candidate's video stream for fake faces and overlays.</li>
+        <li><strong>Voice and delay tracking:</strong> looks for unusual delays and audio problems that can mean someone is using an outside AI tool.</li>
+        <li><strong>Reasoning check:</strong> a Speech Analyzer and a Gemini Analyzer compare live answers to normal human answers to catch ones that sound too perfect or scripted.</li>
+        <li><strong>One risk score:</strong> combines the deepfake, delay, voice and reasoning signals into one live score, so a recruiter knows right away if a session looks wrong.</li>
+      </ul>
+    `,
+    skills: ['Gemini', 'HeyGen SDK', 'Anthropic Claude', 'Deepfake Detection', 'Computer Vision', 'Speech Analytics', 'MongoDB', 'Full Stack', 'Real Time Systems'],
+  },
+  {
+    id: 'clarity',
+    title: 'Clarity',
+    category: 'Hardware · IoT · Sustainability',
+    tag: 'robotics',
+    group: 'winner',
+    award: { event: 'HackPrinceton Fall 2026', prizes: ['Winner, MLH Best Use of Tiger Data'] },
+    glyph: '◍',
+    date: 'Nov 2026',
+    brand: '--cyan',
+    short:
+      'A water tester you pour into. The tank reads dissolved solids and clarity, then tips the cup into the filter that fixes the problem. Readings go over a direct radio link to a Raspberry Pi base station with an AI agent and a 3D map of Princeton.',
+    tags: ['Arduino', 'ESP32', 'ESP-NOW', 'Raspberry Pi', 'Tiger Data', 'Gemini'],
+    links: {
+      github: 'https://github.com/thejustjim/hackPrincetonFall26',
+      site: 'https://wateramong.us',
+      video: 'https://www.youtube.com/watch?v=Ud5rvpX2Ixw',
+    },
+    more: [{ label: 'My hardware docs, diagrams and Arduino code', url: 'https://github.com/thejustjim/hackPrincetonFall26/tree/bharath/clarity-hardware/hardware' }],
+    stats: [
+      { v: 'Winner', l: 'MLH Best Use of Tiger Data' },
+      { v: '36h', l: 'HackPrinceton Fall 2026' },
+    ],
+    body: `
+      <p><strong>Clarity</strong> is a water tester that also fixes the water. My team built it in 36 hours at <strong>HackPrinceton Fall 2026</strong>, and it won <strong>MLH Best Use of Tiger Data</strong>. I led the hardware with Ethan Yung.</p>
+      <h3>Why I cared</h3>
+      <p>Growing up in India, I had skin irritation from impure water for years and thought it was normal. When I moved abroad it went away. That stuck with me.</p>
+      <h3>The problem</h3>
+      <p>Public water data is thin. The stream next to Princeton was last sampled for dissolved solids in 2023, and the utility tests its system, not your glass. People buy home filters without knowing what their water needs.</p>
+      <h3>How it works</h3>
+      <ul>
+        <li>You pour one cup of water into the test cup. A TDS probe and a light sensor read it, and the result shows on an LCD.</li>
+        <li>High dissolved solids (over 300 ppm): the cup tips left into a PUR Plus filter. Cloudy water: it tips right into a Brita. Water in range stays upright.</li>
+        <li>Clear cut readings are decided right away by the Arduino. Close calls go to the base station, where an AI model (Gemini) picks the filter and explains why. If it does not answer in 8 seconds, the tank uses its own rule, so it still works with no internet.</li>
+        <li>You pour the filtered water back in to retest, so every pour has a before and an after.</li>
+      </ul>
+      <h3>What I built</h3>
+      <ul>
+        <li><strong>The tank:</strong> Arduino Uno with the TDS sensor, an LDR clarity sensor, a 1602 LCD and a 360 degree servo that tips the cup, with a 1000 µF capacitor so the servo does not brown out the board.</li>
+        <li><strong>The firmware:</strong> sensing, the decision rule, the timed tip and return, and serial commands for calibration.</li>
+        <li><strong>The radio:</strong> an ESP32 on the tank talks to an ESP32 at the base station over ESP-NOW, with no Wi-Fi or cell. A resistor divider brings the Uno's 5 V serial down to 3.3 V. The dashboard can start a test over the same link.</li>
+        <li><strong>The base station:</strong> a Raspberry Pi 4B with the receiver on USB.</li>
+        <li><strong>CAD:</strong> a printed ring sized to hold the PUR Plus filter.</li>
+      </ul>
+      <h3>What my teammates built</h3>
+      <p>Jimin Bang and Verna Lin built the software: a Python gateway with anomaly checks, the Gemini decision agent, a team of LangChain Deep Agents that looks into the unclear cases, every reading synced to Tiger Data (TimescaleDB) with hourly and daily trends, an iMessage agent through Photon where residents can ask questions or send water photos, and a live 3D map of Princeton readings next to about 14,000 USGS monitoring sites.</p>
+      <p>During the event we also walked around campus collecting real water samples to test.</p>
+      <h3>What went wrong and what we changed</h3>
+      <ul>
+        <li>The LoRa radio needed soldering we could not do in time, so we switched to ESP-NOW between two ESP32 boards.</li>
+        <li>The pH probe drifted with no buffer solutions to calibrate it, so this build estimates pH from dissolved solids and says so everywhere.</li>
+        <li>Our 3D printer broke in the middle of the event, so we swapped the ZeroWater filter for a PUR Plus and printed a ring to hold it.</li>
+        <li>Hardware humbles you. One voltage drop from the servo was enough to throw off our sensor readings until a 1000 µF capacitor fixed it.</li>
+        <li>We cut the RGB LED, the button and the stop switches to keep the build reliable. Tests start from the dashboard instead.</li>
+      </ul>
+      <h3>Honest limits</h3>
+      <p class="note">Clarity reads dissolved solids and clarity. pH is estimated from dissolved solids, not measured. It does not test for lead or bacteria, and it never calls water safe, only "in range". There is one real tank; the other map nodes are simulated and labelled.</p>
+    `,
+    skills: ['Arduino', 'C++', 'ESP32', 'ESP-NOW', 'Raspberry Pi', 'Sensors', 'Servo control', 'Circuit design', 'CAD', 'Python', 'FastAPI', 'TimescaleDB', 'Gemini', 'LangChain'],
+  },
+  {
+    id: 'outbound',
+    title: 'Outbound',
+    category: 'Full Stack · AI Agents · Solana',
+    tag: 'ai',
+    group: 'winner',
+    award: { event: 'BostonHacks 2026', prizes: ['1st place, Bos(tons) of Eats & Streets track', 'Winner, MLH Best Use of Solana'] },
+    glyph: '⇢',
+    date: 'Nov 2026',
+    brand: '--green',
+    short:
+      'A multiplayer game on Boston’s T. Students ride to quests on a live 3D map with every train in real time, plan trips from a photo with AI agents, fill a neighborhood passport, and turn XP into a Solana token they spend on coupons.',
+    tags: ['Next.js', 'Supabase', 'TimescaleDB', 'Mastra', 'Gemini', 'Solana'],
+    links: {
+      github: 'https://github.com/bharaths27/outbound',
+      demo: 'https://outboundwith.us',
+    },
+    stats: [
+      { v: '1st', l: 'Eats & Streets track' },
+      { v: '349', l: 'automated tests' },
+      { v: '24h', l: 'BostonHacks 2026' },
+    ],
+    body: `
+      <p><strong>Outbound</strong> gives Boston students a reason to get off at an unfamiliar T stop, and someone from another school to go with. My team of four built it in 24 hours at <strong>BostonHacks 2026</strong> at Boston University. It won <strong>1st place in the Bos(tons) of Eats &amp; Streets track</strong> and <strong>MLH Best Use of Solana</strong>.</p>
+      <p class="m-meta">Nov 21 to 22, 2026 · I was the backend and infrastructure lead.</p>
+      <h3>The problem</h3>
+      <p>Give a Boston student 45 minutes between classes and the hardest question is "where can I go that is worth the trip?" The café is saved on TikTok, the event is on a university calendar, and which train to take is another search. Boston has more than 30 colleges, yet students spend four years in the same neighborhood with people from their own school.</p>
+      <h3>What it does</h3>
+      <ul>
+        <li><strong>Live 3D map of Boston:</strong> real 3D buildings and every Red, Orange, Green and Blue Line train drawn live on the real track. If the live feed fails, it replays recorded trains and says so.</li>
+        <li><strong>Explore by craving, budget, time and T line:</strong> filters for open now, free food and how much time you have, plus a search box where "cheap dumplings 40 min" turns into filters.</li>
+        <li><strong>Directions:</strong> our own MBTA route planner with up to 4 T options, each with minutes, fare, transfers and steps.</li>
+        <li><strong>Outbound Guide:</strong> drop a photo of food or a place, or ask a question, and a chain of AI agents finds the spot and plans the ride.</li>
+        <li><strong>The game:</strong> check in when you arrive (checked by location in the database), earn XP, fill a Boston Passport with neighborhood stamps, keep streaks, and push your school up a weekly leaderboard. A trip with a friend from another school earns double XP.</li>
+        <li><strong>Rewards:</strong> XP turns into OUT, a Solana token, that you spend on sample coupons.</li>
+        <li><strong>Host an event:</strong> any student or club can post an event that shows up as a pin on everyone's map.</li>
+      </ul>
+      <h3>What I built</h3>
+      <ul>
+        <li><strong>Database and game rules:</strong> the Supabase Postgres schema, migrations and row level security. All scoring lives in Postgres functions: <code>check_in()</code> checks you are within 75 m, allows one check in per quest per day and applies the XP bonuses, so XP cannot be faked from the app.</li>
+        <li><strong>Live train data:</strong> a Python tracker on a Vultr server polls the MBTA API every 15 seconds into Tiger Data (TimescaleDB) hypertables. Continuous aggregates compare each line's delay now with its normal delay for that hour, like "Orange Line +6 min".</li>
+        <li><strong>The AI Guide:</strong> Mastra workflows where Grok looks at the photo, a Photo Decider agent picks food or place, a Food Researcher or Trip Planner agent uses live train tools, and Gemini writes one answer card. Every stage streams to the screen. If Gemini fails, it falls back to Gemini Lite, then Grok, then a keyword matcher. Every quest a model suggests is checked against the database first.</li>
+        <li><strong>Route planner:</strong> a graph built from MassGIS track data and every MBTA station, with transfer penalties and Dijkstra's algorithm, so directions work with no Google key.</li>
+        <li><strong>Solana rewards:</strong> OUT is an SPL Token-2022 token, 1 XP = 1 OUT. Claiming mints your balance to your Phantom wallet. To redeem, you sign a transfer in Phantom, and the server checks the mint, sender, treasury, amount, memo and that the signature was not used before, then gives you a coupon code.</li>
+        <li><strong>Deploy and integration:</strong> Vercel with the outboundwith.us domain, and I owned the branch that merged all four people's work (map, screens, game logic, AI and wallet) into one app.</li>
+        <li><strong>Security fixes during the event:</strong> views that skipped row level security and leaked hidden players' stamps, players being able to edit their own XP, and QR codes readable through the public API. All three are fixed.</li>
+      </ul>
+      <h3>Team</h3>
+      <p>Me (backend, data, AI, blockchain, infrastructure, integration), Verna Lin (3D map, frontend, design), Siqi "Suki" Li (content, game design, survey, Mastra photo trip flow, Devpost, pitch) and Angie Che (app screens).</p>
+      <h3>What I learned</h3>
+      <p>A useful recommendation starts with a limit, like "$15 and 45 minutes". The reward shapes the game, so XP had to be locked down before it could become a token. And trust comes from details users rarely see.</p>
+      <h3>Honest limits</h3>
+      <p class="note">OUT is a test token on Solana devnet with no money value, and the coupons are samples. Leaderboard players marked "(sim)" are simulated from our student survey, and place reviews and friends on the map are sample data, all labelled in the app. The train tracker server was set to shut down after judging, so live delay history may now show the replay fallback.</p>
+    `,
+    skills: ['TypeScript', 'Python', 'SQL', 'PL/pgSQL', 'Next.js', 'React', 'PostgreSQL', 'Supabase', 'TimescaleDB', 'Mastra', 'Gemini API', 'xAI Grok', 'LLM agents', 'Solana', 'SPL Token-2022', 'Vercel', 'Vultr', 'Graph algorithms', 'Geospatial data', 'Row level security', 'Vitest'],
+  },
+  {
     id: 'engram-assist',
     title: 'ENGRAM Assist',
     category: 'Robotics · Voice AI · Healthcare',
     tag: 'robotics',
     glyph: '◉',
     date: 'Oct 2026',
-    featured: true,
+    group: 'other',
     brand: '--c-engram',
     short:
       'A small helper robot for people who cannot get up or cannot speak. The person controls it with their voice or with hand signs, and it drives over, picks up a light object like a pill bottle with its claw, and brings it back. Built overnight at the DS+X hackathon at Boston University.',
@@ -79,54 +278,11 @@ export const PROJECTS: Project[] = [
     skills: ['Python', 'FastAPI', 'Raspberry Pi OS', 'whisper.cpp', 'OpenCV', 'MJPEG streaming', 'Signed HTTP', 'SSH tunnels', 'pytest', 'React 19', 'TypeScript', 'Vite', 'Tailwind CSS', 'React Three Fiber', 'MediaPipe Hands', 'Vitest', 'ffmpeg'],
   },
   {
-    id: 'boundline',
-    title: 'Boundline',
-    category: 'Security business · AI agents · MCP',
-    tag: 'security',
-    glyph: '⟂',
-    date: 'Oct 2026',
-    featured: true,
-    brand: '--c-boundline',
-    short:
-      'Boundline is my security review business for AI agents and MCP servers. I designed, built and launched the website, the products and the outreach system myself.',
-    tags: ['Astro', 'React', 'TypeScript', 'React Three Fiber', 'GSAP', 'Stripe', 'Cloudflare Pages'],
-    links: {
-      site: 'https://boundline.dev',
-    },
-    note: 'The code is in a private GitHub repo. I can walk through it on request.',
-    more: [
-      { label: 'Field note: Twelve checks before you ship an MCP server', url: 'https://boundline.dev/notes/mcp-server-security-checks/' },
-      { label: 'Templates and the MCP server checklist', url: 'https://boundline.dev/templates/' },
-      { label: 'Book a call', url: 'https://cal.com/boundline/intro' },
-    ],
-    stats: [
-      { v: '40', l: 'check MCP checklist' },
-      { v: '4 step', l: 'scroll story' },
-      { v: 'Live', l: 'site, booking, product' },
-    ],
-    body: `
-      <p><strong>Boundline</strong> is a small business I started in October 2026. It does security reviews for startups that build AI agents and MCP servers. Those startups often get asked hard security questions by their buyers, so Boundline reviews how their agent handles tool permissions, untrusted input, tool definitions, authentication, secrets and third party servers, then gives them a written report and fixes.</p>
-      <h3>What I built</h3>
-      <ul>
-        <li><strong>The business itself.</strong> I wrote the offers, the scope of a review, the pricing, the terms and the privacy policy.</li>
-        <li><strong>The website, boundline.dev.</strong> Astro with React islands, TypeScript, Tailwind CSS v4, GSAP and Lenis for motion, and React Three Fiber for the 3D scene. Hosted on Cloudflare Pages. Every push to main deploys on its own, and every branch gets its own preview link.</li>
-        <li><strong>A scroll story called "How one message crosses the line".</strong> It walks through a real attack pattern in four steps: an untrusted ticket lands in an issue tracker, the agent reads it, the agent tries to send data out by email, and an approval gate stops it. Each colour on the site has one meaning: amber for untrusted input, crimson for crossing the boundary, and jade for contained or approved.</li>
-        <li><strong>A site that works for everyone.</strong> It works with reduced motion, without JavaScript and without WebGL, where a 2D diagram takes over. It keeps WCAG AA contrast and has no sideways scrolling from 360px to 1920px wide.</li>
-        <li><strong>Security on my own site.</strong> A strict content security policy only allows scripts, styles and fonts from the site itself, with no inline code at all. I wrote a build check that fails the build if anything would break this policy.</li>
-        <li><strong>Products.</strong> A 40 check MCP server security checklist, sold for $15 through Stripe, with a download page after payment. A field note called "Twelve checks before you ship an MCP server".</li>
-        <li><strong>Email and domain setup.</strong> Google Workspace on my own domain, with SPF, DKIM and a strict DMARC policy.</li>
-        <li><strong>An outreach system.</strong> A scheduled task finds startups that just launched or raised money, finds an address they published themselves, and saves a short personal email as a draft. It sends at most 5 emails a day, never guesses an address, honors every opt out, and stops sending if emails start to bounce.</li>
-      </ul>
-      <h3>Status</h3>
-      <p>Launched in October 2026. The website, booking and the first paid product are live.</p>
-    `,
-    skills: ['AI agent security', 'MCP security', 'Threat modeling', 'Web security headers / CSP', 'Astro', 'React', 'TypeScript', 'Tailwind CSS', 'three.js', 'GSAP', 'Accessibility', 'DNS and email security (SPF, DKIM, DMARC)', 'Stripe', 'Automation', 'Running a business'],
-  },
-  {
     id: 'aerotrace',
     title: 'AeroTrace',
     category: 'Multi Agent AI · Cognizant',
     tag: 'ai',
+    group: 'other',
     glyph: '✈',
     date: 'Summer 2026',
     brand: '--c-cognizant',
@@ -168,178 +324,60 @@ export const PROJECTS: Project[] = [
     skills: ['Pydantic AI', 'Multi agent systems', 'RAG', 'PostgreSQL', 'pgvector', 'Amazon S3', 'OCR', 'Python'],
   },
   {
-    id: "trueface",
-    title: "TrueFace",
-    category: "AI · Deepfake Detection · Full-Stack",
-    tag: "ai",
-    glyph: "◎",
-    date: "Apr 2026",
-    
-    brand: "--violet",
+    id: 'courtside-inference',
+    title: 'Courtside Inference',
+    category: 'Machine Learning · Sports Analytics',
+    tag: 'ml',
+    group: 'other',
+    glyph: '🏀',
+    date: 'Jan 2026',
+    brand: '--amber',
     short:
-      "Dual-sided mock-interview & integrity platform (HackDartmouth XI). A real-time conversational AI avatar trains candidates, while a live integrity engine detects deepfakes, latency anomalies, and bot-like reasoning for recruiters.",
-    tags: ["Gemini", "HeyGen SDK", "Deepfake Detection", "Python", "MongoDB", "Full-Stack"],
-    links: {
-      github: "https://github.com/bharaths27/HackDartmouthXI",
-      video: "https://www.youtube.com/watch?v=oRwWkHM_534",
-      devpost: "https://devpost.com/software/trueface",
-    },
-    body: `
-      <p><strong>TrueFace</strong> is a comprehensive, dual-sided mock-interview and integrity-testing platform built at <strong>HackDartmouth XI</strong>, a complete suite serving both candidates preparing for the real world and recruiters protecting their hiring pipelines.</p>
-      <h3>For the Interviewee, The Training Arena</h3>
-      <ul>
-        <li><strong>Real-Time AI Live Avatar:</strong> a hyper-realistic, low-latency conversational partner powered by <strong>Gemini</strong> and <strong>HeyGen</strong> that simulates the pressure of a real face-to-face interview.</li>
-        <li><strong>Live Speech Analytics:</strong> an in-browser dashboard that intercepts raw audio transcripts to track and penalize filler words ("um," "like," "uh") the millisecond they happen.</li>
-        <li><strong>Performance Review Dashboard:</strong> a full CRUD interface to save, review, and delete recorded video responses next to the exact prompt asked, so candidates can study body language and delivery.</li>
-      </ul>
-      <h3>For the Interviewer, The Integrity Engine</h3>
-      <ul>
-        <li><strong>Real-Time Deepfake Detection:</strong> active monitoring of the candidate's video stream to catch synthetic manipulation and facial overlays.</li>
-        <li><strong>Voice &amp; Latency Tracking:</strong> measures unnatural latency spikes and audio anomalies that signal a third-party AI transcription/generation tool.</li>
-        <li><strong>Cognitive &amp; Reasoning Evaluation:</strong> a dedicated Speech Analyzer + Gemini Analyzer measure live reasoning against human baselines to catch suspiciously perfect, scripted answers.</li>
-        <li><strong>Live Risk Aggregation:</strong> consolidates deepfake probability, latency, voice anomalies, and reasoning scores into a single real-time Risk Score so recruiters know instantly if a session is compromised.</li>
-      </ul>
-    `,
-    skills: ["Gemini", "HeyGen SDK", "Anthropic Claude", "Deepfake Detection", "Computer Vision", "Speech Analytics", "MongoDB", "Full-Stack", "Real-Time Systems"],
-  },
-  {
-    id: 'engram-cortex',
-    title: 'ENGRAM Cortex',
-    category: 'Robotics · AI Memory',
-    tag: 'robotics',
-    glyph: '⌬',
-    date: 'Oct 2026',
-    brand: '--c-engram',
-    short:
-      'A memory brain for a helper robot, built at the Hackachusetts hackathon (Robotics track). Teach it a rule, plan a task, a person approves, and repeated tasks are saved as skills. It became the base for ENGRAM Assist the next day.',
-    tags: ['Python', 'Robotics', 'AI Memory', 'Human in the loop'],
-    links: {
-      github: 'https://github.com/bharaths27/VAYLT_Hackathon',
-    },
-    body: `
-      <p><strong>ENGRAM Cortex</strong> is a memory brain for the same Hiwonder MasterPi robot, built at the <strong>Hackachusetts</strong> hackathon (Robotics track) on Oct 24, 2026.</p>
-      <ul>
-        <li>Teach the robot a rule.</li>
-        <li>Plan a task, and a person approves the plan before the robot acts.</li>
-        <li>Tasks that repeat are saved as skills so they can be reused.</li>
-      </ul>
-      <p>The next day our team built ENGRAM Assist on top of it at DS+X. Both projects grew out of VAYLT, my Boston University EC 463 Senior Design project, a private home hub for files.</p>
-    `,
-    skills: ['Python', 'Robotics', 'Task Planning', 'Human in the loop'],
-  },
-  {
-    id: "smart-contract-auditor",
-    title: "AI Smart Contract Auditor",
-    category: "AI · Cybersecurity",
-    tag: "ai",
-    glyph: "</>",
-    date: "Oct 2025",
-    brand: "--cyan",
-    short:
-      "Full-stack tool that runs a local, private LLM (Code Llama) to security-audit Solidity smart contracts for vulnerabilities like reentrancy and integer overflow.",
-    tags: ["Next.js", "FastAPI", "Ollama", "Prompt Engineering", "Solidity"],
-    links: {
-      github: "https://github.com/bharaths27/Smart-Contract-Auditor",
-      video: "https://www.loom.com/share/eed49925cad24144944da4758cda6ec7",
-    },
-    body: `
-      <p>A full-stack application that leverages a local, private Large Language Model (<strong>Code Llama</strong>) to perform security audits on Solidity smart contracts. It ships with a "How It Works" walkthrough and example contracts (Integer Overflow, Reentrancy) so users can test the AI's analysis directly in the browser.</p>
-      <p class="note">The core AI runs Ollama + Code Llama locally to guarantee 100% privacy and control over the code being audited. The video demo shows the full flow end to end.</p>
-      <h3>Technical Architecture</h3>
-      <p>Decoupled design with a clean separation between the UI and the AI logic:</p>
-      <ul>
-        <li>A <strong>React &amp; Next.js frontend</strong> for pasting contract code and viewing formatted audit results.</li>
-        <li>A <strong>Python &amp; FastAPI backend</strong> that receives code, forwards it to the model, handles CORS, and returns the analysis.</li>
-        <li><strong>Ollama (Code Llama)</strong> running as a separate local server, keeping all sensitive code on the user's machine.</li>
-      </ul>
-      <h3>AI Implementation, Prompt Engineering</h3>
-      <p>Intelligence comes from advanced <strong>prompt engineering</strong> and <strong>in-context learning</strong> rather than fine-tuning. A structured, multi-part prompt template instructs the model to act as a "world-class, meticulous smart contract security auditor," supplying core principles (e.g. Checks-Effects-Interactions) and formatting examples that steer a general model toward specialized, high-quality output.</p>
-      <h3>Obstacles &amp; Solutions</h3>
-      <p>Orchestrating three services (React, FastAPI, Ollama) required solving cross-origin communication via <strong>CORS middleware</strong> whitelisting the frontend origin. Output consistency was achieved by iteratively refining the prompt template to be highly specific, sharply improving relevance and accuracy.</p>
-    `,
-    skills: ["React", "Next.js", "Python", "FastAPI", "Ollama", "Prompt Engineering", "AI Integration", "REST APIs", "CORS"],
-  },
-  {
-    id: "courtside-inference",
-    title: "Courtside Inference",
-    category: "Machine Learning · Sports Analytics",
-    tag: "ml",
-    glyph: "🏀",
-    date: "Jan 2026",
-    brand: "--amber",
-    short:
-      "Data-driven prediction model that calculates win probabilities and forecasts outcomes for live NBA games from historical performance data.",
-    tags: ["Python", "Machine Learning", "Data Analytics", "Pandas"],
+      'A prediction model that works out win chances and forecasts results for live NBA games, using past game data.',
+    tags: ['Python', 'Machine Learning', 'Data Analytics', 'Pandas'],
     links: {},
-    note: "Code available on request.",
+    note: 'Code available on request.',
     body: `
-      <p>A data-driven prediction platform that calculates win probabilities and forecasts outcomes for live NBA games.</p>
+      <p>A prediction platform that works out win chances and forecasts results for live NBA games.</p>
       <h3>Highlights</h3>
       <ul>
-        <li>Built a prediction model over historical NBA datasets to estimate live win probabilities and forecast game outcomes.</li>
-        <li>Processed and analyzed large historical sports datasets to support strategic analysis and predictive modeling.</li>
+        <li>Built a prediction model on past NBA datasets to estimate live win chances and forecast game results.</li>
+        <li>Cleaned and analyzed large sets of past sports data to support the analysis and the model.</li>
       </ul>
     `,
-    skills: ["Python", "Machine Learning", "Data Analytics", "Pandas", "Feature Engineering"],
+    skills: ['Python', 'Machine Learning', 'Data Analytics', 'Pandas', 'Feature Engineering'],
   },
   {
-    id: "stock-prediction",
-    title: "Stock Prediction & Analysis Tool",
-    category: "AI · Machine Learning",
-    tag: "ml",
-    glyph: "$",
-    date: "Jan 2024",
-    brand: "--green",
+    id: 'smart-contract-auditor',
+    title: 'AI Smart Contract Auditor',
+    category: 'AI · Cybersecurity',
+    tag: 'ai',
+    group: 'other',
+    glyph: '</>',
+    date: 'Oct 2025',
+    brand: '--cyan',
     short:
-      "Full-stack platform to analyze 50 S&P 500 companies, with historical metrics plus future price forecasts from two ML models built on engineered technical indicators.",
-    tags: ["Next.js", "FastAPI", "Scikit-learn", "Pandas", "Feature Engineering"],
+      'A full stack tool that runs a private LLM (Code Llama) on your own machine to check Solidity smart contracts for security bugs like reentrancy and integer overflow.',
+    tags: ['Next.js', 'FastAPI', 'Ollama', 'Prompt Engineering', 'Solidity'],
     links: {
-      demo: "https://stock-prediction-app-delta.vercel.app/",
-      github: "https://github.com/bharaths27/Stock-Prediction-App",
+      github: 'https://github.com/bharaths27/Smart-Contract-Auditor',
+      video: 'https://www.loom.com/share/eed49925cad24144944da4758cda6ec7',
     },
     body: `
-      <p>A full-stack application providing an interactive platform for market-data analysis. Users query historical performance for 50 popular S&amp;P 500 companies, view key financial metrics, and generate future price forecasts with one of two machine-learning models.</p>
-      <h3>Technical Architecture</h3>
-      <p>Decoupled architecture; 100% self-contained with no live external API calls during interaction.</p>
+      <p>A full stack app that uses a private Large Language Model (<strong>Code Llama</strong>) running on your own machine to do security audits of Solidity smart contracts. It comes with a "How It Works" walkthrough and example contracts (Integer Overflow, Reentrancy) so you can test the AI's analysis right in the browser.</p>
+      <p class="note">The AI runs through Ollama and Code Llama on the user's own machine, so the code being audited never leaves it. The video demo shows the full flow from start to end.</p>
+      <h3>How it is built</h3>
+      <p>The UI and the AI logic are kept separate:</p>
       <ul>
-        <li><strong>React &amp; Next.js</strong> frontend (Tailwind, Shadcn/UI) with interactive Recharts visualizations.</li>
-        <li><strong>Python &amp; FastAPI</strong> backend reading a pre-cached local data store for near-zero latency, plus real-time loading/inference of the ML models.</li>
+        <li>A <strong>React and Next.js frontend</strong> where you paste contract code and read the formatted audit results.</li>
+        <li>A <strong>Python and FastAPI backend</strong> that receives the code, sends it to the model, handles CORS, and returns the analysis.</li>
+        <li><strong>Ollama (Code Llama)</strong> running as its own local server, so sensitive code stays on the user's machine.</li>
       </ul>
-      <h3>Machine Learning</h3>
-      <p>Models were trained on a dataset built through <strong>feature engineering</strong>. Beyond raw price history, I computed technical indicators like <strong>Simple Moving Averages (SMA)</strong> and the <strong>Relative Strength Index (RSI)</strong>. Users choose between a baseline <strong>Linear Regression</strong> model and a <strong>Random Forest Regressor</strong> that captures non-linear patterns. Forecasts use an iterative technique where each day's prediction feeds the next.</p>
-      <h3>Obstacles &amp; Solutions</h3>
-      <p>Free financial APIs were unreliable and rate-limited, crashing the initial on-demand architecture. I re-architected to an offline approach: Python scripts pre-fetch and process data and train the models, so the deployed app is fully self-contained, fast, stable, and reliable.</p>
+      <h3>How the AI works: prompt engineering</h3>
+      <p>The results come from careful <strong>prompt engineering</strong> and <strong>in context learning</strong>, not fine tuning. A structured prompt with several parts tells the model to act as a very careful smart contract security auditor, gives it core rules (like Checks Effects Interactions) and shows example outputs, which steers a general model toward focused, useful answers.</p>
+      <h3>Problems and fixes</h3>
+      <p>Running three services (React, FastAPI, Ollama) together meant fixing cross origin requests with <strong>CORS middleware</strong> that allows the frontend's address. To get consistent answers, I kept refining the prompt to be more specific, which made the results much more relevant and accurate.</p>
     `,
-    skills: ["React", "Next.js", "Python", "FastAPI", "Scikit-learn", "Pandas", "Feature Engineering", "System Architecture", "Vercel/Render"],
-  },
-  {
-    id: "gear-vision",
-    title: "Gear Vision, 3D Car Optimizer",
-    category: "Machine Learning · 3D",
-    tag: "ml",
-    glyph: "◈",
-    date: "May 2024",
-    brand: "--cyan",
-    short:
-      "Microservice app that renders real vehicles as interactive 3D models and simulates the performance impact of modifications via an ML-powered optimization engine.",
-    tags: ["React", "Three.js", "Node.js", "Flask", "Scikit-learn"],
-    links: {
-      demo: "https://bharaths27.github.io/Gear_Vision_Frontend/",
-      github: "https://github.com/bharaths27/Gear_Vision_Frontend",
-    },
-    body: `
-      <p>A full-stack app demonstrating a microservice architecture for a dynamic, data-driven experience. Users select real-world vehicles, view them as interactive 3D models, and simulate how modifications affect performance using a machine-learning engine.</p>
-      <h3>Technical Architecture</h3>
-      <p>Decoupled microservices with a <strong>React</strong> frontend orchestrating two independent backends:</p>
-      <ul>
-        <li>A <strong>Node.js &amp; Express</strong> backend-for-frontend (BFF) that guards external API keys and connects to MongoDB Atlas.</li>
-        <li>A <strong>Python, Flask &amp; Scikit-learn</strong> microservice serving performance predictions over a lightweight REST API.</li>
-      </ul>
-      <h3>Machine Learning</h3>
-      <p>To deliver instant, realistic feedback without a heavy physics engine, I trained a <strong>Linear Regression</strong> model on vehicle base stats and modification gains. The optimization engine returns accurate approximations (0-60 time, horsepower) with near-zero latency via a scalable Flask API.</p>
-      <h3>Obstacles &amp; Solutions</h3>
-      <p>Cross-origin deployment surfaced <strong>CORS</strong> errors between the live frontend and backends, resolved with server-side CORS policies whitelisting the frontend domain. Secrets (API keys, DB credentials) were secured with <strong>environment variables</strong> on Render, keeping sensitive data out of the public repos.</p>
-    `,
-    skills: ["React", "Three.js", "WebGL", "Node.js", "Python", "Flask", "Scikit-learn", "REST APIs", "Secure Credentials", "CORS"],
+    skills: ['React', 'Next.js', 'Python', 'FastAPI', 'Ollama', 'Prompt Engineering', 'AI Integration', 'REST APIs', 'CORS'],
   },
 ]
